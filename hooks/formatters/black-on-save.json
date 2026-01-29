@@ -1,0 +1,57 @@
+{
+  "// ABOUT": "Black + Ruff auto-formatting for Python files",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// REQUIRES": "black and ruff installed (uv add --dev black ruff)",
+
+  "PostToolUse": [
+    {
+      "// DESCRIPTION": "Format Python files with Black and fix with Ruff",
+      "matcher": "Write(*.py)|Edit(*.py)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "black \"$CLAUDE_FILE_PATH\" 2>/dev/null && ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Format Python stub files",
+      "matcher": "Write(*.pyi)|Edit(*.pyi)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "black \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// ALTERNATIVE_UV": "If using uv, prefix commands with 'uv run'",
+  "PostToolUse_uv": [
+    {
+      "matcher": "Write(*.py)|Edit(*.py)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "uv run black \"$CLAUDE_FILE_PATH\" 2>/dev/null && uv run ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// PYPROJECT_TOML": "Recommended configuration for your pyproject.toml",
+  "// EXAMPLE_CONFIG": {
+    "tool.black": {
+      "line-length": 100,
+      "target-version": ["py312"]
+    },
+    "tool.ruff": {
+      "line-length": 100,
+      "select": ["E", "F", "I", "UP", "B", "C4", "SIM"],
+      "ignore": ["E501"]
+    },
+    "tool.ruff.isort": {
+      "known-first-party": ["src"]
+    }
+  }
+}

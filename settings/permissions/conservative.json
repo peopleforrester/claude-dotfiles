@@ -1,0 +1,49 @@
+{
+  "// PROFILE": "conservative - Ask before most actions",
+  "// USE CASE": "Learning Claude Code, sensitive projects, unfamiliar codebases",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS"
+    ],
+    "ask": [
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Bash(*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/credentials*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r /)",
+      "Bash(curl * | bash)",
+      "Bash(curl * | sh)",
+      "Bash(wget * | bash)",
+      "Bash(wget * | sh)",
+      "Bash(sudo *)",
+      "Bash(chmod 777 *)",
+      "Bash(> /dev/*)"
+    ],
+    "defaultMode": "prompt"
+  },
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false,
+    "excludedCommands": ["git"],
+    "network": {
+      "allowLocalBinding": true
+    }
+  },
+
+  "includeCoAuthoredBy": true
+}

@@ -1,0 +1,38 @@
+{
+  "// ABOUT": "Integration hooks for GitButler version control",
+  "// DOCS": "https://gitbutler.com/",
+  "// PURPOSE": "Sync Claude Code changes with GitButler's virtual branches",
+
+  "// WORKFLOW": [
+    "GitButler manages virtual branches that don't exist in Git",
+    "These hooks help coordinate Claude's changes with GitButler",
+    "Changes made by Claude appear in GitButler's uncommitted changes"
+  ],
+
+  "PostToolUse": [
+    {
+      "// DESCRIPTION": "Notify GitButler after file modifications",
+      "// NOTE": "GitButler auto-detects file changes, this is for explicit refresh",
+      "matcher": "Write(*)|Edit(*)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "gitbutler project refresh 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// GITBUTLER_TIPS": {
+    "virtual_branches": "GitButler's virtual branches let you work on multiple features simultaneously",
+    "trunk_mode": "Enable trunk mode for trunk-based development workflow",
+    "ai_commits": "GitButler can also generate commit messages with AI"
+  },
+
+  "// RECOMMENDED_SETTINGS": {
+    "// NOTE": "Add these to GitButler's settings, not Claude's settings.json",
+    "auto_commit": false,
+    "sign_commits": true,
+    "default_branch": "main"
+  }
+}

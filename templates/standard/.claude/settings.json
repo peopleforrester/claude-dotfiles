@@ -1,0 +1,45 @@
+{
+  "// PROFILE": "balanced - Auto-accept edits, ask for bash commands",
+
+  "// PERMISSIONS": "What Claude can do automatically vs. needs to ask",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(npx *)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Bash(rm -rf *)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | sh)",
+      "Bash(sudo *)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+
+  "// SANDBOX": "Container-based isolation for bash commands",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": ["git"],
+    "network": {
+      "allowLocalBinding": true
+    }
+  },
+
+  "// DISPLAY": "Output and formatting preferences",
+  "includeCoAuthoredBy": true
+}

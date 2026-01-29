@@ -1,0 +1,64 @@
+{
+  "// BUNDLE": "Developer Essentials",
+  "// DESCRIPTION": "Core tools for software development workflows",
+  "// INCLUDES": ["Filesystem", "GitHub", "Brave Search"],
+
+  "mcpServers": {
+    "// FILESYSTEM": "Local file access for your projects",
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/username/Projects",
+        "/Users/username/Documents/specs"
+      ]
+    },
+
+    "// GITHUB": "Repository management and code search",
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+
+    "// BRAVE_SEARCH": "Web search for docs and solutions",
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    }
+  },
+
+  "// SETUP_CHECKLIST": [
+    "1. Update filesystem paths to your project directories",
+    "2. Generate GitHub PAT: https://github.com/settings/tokens",
+    "3. Get Brave API key: https://brave.com/search/api/",
+    "4. Copy this config to your claude_desktop_config.json",
+    "5. Restart Claude Desktop"
+  ],
+
+  "// USE_CASES": [
+    "Exploring and editing local codebases",
+    "Managing GitHub issues and PRs",
+    "Searching for documentation and solutions",
+    "Code review across repositories",
+    "Creating and updating project files"
+  ],
+
+  "// OPTIONAL_ADDITIONS": {
+    "postgres": "Add for database-backed projects",
+    "docker": "Add for containerized development",
+    "linear": "Add for issue tracking integration"
+  }
+}

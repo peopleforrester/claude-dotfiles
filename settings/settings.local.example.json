@@ -1,0 +1,54 @@
+{
+  "// ABOUT": "Personal overrides - copy to settings.local.json and customize",
+  "// NOTE": "This file should be gitignored - it's for personal preferences",
+
+  "// PERMISSIONS": "Add to or modify the default permission lists",
+  "permissions": {
+    "// ALLOW": "Additional commands to auto-approve",
+    "allow": [
+      "Bash(./scripts/dev.sh)",
+      "Bash(make *)"
+    ],
+
+    "// DENY": "Additional paths/commands to block",
+    "deny": [
+      "Read(./personal/**)"
+    ]
+  },
+
+  "// HOOKS": "Add your personal automation",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "// DESCRIPTION": "Example: Run custom formatter",
+        "matcher": "Write(*.custom)|Edit(*.custom)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./scripts/format-custom.sh \"$CLAUDE_FILE_PATH\""
+          }
+        ]
+      }
+    ],
+
+    "Stop": [
+      {
+        "// DESCRIPTION": "Example: Play sound on completion",
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Glass.aiff 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  },
+
+  "// ENVIRONMENT": "Personal environment variables",
+  "env": {
+    "EDITOR": "code --wait"
+  },
+
+  "// USAGE": "1. Copy to settings.local.json  2. Remove examples  3. Add your preferences"
+}

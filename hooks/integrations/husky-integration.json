@@ -1,0 +1,65 @@
+{
+  "// ABOUT": "Integration with Husky Git hooks",
+  "// DOCS": "https://typicode.github.io/husky/",
+  "// PURPOSE": "Coordinate Claude Code hooks with project's Husky hooks",
+
+  "// WORKFLOW": [
+    "Husky manages Git hooks (.husky/ directory)",
+    "Claude's PreToolUse hooks can trigger Husky-like checks",
+    "Prevents Claude from committing if Husky checks would fail"
+  ],
+
+  "PreToolUse": [
+    {
+      "// DESCRIPTION": "Run Husky pre-commit checks before Claude commits",
+      "matcher": "Bash(git commit *)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "if [ -f .husky/pre-commit ]; then .husky/pre-commit; fi"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Run Husky commit-msg validation",
+      "matcher": "Bash(git commit *)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "if [ -f .husky/commit-msg ]; then echo 'Husky commit-msg will run on actual commit'; fi"
+        }
+      ]
+    }
+  ],
+
+  "// COMMON_HUSKY_SETUP": {
+    "pre-commit": [
+      "npx lint-staged",
+      "npm test"
+    ],
+    "commit-msg": [
+      "npx --no -- commitlint --edit $1"
+    ],
+    "pre-push": [
+      "npm run build",
+      "npm test"
+    ]
+  },
+
+  "// LINT_STAGED_CONFIG": {
+    "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,md}": ["prettier --write"]
+  },
+
+  "// TIPS": [
+    "If Husky hooks fail, Claude's commit will be blocked",
+    "Ensure lint-staged is configured to avoid formatting conflicts",
+    "Use 'git commit --no-verify' to skip hooks (not recommended)"
+  ],
+
+  "// SETUP_COMMANDS": [
+    "npm install -D husky lint-staged",
+    "npx husky init",
+    "echo 'npx lint-staged' > .husky/pre-commit"
+  ]
+}

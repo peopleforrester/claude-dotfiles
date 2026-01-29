@@ -1,0 +1,42 @@
+{
+  "// ABOUT": "Rustfmt auto-formatting for Rust files",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// REQUIRES": "rustfmt installed (included with Rust toolchain)",
+
+  "PostToolUse": [
+    {
+      "// DESCRIPTION": "Format Rust source files",
+      "matcher": "Write(*.rs)|Edit(*.rs)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "rustfmt \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// ALTERNATIVE_CARGO": "Use cargo fmt for workspace-aware formatting",
+  "PostToolUse_cargo": [
+    {
+      "matcher": "Write(*.rs)|Edit(*.rs)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "cargo fmt -- \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// RUSTFMT_TOML": "Recommended rustfmt.toml configuration",
+  "// EXAMPLE_CONFIG": {
+    "edition": "2021",
+    "max_width": 100,
+    "tab_spaces": 4,
+    "use_small_heuristics": "Default",
+    "imports_granularity": "Crate",
+    "group_imports": "StdExternalCrate",
+    "reorder_imports": true
+  }
+}

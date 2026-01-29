@@ -1,0 +1,72 @@
+{
+  "// ABOUT": "PostgreSQL MCP Server - Database queries and schema access",
+  "// DOCS": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+  "// INSTALL": "npx @modelcontextprotocol/server-postgres",
+
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://user:password@localhost:5432/database"
+      ]
+    }
+  },
+
+  "// CONNECTION_STRINGS": {
+    "local": "postgresql://user:password@localhost:5432/mydb",
+    "docker": "postgresql://postgres:postgres@host.docker.internal:5432/mydb",
+    "with_ssl": "postgresql://user:password@host:5432/mydb?sslmode=require",
+    "with_schema": "postgresql://user:password@host:5432/mydb?schema=public"
+  },
+
+  "// ENVIRONMENT_VARIABLE": {
+    "description": "Use environment variable for connection string",
+    "config": {
+      "mcpServers": {
+        "postgres": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-postgres"
+          ],
+          "env": {
+            "DATABASE_URL": "postgresql://user:password@localhost:5432/database"
+          }
+        }
+      }
+    }
+  },
+
+  "// CAPABILITIES": [
+    "query - Execute SELECT queries",
+    "list_tables - List database tables",
+    "describe_table - Get table schema",
+    "list_schemas - List database schemas"
+  ],
+
+  "// SECURITY_NOTES": [
+    "Use a read-only database user when possible",
+    "Never use production credentials directly",
+    "Consider using a replica for read operations",
+    "Limit accessible schemas/tables via DB permissions",
+    "Connection strings contain credentials - keep secure"
+  ],
+
+  "// READ_ONLY_USER": {
+    "description": "Create a read-only user for Claude",
+    "sql": [
+      "CREATE USER claude_readonly WITH PASSWORD 'secure_password';",
+      "GRANT CONNECT ON DATABASE mydb TO claude_readonly;",
+      "GRANT USAGE ON SCHEMA public TO claude_readonly;",
+      "GRANT SELECT ON ALL TABLES IN SCHEMA public TO claude_readonly;",
+      "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO claude_readonly;"
+    ]
+  },
+
+  "// DOCKER_SETUP": {
+    "description": "Quick local PostgreSQL for testing",
+    "command": "docker run -d --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:16"
+  }
+}

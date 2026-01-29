@@ -1,0 +1,87 @@
+{
+  "// ABOUT": "Prettier auto-formatting for TypeScript, JavaScript, and web files",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// REQUIRES": "prettier installed (npm install -D prettier)",
+
+  "PostToolUse": [
+    {
+      "// DESCRIPTION": "Format TypeScript files",
+      "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Format JavaScript files",
+      "matcher": "Write(*.js)|Write(*.jsx)|Edit(*.js)|Edit(*.jsx)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Format JSON files",
+      "matcher": "Write(*.json)|Edit(*.json)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Format CSS/SCSS files",
+      "matcher": "Write(*.css)|Write(*.scss)|Write(*.less)|Edit(*.css)|Edit(*.scss)|Edit(*.less)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Format Markdown files",
+      "matcher": "Write(*.md)|Write(*.mdx)|Edit(*.md)|Edit(*.mdx)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Format HTML files",
+      "matcher": "Write(*.html)|Write(*.htm)|Edit(*.html)|Edit(*.htm)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "// DESCRIPTION": "Format YAML files",
+      "matcher": "Write(*.yml)|Write(*.yaml)|Edit(*.yml)|Edit(*.yaml)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// PRETTIER_CONFIG": "Recommended .prettierrc for your project",
+  "// EXAMPLE_PRETTIERRC": {
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "printWidth": 100
+  }
+}

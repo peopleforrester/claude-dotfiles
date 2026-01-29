@@ -1,0 +1,108 @@
+{
+  "// BUNDLE": "Data Engineer",
+  "// DESCRIPTION": "Database access and data exploration tools",
+  "// INCLUDES": ["PostgreSQL", "SQLite", "Filesystem", "Brave Search"],
+
+  "mcpServers": {
+    "// POSTGRES": "Production/staging database access",
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://readonly_user:password@localhost:5432/analytics"
+      ]
+    },
+
+    "// SQLITE": "Local data files and exports",
+    "sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite",
+        "/Users/username/data/local.db"
+      ]
+    },
+
+    "// FILESYSTEM": "Data files, exports, and scripts",
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/username/data",
+        "/Users/username/Projects/analytics"
+      ]
+    },
+
+    "// BRAVE_SEARCH": "Documentation and SQL reference",
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    }
+  },
+
+  "// SETUP_CHECKLIST": [
+    "1. Create read-only PostgreSQL user (see SQL below)",
+    "2. Update PostgreSQL connection string",
+    "3. Update SQLite database path",
+    "4. Update filesystem paths to data directories",
+    "5. Get Brave API key: https://brave.com/search/api/",
+    "6. Restart Claude Desktop"
+  ],
+
+  "// CREATE_READONLY_USER": {
+    "description": "SQL to create a safe read-only user",
+    "sql": [
+      "CREATE USER claude_readonly WITH PASSWORD 'secure_password';",
+      "GRANT CONNECT ON DATABASE analytics TO claude_readonly;",
+      "GRANT USAGE ON SCHEMA public TO claude_readonly;",
+      "GRANT SELECT ON ALL TABLES IN SCHEMA public TO claude_readonly;",
+      "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO claude_readonly;"
+    ]
+  },
+
+  "// USE_CASES": [
+    "Exploring database schemas",
+    "Writing and testing SQL queries",
+    "Analyzing data patterns",
+    "Generating reports",
+    "Data quality investigations",
+    "Query optimization"
+  ],
+
+  "// SECURITY_BEST_PRACTICES": [
+    "Always use read-only database users",
+    "Connect to replicas instead of primary databases",
+    "Avoid production credentials - use staging/dev",
+    "Limit accessible schemas via database permissions",
+    "Never expose credentials in version control"
+  ],
+
+  "// OPTIONAL_ADDITIONS": {
+    "bigquery": "Add for Google BigQuery access",
+    "snowflake": "Add for Snowflake data warehouse",
+    "s3": "Add for cloud storage access",
+    "dbt": "Add for dbt project management"
+  },
+
+  "// MULTIPLE_DATABASES": {
+    "description": "Add multiple PostgreSQL connections",
+    "example": {
+      "postgres-prod-replica": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://..."]
+      },
+      "postgres-staging": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://..."]
+      }
+    }
+  }
+}

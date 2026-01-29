@@ -1,0 +1,76 @@
+{
+  "// ABOUT": "Slack MCP Server - Workspace messaging and channel access",
+  "// DOCS": "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+  "// INSTALL": "npx @modelcontextprotocol/server-slack",
+
+  "mcpServers": {
+    "slack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "xoxb-xxxxxxxxxxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx",
+        "SLACK_TEAM_ID": "T01XXXXXXXX"
+      }
+    }
+  },
+
+  "// TOKEN_SETUP": {
+    "steps": [
+      "1. Go to https://api.slack.com/apps",
+      "2. Click 'Create New App' → 'From scratch'",
+      "3. Add to a workspace",
+      "4. Go to 'OAuth & Permissions'",
+      "5. Add Bot Token Scopes (see below)",
+      "6. Install to workspace",
+      "7. Copy 'Bot User OAuth Token' (starts with xoxb-)"
+    ],
+    "required_scopes": [
+      "channels:history - Read public channel messages",
+      "channels:read - List public channels",
+      "chat:write - Send messages",
+      "groups:history - Read private channel messages (optional)",
+      "groups:read - List private channels (optional)",
+      "im:history - Read DMs (optional)",
+      "users:read - List users"
+    ]
+  },
+
+  "// TEAM_ID": {
+    "description": "Find your Team ID",
+    "steps": [
+      "1. Open Slack in browser",
+      "2. Look at URL: https://app.slack.com/client/T01XXXXXX/...",
+      "3. The T01XXXXXX part is your Team ID"
+    ]
+  },
+
+  "// CAPABILITIES": [
+    "list_channels - List workspace channels",
+    "read_channel_messages - Read messages from a channel",
+    "post_message - Send a message to a channel",
+    "reply_to_thread - Reply in a thread",
+    "list_users - List workspace members",
+    "get_user_info - Get user details",
+    "search_messages - Search message history"
+  ],
+
+  "// SECURITY_NOTES": [
+    "Bot tokens have access to all channels they're invited to",
+    "Consider creating a dedicated bot for Claude",
+    "Limit scopes to only what's needed",
+    "Private channel access requires explicit invitation",
+    "DM access is sensitive - only enable if needed"
+  ],
+
+  "// MINIMAL_READONLY_CONFIG": {
+    "description": "Read-only access to public channels",
+    "scopes": [
+      "channels:history",
+      "channels:read",
+      "users:read"
+    ]
+  }
+}

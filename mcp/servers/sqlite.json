@@ -1,0 +1,77 @@
+{
+  "// ABOUT": "SQLite MCP Server - Local database access",
+  "// DOCS": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
+  "// INSTALL": "npx @modelcontextprotocol/server-sqlite",
+
+  "mcpServers": {
+    "sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite",
+        "/path/to/database.db"
+      ]
+    }
+  },
+
+  "// CONFIGURATION": {
+    "single_database": {
+      "description": "Access a specific database file",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", "/Users/username/data/app.db"]
+    },
+    "memory_database": {
+      "description": "Use in-memory database for testing",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", ":memory:"]
+    },
+    "read_only": {
+      "description": "Open in read-only mode",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", "--readonly", "/path/to/database.db"]
+    }
+  },
+
+  "// CAPABILITIES": [
+    "query - Execute SQL queries (SELECT, INSERT, UPDATE, DELETE)",
+    "list_tables - List all tables",
+    "describe_table - Get table schema",
+    "create_table - Create new tables",
+    "insert - Insert rows",
+    "read_query - Execute SELECT queries"
+  ],
+
+  "// COMMON_DATABASES": {
+    "description": "SQLite databases you might want to connect to",
+    "examples": [
+      {
+        "name": "Browser History (Chrome)",
+        "path_mac": "~/Library/Application Support/Google/Chrome/Default/History",
+        "path_linux": "~/.config/google-chrome/Default/History",
+        "note": "Close Chrome first, file is locked when browser is open"
+      },
+      {
+        "name": "Browser History (Firefox)",
+        "path_mac": "~/Library/Application Support/Firefox/Profiles/*/places.sqlite",
+        "path_linux": "~/.mozilla/firefox/*/places.sqlite"
+      },
+      {
+        "name": "iOS Backups",
+        "path_mac": "~/Library/Application Support/MobileSync/Backup/*/Manifest.db"
+      }
+    ]
+  },
+
+  "// SECURITY_NOTES": [
+    "SQLite files can contain sensitive data",
+    "Browser databases contain browsing history",
+    "Make a copy before querying active databases",
+    "Some databases are locked while apps are running",
+    "Use read-only mode when you only need to query"
+  ],
+
+  "// USE_CASES": [
+    "Exploring local application data",
+    "Querying development databases",
+    "Analyzing exported data",
+    "Working with embedded databases",
+    "Data migration tasks"
+  ]
+}

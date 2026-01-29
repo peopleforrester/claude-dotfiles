@@ -1,0 +1,48 @@
+{
+  "// ABOUT": "Go formatting with gofmt and goimports",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// REQUIRES": "Go installed, goimports (go install golang.org/x/tools/cmd/goimports@latest)",
+
+  "PostToolUse": [
+    {
+      "// DESCRIPTION": "Format Go files with gofmt",
+      "matcher": "Write(*.go)|Edit(*.go)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "gofmt -w \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// WITH_GOIMPORTS": "Use goimports for formatting + import management",
+  "PostToolUse_goimports": [
+    {
+      "// DESCRIPTION": "Format Go files with goimports (includes gofmt + import organization)",
+      "matcher": "Write(*.go)|Edit(*.go)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "goimports -w \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// WITH_GOLANGCI_LINT": "Add linting after formatting",
+  "PostToolUse_with_lint": [
+    {
+      "matcher": "Write(*.go)|Edit(*.go)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "goimports -w \"$CLAUDE_FILE_PATH\" 2>/dev/null && golangci-lint run \"$CLAUDE_FILE_PATH\" --fix 2>/dev/null || true"
+        }
+      ]
+    }
+  ],
+
+  "// INSTALL_GOIMPORTS": "go install golang.org/x/tools/cmd/goimports@latest",
+  "// INSTALL_GOLANGCI_LINT": "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
+}

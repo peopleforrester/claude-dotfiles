@@ -1,0 +1,80 @@
+{
+  "// ABOUT": "Brave Search MCP Server - Web search capabilities",
+  "// DOCS": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
+  "// INSTALL": "npx @modelcontextprotocol/server-brave-search",
+
+  "mcpServers": {
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    }
+  },
+
+  "// API_KEY_SETUP": {
+    "steps": [
+      "1. Go to https://brave.com/search/api/",
+      "2. Click 'Get Started'",
+      "3. Create an account or sign in",
+      "4. Subscribe to a plan (free tier available)",
+      "5. Generate an API key",
+      "6. Copy the key (starts with 'BSA')"
+    ],
+    "free_tier": {
+      "queries_per_month": 2000,
+      "rate_limit": "1 query per second",
+      "features": ["Web search", "No ads in results"]
+    },
+    "paid_tiers": {
+      "basic": "Up to 20,000 queries/month",
+      "pro": "Custom limits"
+    }
+  },
+
+  "// CAPABILITIES": [
+    "web_search - Search the web",
+    "local_search - Search for local businesses (paid)",
+    "news_search - Search news articles",
+    "image_search - Search for images (paid)"
+  ],
+
+  "// SEARCH_OPTIONS": {
+    "parameters": {
+      "count": "Number of results (default: 10, max: 20)",
+      "country": "Country code for localized results (e.g., 'US', 'GB')",
+      "search_lang": "Language code (e.g., 'en', 'es')",
+      "safesearch": "Filter adult content: 'off', 'moderate', 'strict'"
+    }
+  },
+
+  "// SECURITY_NOTES": [
+    "API keys are tied to your billing account",
+    "Monitor usage to avoid unexpected charges",
+    "Free tier is sufficient for personal use",
+    "Results are not filtered for accuracy - verify important info"
+  ],
+
+  "// USE_CASES": [
+    "Researching current information",
+    "Finding documentation",
+    "Checking recent news",
+    "Discovering solutions to problems",
+    "Verifying facts"
+  ],
+
+  "// ALTERNATIVE_SEARCH_SERVERS": {
+    "tavily": {
+      "url": "https://github.com/tavily-ai/tavily-mcp",
+      "description": "AI-optimized search with summaries"
+    },
+    "exa": {
+      "url": "https://github.com/exa-labs/exa-mcp-server",
+      "description": "Neural search engine"
+    }
+  }
+}

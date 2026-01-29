@@ -1,0 +1,83 @@
+# ABOUTME: GitHub Actions workflow for tag-based releases
+# ABOUTME: Creates GitHub releases with auto-generated notes
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Generate release notes
+        id: notes
+        run: |
+          # Get previous tag
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+
+          if [ -n "$PREV_TAG" ]; then
+            echo "Generating notes from $PREV_TAG to ${GITHUB_REF#refs/tags/}"
+            NOTES=$(git log "$PREV_TAG"..HEAD --pretty=format:"- %s" --no-merges)
+          else
+            echo "First release - generating notes from all commits"
+            NOTES=$(git log --pretty=format:"- %s" --no-merges | head -50)
+          fi
+
+          # Write to file for multiline handling
+          echo "$NOTES" > release_notes.txt
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release v${{ steps.version.outputs.version }}
+          body_path: release_notes.txt
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  validate-before-release:
+    name: Validate Before Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install tiktoken
+
+      - name: Validate all configs
+        run: python scripts/validate.py .
+
+      - name: Check token counts
+        run: python scripts/token-count.py .
+
+      - name: Verify install script
+        run: |
+          # Test that install script is valid bash
+          bash -n install.sh
+          echo "Install script syntax is valid"

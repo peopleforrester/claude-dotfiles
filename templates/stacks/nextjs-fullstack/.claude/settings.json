@@ -1,0 +1,59 @@
+{
+  "// STACK": "Next.js 14 + TypeScript + Prisma + NextAuth",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS",
+      "Bash(pnpm *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Bash(rm -rf *)",
+      "Bash(curl * | bash)",
+      "Bash(sudo *)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": ["git"],
+    "network": {
+      "allowLocalBinding": true
+    }
+  },
+
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
+        "hooks": [{
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }]
+      },
+      {
+        "matcher": "Write(*.prisma)|Edit(*.prisma)",
+        "hooks": [{
+          "type": "command",
+          "command": "npx prisma format 2>/dev/null || true"
+        }]
+      }
+    ]
+  },
+
+  "includeCoAuthoredBy": true
+}

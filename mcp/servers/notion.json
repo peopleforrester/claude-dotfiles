@@ -1,0 +1,79 @@
+{
+  "// ABOUT": "Notion MCP Server - Database and page access",
+  "// DOCS": "https://github.com/modelcontextprotocol/servers/tree/main/src/notion",
+  "// INSTALL": "npx @modelcontextprotocol/server-notion",
+
+  "mcpServers": {
+    "notion": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-notion"
+      ],
+      "env": {
+        "NOTION_API_KEY": "secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    }
+  },
+
+  "// TOKEN_SETUP": {
+    "steps": [
+      "1. Go to https://www.notion.so/my-integrations",
+      "2. Click 'New integration'",
+      "3. Name it (e.g., 'Claude Assistant')",
+      "4. Select the workspace",
+      "5. Set capabilities (see below)",
+      "6. Copy the 'Internal Integration Token'"
+    ],
+    "capabilities": {
+      "content": {
+        "read": true,
+        "update": true,
+        "insert": true
+      },
+      "comments": {
+        "read": true,
+        "create": true
+      },
+      "user_info": "read"
+    }
+  },
+
+  "// SHARING_PAGES": {
+    "important": "Integration must be explicitly shared with pages/databases",
+    "steps": [
+      "1. Open the page or database in Notion",
+      "2. Click '...' menu → 'Add connections'",
+      "3. Find and select your integration",
+      "4. Repeat for each page/database Claude should access"
+    ]
+  },
+
+  "// CAPABILITIES": [
+    "search - Search pages and databases",
+    "get_page - Get page content",
+    "create_page - Create new pages",
+    "update_page - Update page properties",
+    "get_database - Get database schema",
+    "query_database - Query database entries",
+    "create_database_item - Add database entry",
+    "get_block_children - Get page blocks",
+    "append_block_children - Add content to page"
+  ],
+
+  "// SECURITY_NOTES": [
+    "Integrations only access explicitly shared content",
+    "Share specific pages, not entire workspace",
+    "Consider separate integrations for different use cases",
+    "Review shared pages periodically",
+    "Integration tokens don't expire (rotate manually if needed)"
+  ],
+
+  "// USE_CASES": [
+    "Reading documentation from Notion",
+    "Creating meeting notes",
+    "Updating project databases",
+    "Searching knowledge base",
+    "Appending to running documents"
+  ]
+}

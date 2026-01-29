@@ -1,0 +1,91 @@
+{
+  "// BUNDLE": "Knowledge Worker",
+  "// DESCRIPTION": "Tools for documentation, communication, and research",
+  "// INCLUDES": ["Notion", "Slack", "Brave Search", "Filesystem"],
+
+  "mcpServers": {
+    "// NOTION": "Documentation and knowledge base",
+    "notion": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-notion"
+      ],
+      "env": {
+        "NOTION_API_KEY": "secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+
+    "// SLACK": "Team communication and history",
+    "slack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "xoxb-xxxxxxxxxxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx",
+        "SLACK_TEAM_ID": "T01XXXXXXXX"
+      }
+    },
+
+    "// BRAVE_SEARCH": "Web research and fact-checking",
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+
+    "// FILESYSTEM": "Local documents and notes",
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/username/Documents",
+        "/Users/username/Notes"
+      ]
+    }
+  },
+
+  "// SETUP_CHECKLIST": [
+    "1. Create Notion integration: https://www.notion.so/my-integrations",
+    "2. Share Notion pages with the integration",
+    "3. Create Slack app: https://api.slack.com/apps",
+    "4. Install Slack app to workspace and copy bot token",
+    "5. Find Slack Team ID from workspace URL",
+    "6. Get Brave API key: https://brave.com/search/api/",
+    "7. Update filesystem paths to your document directories",
+    "8. Restart Claude Desktop"
+  ],
+
+  "// USE_CASES": [
+    "Researching topics across web and internal docs",
+    "Summarizing Slack conversations",
+    "Creating and updating Notion documentation",
+    "Finding information across multiple sources",
+    "Drafting documents based on research"
+  ],
+
+  "// OPTIONAL_ADDITIONS": {
+    "google-drive": "Add for Google Workspace integration",
+    "memory": "Add for persistent context across sessions",
+    "calendar": "Add for scheduling awareness"
+  },
+
+  "// SLACK_SCOPES": [
+    "channels:history",
+    "channels:read",
+    "chat:write",
+    "users:read"
+  ],
+
+  "// NOTION_SETUP": {
+    "reminder": "Integration only accesses pages explicitly shared with it"
+  }
+}

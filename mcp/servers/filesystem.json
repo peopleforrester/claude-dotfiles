@@ -1,0 +1,57 @@
+{
+  "// ABOUT": "Filesystem MCP Server - Local file access for Claude Desktop",
+  "// DOCS": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+  "// INSTALL": "npx @modelcontextprotocol/server-filesystem",
+
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/username/Projects",
+        "/Users/username/Documents"
+      ]
+    }
+  },
+
+  "// CONFIGURATION": {
+    "description": "Add directories Claude should have access to as additional args",
+    "example_paths": [
+      "/Users/username/Projects",
+      "/Users/username/Documents",
+      "/Users/username/Desktop"
+    ]
+  },
+
+  "// SECURITY_NOTES": [
+    "Only grant access to directories Claude needs",
+    "Avoid granting access to ~/ (entire home directory)",
+    "Never include ~/.ssh, ~/.aws, or other credential directories",
+    "Consider creating a dedicated workspace directory"
+  ],
+
+  "// CAPABILITIES": [
+    "read_file - Read file contents",
+    "write_file - Create or overwrite files",
+    "list_directory - List directory contents",
+    "create_directory - Create new directories",
+    "move_file - Move or rename files",
+    "search_files - Search for files by pattern",
+    "get_file_info - Get file metadata"
+  ],
+
+  "// MINIMAL_CONFIG": {
+    "description": "Single workspace directory (recommended)",
+    "mcpServers": {
+      "filesystem": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-filesystem",
+          "/Users/username/claude-workspace"
+        ]
+      }
+    }
+  }
+}

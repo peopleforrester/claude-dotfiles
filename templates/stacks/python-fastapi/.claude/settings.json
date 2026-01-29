@@ -1,0 +1,54 @@
+{
+  "// STACK": "Python + FastAPI + SQLAlchemy + Alembic",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS",
+      "Bash(uv *)",
+      "Bash(python *)",
+      "Bash(pytest *)",
+      "Bash(alembic *)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Bash(rm -rf *)",
+      "Bash(curl * | bash)",
+      "Bash(sudo *)",
+      "Bash(pip install *)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": ["git"],
+    "network": {
+      "allowLocalBinding": true
+    }
+  },
+
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write(*.py)|Edit(*.py)",
+        "hooks": [{
+          "type": "command",
+          "command": "uv run ruff format \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }]
+      }
+    ]
+  },
+
+  "includeCoAuthoredBy": true
+}
