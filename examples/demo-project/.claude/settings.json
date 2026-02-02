@@ -1,0 +1,22 @@
+{
+  "// PROJECT": "Demo Todo API - project-specific settings",
+
+  "permissions": {
+    "allow": [
+      "Bash(pnpm *)",
+      "Bash(npx vitest *)"
+    ]
+  },
+
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write(*.ts)|Edit(*.ts)",
+        "hooks": [{
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+        }]
+      }
+    ]
+  }
+}

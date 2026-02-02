@@ -1,162 +1,213 @@
 <div align="center">
-  <h1>claude-dotfiles</h1>
-  <p><strong>Production-ready configurations for Claude Code</strong></p>
 
-  <p>
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
-    <img alt="Claude Code 2.1+" src="https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet">
-    <img alt="Platform" src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey">
-  </p>
+```
+     ╭──────────────────────────────────────────╮
+     │                                          │
+     │          claude-dotfiles                 │
+     │                                          │
+     │     🧠  Give Claude Code a Memory  🧠    │
+     │                                          │
+     ╰──────────────────────────────────────────╯
+```
 
-  <p>
-    <a href="#-quick-start">Quick Start</a> •
-    <a href="#-whats-included">Features</a> •
-    <a href="#-choose-your-template">Templates</a> •
-    <a href="#-documentation">Documentation</a> •
-    <a href="#-contributing">Contributing</a>
-  </p>
+**Production-ready configurations for Claude Code**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Claude Code 2.1+](https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet)](https://docs.anthropic.com/claude-code)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#compatibility)
+[![Built with Claude](https://img.shields.io/badge/Built%20with-Claude%20Code-orange)](BUILT_WITH_CLAUDE.md)
+
+[Quick Start](#-quick-start) •
+[Why This Exists](#-why-this-exists) •
+[What's Included](#-whats-included) •
+[Documentation](#-documentation)
+
 </div>
 
 ---
 
-## Quick Start
+## 🤔 Why This Exists
 
-**One-command installation:**
+**Without configuration**, Claude Code starts every session with zero context about your project:
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/michaelrishiforrester/claude-dotfiles/main/install.sh | bash
+```
+You: "Run the tests"
+Claude: "What test framework do you use? What's the command?"
+
+You: "Use our API client"
+Claude: "I don't see an API client. Where is it located?"
+
+You: "Follow our coding standards"
+Claude: "What are your coding standards?"
 ```
 
-**Or clone and install manually:**
+**With claude-dotfiles**, Claude remembers everything:
+
+```
+You: "Run the tests"
+Claude: *runs `pytest -v`*
+
+You: "Use our API client"
+Claude: *imports from src/lib/api.ts*
+
+You: "Follow our coding standards"
+Claude: *uses your error handling pattern, naming conventions, etc.*
+```
+
+**One-time setup. Permanent memory.**
+
+---
+
+## ⚡ Quick Start
+
+**30 seconds to a smarter Claude:**
 
 ```bash
-git clone https://github.com/michaelrishiforrester/claude-dotfiles.git ~/.claude-dotfiles
+# Clone and install
+git clone https://github.com/peopleforrester/claude-dotfiles.git ~/.claude-dotfiles
 cd ~/.claude-dotfiles
 ./install.sh
+
+# Copy a template to your project
+cp templates/standard/CLAUDE.md ~/your-project/CLAUDE.md
+
+# Edit it for your project
+# Then start Claude Code - it now knows your project!
+```
+
+<details>
+<summary><strong>Other installation methods</strong></summary>
+
+**One-command install (when public):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/peopleforrester/claude-dotfiles/main/install.sh | bash
 ```
 
 **Windows (PowerShell):**
-
 ```powershell
-irm https://raw.githubusercontent.com/michaelrishiforrester/claude-dotfiles/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/peopleforrester/claude-dotfiles/main/install.ps1 | iex
 ```
 
-## What's Included
+**Using Make:**
+```bash
+make install        # Interactive
+make install-all    # Everything
+make install-minimal # Just essentials
+```
 
-| Category | Contents | Directory |
-|----------|----------|-----------|
-| **CLAUDE.md Templates** | Language, framework, and domain-specific templates | [`claude-md/`](./claude-md/) |
-| **Skills** | TDD workflow, code review, documentation, git helpers | [`skills/`](./skills/) |
-| **Hooks** | Auto-formatters, validators, notifications | [`hooks/`](./hooks/) |
-| **Settings** | Permission profiles (conservative → autonomous) | [`settings/`](./settings/) |
-| **MCP Configs** | GitHub, Slack, Notion, PostgreSQL bundles | [`mcp/`](./mcp/) |
-| **Starter Templates** | Complete project setups ready to copy | [`templates/`](./templates/) |
+</details>
 
-## Choose Your Template
+---
 
-### By Experience Level
+## 📦 What's Included
 
-| Template | Lines | Best For |
-|----------|-------|----------|
-| [`templates/minimal/`](./templates/minimal/) | ~30 | Quick projects, learning Claude Code |
-| [`templates/standard/`](./templates/standard/) | ~80 | Most projects (recommended) |
-| [`templates/power-user/`](./templates/power-user/) | ~100 | Full automation, advanced workflows |
+| You Get | What It Does | Files |
+|---------|--------------|-------|
+| **[CLAUDE.md Templates](./claude-md/)** | Tell Claude about your project's stack, commands, and conventions | 13 templates |
+| **[Skills](./skills/)** | Teach Claude *how* to do things (TDD, code review, debugging) | 14 skills |
+| **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 13 hooks |
+| **[Settings](./settings/)** | Control what Claude can do automatically | 3 profiles |
+| **[MCP Configs](./mcp/)** | Connect Claude to GitHub, databases, Slack | 10 configs |
 
-### By Stack
+### Starter Templates
 
-| If you're building... | Use this template |
-|-----------------------|-------------------|
-| React/TypeScript app | [`templates/stacks/react-typescript/`](./templates/stacks/react-typescript/) |
-| Python FastAPI | [`templates/stacks/python-fastapi/`](./templates/stacks/python-fastapi/) |
-| Next.js fullstack | [`templates/stacks/nextjs-fullstack/`](./templates/stacks/nextjs-fullstack/) |
-| CLI tool | [`claude-md/domains/cli-tool.md`](./claude-md/domains/cli-tool.md) |
-| Library/package | [`claude-md/domains/library.md`](./claude-md/domains/library.md) |
-| Monorepo | [`claude-md/domains/monorepo.md`](./claude-md/domains/monorepo.md) |
+| Template | Best For | Get Started |
+|----------|----------|-------------|
+| **[Minimal](./templates/minimal/)** | Quick projects, learning | `cp templates/minimal/CLAUDE.md .` |
+| **[Standard](./templates/standard/)** | Most projects ⭐ | `cp templates/standard/CLAUDE.md .` |
+| **[Power User](./templates/power-user/)** | Full automation | `cp -r templates/power-user/.* .` |
 
-## Installation Options
+### Stack-Specific Templates
+
+| Stack | Template |
+|-------|----------|
+| React + TypeScript | [`templates/stacks/react-typescript/`](./templates/stacks/react-typescript/) |
+| Python + FastAPI | [`templates/stacks/python-fastapi/`](./templates/stacks/python-fastapi/) |
+| Next.js Fullstack | [`templates/stacks/nextjs-fullstack/`](./templates/stacks/nextjs-fullstack/) |
+
+### Language & Framework Templates
+
+Browse [`claude-md/`](./claude-md/) for templates covering:
+- **Languages:** Python, TypeScript, Rust, Go
+- **Frameworks:** React, Next.js, FastAPI, Rails, Django
+- **Domains:** APIs, CLI tools, libraries, monorepos
+
+---
+
+## 🛡️ Permission Profiles
+
+Control how much autonomy Claude has:
+
+| Profile | Claude Can... | Best For |
+|---------|---------------|----------|
+| **Conservative** | Read files, ask before changes | Learning, sensitive projects |
+| **Balanced** ⭐ | Edit files, ask before shell commands | Daily development |
+| **Autonomous** | Most actions without asking | Trusted automation |
+
+All profiles block access to `.env`, `~/.ssh/`, `~/.aws/`, and dangerous commands.
 
 ```bash
-# Interactive mode (default) - choose what to install
-./install.sh
-
-# Install everything
-./install.sh --all
-
-# Minimal install (CLAUDE.md + settings only)
-./install.sh --minimal
-
-# Install specific components
-./install.sh --skills          # Skills only
-./install.sh --hooks           # Hooks only
-./install.sh --mcp             # MCP configs only
-
-# Options
-./install.sh --profile balanced   # Permission profile (conservative|balanced|autonomous)
-./install.sh --symlink            # Symlink instead of copy
-./install.sh --no-backup          # Skip backing up existing configs
+./install.sh --profile balanced  # Recommended
 ```
 
-## Settings Profiles
+---
 
-| Profile | Description | Default Mode | Use Case |
-|---------|-------------|--------------|----------|
-| **Conservative** | Ask before most actions | `prompt` | Learning, sensitive projects |
-| **Balanced** | Auto-accept edits, ask for bash | `acceptEdits` | Daily development |
-| **Autonomous** | Minimal interruptions | `acceptEdits` | Trusted automation |
+## 📚 Documentation
 
-All profiles include security defaults that deny access to `.env`, `~/.ssh/`, `~/.aws/`, and dangerous bash commands.
+| Guide | What You'll Learn |
+|-------|-------------------|
+| [CLAUDE.md Best Practices](./claude-md/README.md) | Write effective project context |
+| [Skills Guide](./skills/README.md) | Use and create skills |
+| [Hooks Cookbook](./hooks/README.md) | Automate your workflow |
+| [Settings Reference](./settings/README.md) | Configure permissions |
+| [MCP Setup](./mcp/README.md) | Connect external services |
+| [Troubleshooting](./TROUBLESHOOTING.md) | Fix common issues |
 
-## Compatibility
+---
 
-| Platform | Version | Status |
-|----------|---------|--------|
-| Claude Code | 2.1+ | Full support |
-| Claude Desktop | Latest | Skills + MCP |
-| Cursor | Latest | Skills compatible |
-| OpenAI Codex CLI | Latest | Skills compatible |
+## 🔧 Development
 
-## Directory Structure After Install
-
-```
-~/.claude/
-├── settings.json           # Global settings (from chosen profile)
-├── settings.local.json     # Your personal overrides (gitignored)
-├── skills/                 # Global skills
-│   ├── tdd-workflow/
-│   ├── code-reviewer/
-│   ├── commit-helper/
-│   └── ...
-└── hooks/                  # Hook scripts
-    ├── format-typescript.sh
-    ├── format-python.sh
-    └── notify-complete.sh
+```bash
+make test       # Run all tests
+make validate   # Validate configs
+make tokens     # Check token counts
+make stats      # Show repo statistics
+make help       # See all commands
 ```
 
-## Documentation
+---
 
-- [CLAUDE.md Best Practices](./claude-md/README.md) - Writing effective project memory
-- [Skills Guide](./skills/README.md) - Using and creating skills
-- [Hooks Cookbook](./hooks/README.md) - Automation recipes
-- [Settings Reference](./settings/README.md) - Complete settings.json documentation
-- [MCP Setup Guide](./mcp/README.md) - MCP server configuration
-- [Troubleshooting](./TROUBLESHOOTING.md) - Common issues and solutions
+## 🤝 Contributing
 
-## Contributing
-
-Contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 **Most Wanted:**
-- Framework templates (Laravel, Django, Go, Rust)
-- Industry-specific configs (healthcare, finance, e-commerce)
-- MCP server bundles
+- Templates for Laravel, Vue, Svelte, Go frameworks
+- Industry-specific configs
 - Translations
 
-## License
+---
 
-MIT © [Michael Rishi Forrester](https://github.com/michaelrishiforrester)
+## 🌟 Built with Claude Code
+
+This entire repository was built in a single Claude Code session.
+
+100+ files, 15,000+ lines, created by Claude to help Claude work better.
+
+**[Read the full story →](./BUILT_WITH_CLAUDE.md)**
+
+---
+
+## 📄 License
+
+MIT © [Michael Rishi Forrester](https://github.com/peopleforrester)
 
 ---
 
 <div align="center">
-  <sub>Built for the Claude community</sub>
+
+**[⬆ Back to top](#)**
+
+Made with 🧠 by Claude Code
+
 </div>

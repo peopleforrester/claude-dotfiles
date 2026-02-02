@@ -1,209 +1,252 @@
 # Contributing to claude-dotfiles
 
-Thank you for your interest in contributing! This guide will help you get started.
+Thank you for your interest in contributing! This project aims to be the definitive
+resource for Claude Code configurations, and community contributions are essential.
 
-## Types of Contributions
+## Quick Links
 
-### CLAUDE.md Templates
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security Policy](SECURITY.md)
+- [Issue Templates](.github/ISSUE_TEMPLATE/)
 
-**Location:** `claude-md/languages/`, `claude-md/frameworks/`, `claude-md/domains/`
+## Ways to Contribute
 
-Templates should follow these guidelines:
+### 1. Add a New Template
 
-1. **Token budget**: 60-100 lines optimal, never exceed 150
-2. **Include header comment** with token count:
-   ```markdown
-   <!-- Tokens: ~1,450 (target: 1,500) | Lines: 72 -->
-   ```
-3. **Required sections**: Stack, Commands, Key Directories
-4. **Avoid**: Generic advice, rules enforceable by linters, obvious conventions
+We're always looking for CLAUDE.md templates for:
 
-**Template structure:**
-```markdown
-<!-- Tokens: ~X (target: Y) | Lines: Z -->
-# [Language/Framework] Project
+- **Languages**: Elixir, Scala, Kotlin, Swift, etc.
+- **Frameworks**: Laravel, Svelte, Vue, Spring Boot, etc.
+- **Domains**: Mobile apps, game dev, embedded systems, etc.
 
-[One-sentence description of typical project using this stack]
+### 2. Add a New Skill
 
-## Stack
-- **Language**: [e.g., Python 3.12]
-- **Framework**: [if applicable]
-- **Package Manager**: [e.g., uv, npm, cargo]
+Skills that would be valuable:
 
-## Commands
-\`\`\`bash
-[package-manager] run dev      # Start development
-[package-manager] run test     # Run tests
-[package-manager] run lint     # Lint code
-[package-manager] run build    # Build for production
-\`\`\`
+- Testing strategies (E2E, integration, mocking)
+- DevOps workflows (CI/CD, Docker, Kubernetes)
+- Language-specific patterns
 
-## Key Directories
-\`\`\`
-src/
-├── [dir]/    # [Purpose]
-└── [dir]/    # [Purpose]
-\`\`\`
+### 3. Add Hooks
 
-## Code Standards
-- [2-3 critical conventions only]
+Platform-specific hooks, formatters for other languages, or creative integrations.
 
-## Gotchas
-- [Non-obvious behaviors]
-- [Common mistakes]
+### 4. Improve Documentation
+
+- Fix typos or unclear explanations
+- Add examples
+- Translate to other languages
+
+### 5. Report Issues
+
+Found a bug? Have a suggestion? [Open an issue](../../issues/new/choose).
+
+---
+
+## Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/peopleforrester/claude-dotfiles.git
+cd claude-dotfiles
+
+# Set up development environment
+make dev-setup
+
+# Run tests
+make test
+
+# See all available commands
+make help
 ```
 
-### Skills
+## Contribution Guidelines
 
-**Location:** `skills/[category]/[skill-name]/SKILL.md`
+### For CLAUDE.md Templates
 
-Skills must follow the SKILL.md specification:
+#### Token Budget
+
+| Type | Target | Maximum |
+|------|--------|---------|
+| Minimal | 500 | 1,000 |
+| Standard | 1,500 | 2,500 |
+| Framework-specific | 1,800 | 3,000 |
+
+Check your token count:
+```bash
+python scripts/token-count.py your-template.md
+```
+
+#### Required Sections
+
+Every CLAUDE.md must include:
+
+```markdown
+<!-- Tokens: ~X (target: Y) | Lines: Z | Compatibility: Claude Code 2.1+ -->
+# Project Name
+
+One-sentence description.
+
+## Stack
+## Commands
+## Key Directories
+```
+
+#### Recommended Sections
+
+```markdown
+## Code Standards    # 2-3 project-specific rules only
+## Gotchas           # Non-obvious behaviors, things that break
+## Architecture      # If non-trivial
+```
+
+#### What NOT to Include
+
+- Generic advice ("write clean code")
+- Linter-enforceable rules
+- More than 100 lines
+- Long prose paragraphs
+
+### For Skills (SKILL.md)
+
+#### Required Frontmatter
 
 ```yaml
 ---
-name: lowercase-with-hyphens     # Required, max 64 chars
-description: |                    # Required, max 1024 chars
-  Clear description of when and why to use this skill.
-license: MIT                      # Recommended
-compatibility: Claude Code 2.1+
-metadata:
-  author: your-github-username
-  version: "1.0.0"
+name: skill-name          # lowercase, hyphens, ≤64 chars
+description: |            # ≤1024 chars
+  Clear description of when Claude should use this skill.
 ---
+```
 
+#### Required Sections
+
+```markdown
 # Skill Title
 
 ## When to Use
-[Specific scenarios and trigger phrases]
+[Specific triggers and scenarios]
 
 ## Instructions
 [Step-by-step guidance]
 
 ## Examples
-[Concrete input/output examples]
+[Concrete code examples]
 ```
 
-**Categories:**
-- `development/` - Coding workflows (TDD, refactoring)
-- `documentation/` - Doc generation
-- `git/` - Version control helpers
-- `quality/` - Security, performance, accessibility
-- `debugging/` - Troubleshooting workflows
+#### Style Guide
 
-### Hooks
+- Use numbered lists for sequential steps
+- Use bullet points for options
+- Include real, runnable code examples
+- Add a checklist at the end if applicable
 
-**Location:** `hooks/[category]/`
+### For Hooks
 
-Hook configurations should:
+#### JSON Format
 
-1. Be JSON files with clear naming: `[action]-on-[trigger].json`
-2. Include comments explaining the hook's purpose
-3. Provide platform variants if needed (macOS, Linux, Windows)
+```json
+{
+  "// ABOUT": "Brief description",
+  "// USAGE": "How to use this hook",
+  "// REQUIRES": "Any dependencies",
 
-**Categories:**
-- `formatters/` - Code formatting (prettier, black, rustfmt)
-- `validators/` - Pre-commit checks, file protection
-- `notifications/` - Desktop notifications
-- `integrations/` - Third-party tool integration
+  "PostToolUse": [...]
+}
+```
 
-### Settings Profiles
+#### Best Practices
 
-**Location:** `settings/permissions/`
+- End commands with `|| true` to prevent blocking
+- Use `2>/dev/null` to suppress errors
+- Test on target platform(s)
+- Include platform variants if applicable
 
-New permission profiles should:
+### For Settings/MCP
 
-1. Include all sections with `"// SECTION":` comments
-2. Always include the standard deny list
-3. Document the use case in the file header
+- Use `"// KEY":` comment pattern
+- Never include real credentials
+- Include setup instructions in comments
+- Document all required environment variables
 
-## Submission Process
+---
 
-### 1. Fork and Clone
+## Pull Request Process
+
+### 1. Fork & Branch
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-dotfiles.git
-cd claude-dotfiles
+# Fork on GitHub, then:
+git clone https://github.com/YOUR-USERNAME/claude-dotfiles.git
+git checkout -b feature/your-feature-name
 ```
 
-### 2. Create a Branch
+### 2. Make Changes
+
+- Follow the guidelines above
+- Run `make test` before committing
+- Write clear commit messages
+
+### 3. Test
 
 ```bash
-git checkout -b add-[type]-[name]
-# Examples:
-# add-template-django
-# add-skill-security-auditor
-# add-hook-eslint-formatter
+# Validate all configs
+make validate
+
+# Check token counts
+make tokens
+
+# Run full test suite
+make test
 ```
 
-### 3. Make Your Changes
+### 4. Submit PR
 
-Follow the guidelines above for your contribution type.
+- Fill out the PR template completely
+- Link related issues
+- Be responsive to feedback
 
-### 4. Validate
+---
 
-```bash
-# Run validation script
-./scripts/validate.py
+## Style Guide
 
-# For CLAUDE.md templates, check token count
-./scripts/token-count.py claude-md/frameworks/your-template.md
-```
+### File Naming
 
-### 5. Test
-
-For templates and skills, test with an actual Claude Code session:
-
-```bash
-mkdir /tmp/test-project && cd /tmp/test-project
-cp -r path/to/your/template/* .
-claude
-# Ask Claude to describe the project setup
-```
-
-### 6. Submit PR
-
-- Use a clear, descriptive title
-- Reference any related issues
-- Include test results or screenshots if applicable
-
-## Quality Checklist
-
-Before submitting:
-
-- [ ] All JSON files parse without errors
-- [ ] SKILL.md frontmatter is valid YAML
-- [ ] Bash scripts pass shellcheck (if applicable)
-- [ ] Token counts are documented for CLAUDE.md templates
-- [ ] Tested with Claude Code 2.1+
-- [ ] Cross-platform compatible (where applicable)
-
-## Code Style
+| Type | Convention | Example |
+|------|------------|---------|
+| Templates | lowercase with hyphens | `react-typescript.md` |
+| Skills | lowercase with hyphens | `tdd-workflow/SKILL.md` |
+| Hooks | descriptive with suffix | `prettier-on-save.json` |
 
 ### Markdown
-- Use ATX-style headers (`#`)
-- One sentence per line in prose (for better diffs)
-- Fenced code blocks with language specifier
 
-### JSON
-- Use `"// KEY":` pattern for comments
-- 2-space indentation
-- No trailing commas
+- Use ATX headers (`#`, `##`, `###`)
+- Use fenced code blocks with language identifiers
+- Use tables for structured data
+- Keep lines under 100 characters
 
-### Bash
-- POSIX-compliant when possible
-- Include shebang: `#!/usr/bin/env bash`
-- Quote variables: `"$VAR"` not `$VAR`
+### Code Examples
 
-### Python
-- Python 3.10+
-- No external dependencies unless necessary
-- Type hints encouraged
+- Use realistic, runnable examples
+- Include both the code and expected output
+- Add comments explaining non-obvious parts
+
+---
+
+## Recognition
+
+Contributors are recognized in:
+
+- The README contributors section
+- Release notes when their contribution ships
+- The GitHub contributors graph
+
+---
 
 ## Questions?
 
-- Open an issue for questions or suggestions
-- Tag with `question` or `discussion` label
+- Open a [discussion](../../discussions) for questions
+- Check existing [issues](../../issues) for known problems
+- Review the [README](README.md) for documentation
 
-## License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
+Thank you for contributing! 🙏
