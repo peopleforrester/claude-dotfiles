@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-02-03
+
+### Added
+- CodeRabbit configuration (`.coderabbit.yaml`) for AI-powered code reviews
+- Path-specific review instructions for JSON, SKILL.md, CLAUDE.md, and shell scripts
+- Auto-review enabled for PRs to main and staging branches
+
 ## [0.1.1] - 2026-02-03
 
 ### Fixed
@@ -47,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cursor (skills)
 - OpenAI Codex CLI (skills)
 
-[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/peopleforrester/claude-dotfiles/releases/tag/v0.1.0
