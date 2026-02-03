@@ -1,0 +1,70 @@
+# ABOUTME: CodeRabbit configuration for AI-powered code reviews
+# ABOUTME: Customizes review behavior for claude-dotfiles repository
+
+language: en-US
+
+reviews:
+  # Enable high-level summary of changes
+  high_level_summary: true
+
+  # Generate a poem about the changes (fun feature)
+  poem: false
+
+  # Review status to post
+  review_status: true
+
+  # Collapse walkthrough after this many files
+  collapse_walkthrough: 5
+
+  # Auto-review settings
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+      - staging
+
+  # Path-based instructions
+  path_instructions:
+    - path: "**/*.json"
+      instructions: |
+        Review JSON files for:
+        - Valid JSON syntax
+        - Consistent formatting
+        - Appropriate use of comment keys (e.g., "// KEY": "description")
+        - Security: no hardcoded secrets or credentials
+
+    - path: "**/SKILL.md"
+      instructions: |
+        Review SKILL.md files for:
+        - Valid YAML frontmatter with required fields (name, description)
+        - Name field <= 64 characters, lowercase with hyphens
+        - Description field <= 1024 characters
+        - Clear "When to Use" section
+        - Practical examples
+
+    - path: "**/CLAUDE.md"
+      instructions: |
+        Review CLAUDE.md files for:
+        - Token count comment in header
+        - Required sections: Stack, Commands, Key Directories
+        - Concise content (target 60-100 lines for templates)
+        - Gotchas section for non-obvious behaviors
+
+    - path: "**/*.sh"
+      instructions: |
+        Review shell scripts for:
+        - POSIX compliance (works on macOS and Linux)
+        - Proper error handling
+        - Quoted variables to prevent word splitting
+        - No hardcoded paths that won't work cross-platform
+
+chat:
+  # Enable chat in PR comments
+  auto_reply: true
+
+# Ignore these paths from review
+path_filters:
+  - "!docs/**"
+  - "!*.lock"
+  - "!package-lock.json"
