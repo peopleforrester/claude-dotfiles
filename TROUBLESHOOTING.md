@@ -142,7 +142,7 @@ Add error handling:
 ## Getting Help
 
 - Check [README.md](./README.md) for documentation links
-- Open an issue: https://github.com/michaelrishiforrester/claude-dotfiles/issues
+- Open an issue: https://github.com/peopleforrester/claude-dotfiles/issues
 - Review Claude Code docs: https://docs.anthropic.com/claude-code
 
 ## Debug Mode

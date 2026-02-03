@@ -37,5 +37,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Core template system
 - Installation scripts for macOS, Linux, and Windows
 
-[Unreleased]: https://github.com/michaelrishiforrester/claude-dotfiles/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/michaelrishiforrester/claude-dotfiles/releases/tag/v0.1.0
+[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/peopleforrester/claude-dotfiles/releases/tag/v0.1.0

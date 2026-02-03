@@ -7,7 +7,7 @@ description: |
 license: MIT
 compatibility: Claude Code 2.1+
 metadata:
-  author: michaelrishiforrester
+  author: peopleforrester
   version: "1.0.0"
   tags:
     - quality
