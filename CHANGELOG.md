@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-02-03
+
+### Fixed
+- GitHub Actions validation now passes - `token-count.py` uses appropriate limits for different file types
+- Consistent GitHub username (`peopleforrester`) across all URLs in CHANGELOG.md and TROUBLESHOOTING.md
+- Author field in all 14 skill files updated for consistency
+
+### Changed
+- Skills now have 200-350 line limits (detailed reference guides need more space)
+- Documentation files now have 150-300 line limits
+- Templates retain original strict limits (30-150 lines depending on type)
+
+## [0.1.0] - 2026-01-28
+
 ### Added
 - Initial repository structure
 - MIT License
@@ -22,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `settings/permissions/conservative.json`
   - `settings/permissions/balanced.json`
   - `settings/permissions/autonomous.json`
+- 14 curated skills for development, documentation, git, and quality
+- Hook configurations for formatters, validators, and notifications
+- MCP server configurations for GitHub, Slack, Notion, PostgreSQL, and more
+- Stack-specific templates for React/TypeScript, Python/FastAPI, Next.js
 
 ### Compatibility
 - Claude Code 2.1+
@@ -29,13 +47,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cursor (skills)
 - OpenAI Codex CLI (skills)
 
-## [0.1.0] - 2026-01-28
-
-### Added
-- Initial release
-- Repository foundation and documentation
-- Core template system
-- Installation scripts for macOS, Linux, and Windows
-
-[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/peopleforrester/claude-dotfiles/releases/tag/v0.1.0
