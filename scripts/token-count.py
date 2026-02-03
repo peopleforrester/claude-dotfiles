@@ -39,6 +39,8 @@ BUDGETS = {
     'minimal': {'target': 500, 'max': 1000},
     'standard': {'target': 1500, 'max': 2500},
     'power-user': {'target': 2000, 'max': 3500},
+    'skill': {'target': 1500, 'max': 3000},
+    'documentation': {'target': 2000, 'max': 4000},
     'default': {'target': 1500, 'max': 3000},
 }
 
@@ -47,6 +49,8 @@ LINE_LIMITS = {
     'minimal': {'target': 30, 'max': 50},
     'standard': {'target': 80, 'max': 100},
     'power-user': {'target': 100, 'max': 150},
+    'skill': {'target': 200, 'max': 350},
+    'documentation': {'target': 150, 'max': 300},
     'default': {'target': 80, 'max': 150},
 }
 
@@ -96,8 +100,15 @@ def count_tokens(text: str) -> Tuple[int, bool]:
 def get_template_type(file_path: Path) -> str:
     """Determine template type from path."""
     path_str = str(file_path).lower()
+    file_name = file_path.name
 
-    if 'minimal' in path_str:
+    # Check for SKILL.md files first
+    if file_name == 'SKILL.md' or '/skills/' in path_str:
+        return 'skill'
+    # Documentation files (READMEs in subdirs, claude-md examples)
+    elif file_name == 'README.md' or '/examples/' in path_str:
+        return 'documentation'
+    elif 'minimal' in path_str:
         return 'minimal'
     elif 'power-user' in path_str or 'power_user' in path_str:
         return 'power-user'
