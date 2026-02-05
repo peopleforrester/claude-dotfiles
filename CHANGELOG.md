@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Spec-Driven Development Workflow**: Interview-first specification system (Brain Spec lite)
+  - `skills/development/spec-driven-development/` — Core spec workflow patterns and file format
+  - `agents/spec-interviewer.md` — Opus agent for 8-category requirement interviews
+  - `/spec-new` — Create specs through structured interviews
+  - `/spec-status` — View spec progress and next tasks
+  - `/spec-task` — Update task status and add implementation notes
 - **Framework Skills**: Django security, TDD, verification; Spring Boot patterns, security, TDD
   - `skills/frameworks/django-security/` — OWASP, CSP, CSRF, secrets management
   - `skills/frameworks/django-tdd/` — pytest-django, factory_boy, API testing
