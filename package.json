@@ -1,0 +1,29 @@
+{
+  "name": "claude-dotfiles",
+  "version": "0.3.0",
+  "description": "Production-ready configurations, skills, and templates for Claude Code optimization",
+  "private": true,
+  "license": "MIT",
+  "author": "peopleforrester",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peopleforrester/claude-dotfiles.git"
+  },
+  "scripts": {
+    "test": "node tests/run-all.js",
+    "validate": "node scripts/ci/validate-all.js",
+    "validate:agents": "node scripts/ci/validate-agents.js",
+    "validate:commands": "node scripts/ci/validate-commands.js",
+    "validate:skills": "node scripts/ci/validate-skills.js",
+    "validate:rules": "node scripts/ci/validate-rules.js",
+    "validate:hooks": "node scripts/ci/validate-hooks.js",
+    "lint": "markdownlint '**/*.md' --ignore node_modules",
+    "lint:fix": "markdownlint '**/*.md' --ignore node_modules --fix"
+  },
+  "devDependencies": {
+    "markdownlint-cli": "^0.41.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

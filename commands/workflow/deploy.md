@@ -1,3 +1,7 @@
+---
+description: Guide through a safe deployment process with verification
+---
+
 # /deploy - Deployment Workflow
 
 Guide through a safe deployment process.

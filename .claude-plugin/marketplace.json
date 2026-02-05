@@ -1,0 +1,22 @@
+{
+  "// PURPOSE": "Self-hosted marketplace entry for plugin discovery",
+  "plugins": [
+    {
+      "name": "claude-dotfiles",
+      "description": "Production-ready configurations, skills, agents, rules, and templates for Claude Code",
+      "repository": "https://github.com/peopleforrester/claude-dotfiles",
+      "version": "0.2.0",
+      "tags": ["productivity", "development", "security", "testing", "tdd"],
+      "compatibility": "Claude Code 2.1+",
+      "categories": [
+        "skills",
+        "commands",
+        "agents",
+        "rules",
+        "templates",
+        "hooks",
+        "mcp"
+      ]
+    }
+  ]
+}

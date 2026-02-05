@@ -1,3 +1,7 @@
+---
+description: Safely update project dependencies with testing verification
+---
+
 # /update-deps - Dependency Updates
 
 Safely update project dependencies.

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Claude Code Hooks Configuration",
+  "description": "Schema for hooks.json configuration files",
+  "type": "object",
+  "properties": {
+    "hooks": {
+      "type": "object",
+      "properties": {
+        "PreToolUse": { "$ref": "#/$defs/hookArray" },
+        "PostToolUse": { "$ref": "#/$defs/hookArray" },
+        "PreCompact": { "$ref": "#/$defs/hookArray" },
+        "SessionStart": { "$ref": "#/$defs/hookArray" },
+        "SessionEnd": { "$ref": "#/$defs/hookArray" },
+        "Stop": { "$ref": "#/$defs/hookArray" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["hooks"],
+  "$defs": {
+    "hookArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/hookEntry" }
+    },
+    "hookEntry": {
+      "type": "object",
+      "properties": {
+        "matcher": {
+          "type": "string",
+          "description": "Expression to match tool and input (e.g., 'tool == \"Edit\" && tool_input.file_path matches \".ts$\"')"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["command", "message"],
+          "description": "Hook type: command runs a shell command, message shows text"
+        },
+        "command": {
+          "type": "string",
+          "description": "Shell command to execute (for type: command)"
+        },
+        "message": {
+          "type": "string",
+          "description": "Message to display (for type: message)"
+        },
+        "async": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run asynchronously without blocking"
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300,
+          "description": "Timeout in seconds"
+        }
+      },
+      "required": ["type"]
+    }
+  }
+}

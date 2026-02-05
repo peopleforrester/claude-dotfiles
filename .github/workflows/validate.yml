@@ -1,5 +1,5 @@
-# ABOUTME: GitHub Actions workflow to validate configurations on PRs
-# ABOUTME: Checks JSON, YAML, SKILL.md files and runs shellcheck
+# ABOUTME: GitHub Actions workflow to validate configurations on PRs.
+# ABOUTME: Runs Python validators, Node.js validators, shellcheck, and linting.
 
 name: Validate Configurations
 
@@ -10,8 +10,8 @@ on:
     branches: [main, staging]
 
 jobs:
-  validate:
-    name: Validate Configs
+  validate-python:
+    name: Python Validators
     runs-on: ubuntu-latest
 
     steps:
@@ -28,24 +28,40 @@ jobs:
           python -m pip install --upgrade pip
           pip install tiktoken
 
-      - name: Validate JSON files
-        run: |
-          echo "Validating JSON files..."
-          find . -name "*.json" -not -path "./node_modules/*" -not -path "./.git/*" | while read -r file; do
-            if ! python -c "import json; json.load(open('$file'))" 2>/dev/null; then
-              echo "Invalid JSON: $file"
-              exit 1
-            fi
-          done
-          echo "All JSON files are valid"
-
       - name: Run validation script
-        run: |
-          python scripts/validate.py .
+        run: python scripts/validate.py .
 
       - name: Check token counts
-        run: |
-          python scripts/token-count.py .
+        run: python scripts/token-count.py .
+
+  validate-node:
+    name: Node.js Validators
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [18, 20, 22]
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run test suite
+        run: node tests/run-all.js
+
+  validate-scripts:
+    name: Shell Script Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck
@@ -56,6 +72,25 @@ jobs:
           find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" | while read -r file; do
             shellcheck "$file" || true
           done
+
+  validate-json:
+    name: JSON Syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate all JSON files
+        run: |
+          echo "Validating JSON files..."
+          find . -name "*.json" -not -path "./node_modules/*" -not -path "./.git/*" | while read -r file; do
+            if ! python3 -c "import json; json.load(open('$file'))" 2>/dev/null; then
+              echo "Invalid JSON: $file"
+              exit 1
+            fi
+          done
+          echo "All JSON files are valid"
 
   markdown-links:
     name: Check Markdown Links
@@ -85,7 +120,6 @@ jobs:
 
       - name: Lint YAML files
         run: |
-          # Only lint if there are YAML files
           if find . -name "*.yml" -o -name "*.yaml" | grep -q .; then
             yamllint -d relaxed . || true
           fi

@@ -4,7 +4,7 @@ description: |
   Code quality and review specialist. Reviews code for correctness, security,
   performance, and maintainability. Use PROACTIVELY after writing or modifying
   code and before creating pull requests.
-tools: ["Read", "Grep", "Glob", "Bash"]
+tools: ["Read", "Grep", "Glob"]
 model: sonnet
 ---
 

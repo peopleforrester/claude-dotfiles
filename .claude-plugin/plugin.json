@@ -1,0 +1,38 @@
+{
+  "// METADATA": "Plugin manifest for Claude Code plugin system",
+  "name": "claude-dotfiles",
+  "version": "0.2.0",
+  "description": "Production-ready configurations, skills, and templates for Claude Code optimization",
+  "author": "peopleforrester",
+  "license": "MIT",
+  "compatibility": "Claude Code 2.1+",
+
+  "// COMPONENTS": "Paths relative to plugin root",
+  "components": {
+    "skills": "skills/",
+    "commands": "commands/",
+    "agents": "agents/",
+    "rules": "rules/",
+    "contexts": "contexts/",
+    "settings": "settings/",
+    "mcp": "mcp/"
+  },
+
+  "// INSTALLATION": "What gets installed by default",
+  "install": {
+    "skills": true,
+    "commands": true,
+    "agents": true,
+    "rules": ["common"],
+    "contexts": true,
+    "settings": false,
+    "mcp": false
+  },
+
+  "// OPTIONAL": "Components requiring explicit opt-in",
+  "optional": {
+    "templates": "templates/",
+    "claude-md": "claude-md/",
+    "hooks": "hooks/"
+  }
+}

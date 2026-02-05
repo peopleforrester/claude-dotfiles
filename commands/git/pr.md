@@ -1,3 +1,7 @@
+---
+description: Generate a well-structured pull request with summary and test plan
+---
+
 # /pr - Create Pull Request
 
 Generate a well-structured pull request.

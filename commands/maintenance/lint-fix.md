@@ -1,3 +1,7 @@
+---
+description: Fix linting errors systematically across the codebase
+---
+
 # /lint-fix - Iterative Lint Fixing
 
 Fix linting errors systematically across the codebase.

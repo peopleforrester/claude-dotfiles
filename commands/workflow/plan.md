@@ -1,3 +1,7 @@
+---
+description: Create a detailed implementation plan before coding
+---
+
 # /plan - Strategic Planning
 
 Create a detailed implementation plan before coding.

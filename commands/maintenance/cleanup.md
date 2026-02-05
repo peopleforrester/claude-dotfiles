@@ -1,3 +1,7 @@
+---
+description: Clean up project files, remove cruft, and organize codebase
+---
+
 # /cleanup - Project Cleanup
 
 Clean up project files, remove cruft, and organize codebase.

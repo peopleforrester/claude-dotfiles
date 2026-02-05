@@ -1,4 +1,4 @@
-<!-- Tokens: ~400 | Lines: 55 | Compatibility: Claude Code 2.1+ -->
+<!-- Tokens: ~500 | Lines: 75 | Compatibility: Claude Code 2.1+ -->
 # Rules System
 
 Rules are declarative constraints Claude Code applies automatically to every interaction.
@@ -10,40 +10,52 @@ boundaries and standards that are always enforced.
 Place `.md` files in `~/.claude/rules/` (global) or `.claude/rules/` (project-specific).
 Claude Code loads and applies them automatically without explicit invocation.
 
+## Structure
+
+```
+rules/
+  common/              # Language-agnostic (ALWAYS install)
+    security.md        # OWASP Top 10, secrets, input validation
+    coding-style.md    # Immutability, file organization, naming
+    testing.md         # TDD workflow, 80% coverage target
+    git-workflow.md    # Conventional commits, PR process
+    performance.md     # Model selection, context management
+    agents.md          # Subagent delegation patterns
+  typescript/          # TypeScript/JavaScript specific
+    coding-style.md    # Strict mode, branded types, Zod
+    testing.md         # Vitest/Jest, Testing Library, MSW
+    security.md        # XSS prevention, CSP, npm audit
+  python/              # Python specific
+    coding-style.md    # Type hints, Protocols, dataclasses
+    testing.md         # pytest, fixtures, parametrize
+    security.md        # Pydantic validation, pip-audit
+  golang/              # Go specific
+    coding-style.md    # Error wrapping, interfaces, errgroup
+    testing.md         # Table-driven tests, httptest, benchmarks
+    security.md        # govulncheck, crypto/rand, html/template
+```
+
 ## Precedence
 
 1. **Project rules** (`.claude/rules/`) - highest priority, project-specific
 2. **Global rules** (`~/.claude/rules/`) - apply to all projects
 3. **Built-in rules** - Claude's default behavior baseline
 
-## Available Rules
+## Installation
 
-| Rule | Purpose | Audience |
-|------|---------|----------|
-| `security.md` | OWASP Top 10, secrets detection, input validation | All projects |
-| `coding-style.md` | Immutability, file organization, naming conventions | All projects |
-| `testing.md` | TDD workflow, 80% coverage target, test quality | All projects |
-| `git-workflow.md` | Conventional commits, PR process, branching | All projects |
-| `performance.md` | Model selection, context management, caching | Claude Code users |
-| `agents.md` | When and how to delegate to subagents | Claude Code users |
+```bash
+# Install common rules (REQUIRED for all projects)
+cp rules/common/*.md ~/.claude/rules/
 
-## Creating Custom Rules
+# Add language-specific rules for your stack
+cp rules/typescript/*.md ~/.claude/rules/   # For TS/JS projects
+cp rules/python/*.md ~/.claude/rules/       # For Python projects
+cp rules/golang/*.md ~/.claude/rules/       # For Go projects
 
-Rules follow a simple declarative format:
-
-```markdown
-# Rule Name
-
-## Always
-- Constraint that must be followed
-- Another mandatory behavior
-
-## Never
-- Behavior to avoid
-- Anti-pattern to prevent
-
-## When [Context]
-- Conditional constraint for specific situations
+# Or install per-project
+mkdir -p .claude/rules/
+cp rules/common/*.md .claude/rules/
+cp rules/python/*.md .claude/rules/         # Add your language
 ```
 
 ## Rules vs Skills vs Agents
@@ -54,13 +66,22 @@ Rules follow a simple declarative format:
 | **Skill** | Workflow/process | On context match | "TDD red-green-refactor cycle" |
 | **Agent** | Expertise/persona | Explicit command | "Security reviewer specialist" |
 
-## Installation
+## Creating Custom Rules
 
-```bash
-# Global (all projects)
-cp rules/*.md ~/.claude/rules/
+Rules follow a simple declarative format:
 
-# Project-specific
-mkdir -p .claude/rules/
-cp rules/security.md .claude/rules/
+```markdown
+# Rule Name
+
+## Always
+- Constraint that must be followed
+
+## Never
+- Behavior to avoid
+
+## When [Context]
+- Conditional constraint for specific situations
 ```
+
+Language-specific rules should reference the common rule they extend
+(e.g., "Extends `common/security.md` with Python-specific constraints").

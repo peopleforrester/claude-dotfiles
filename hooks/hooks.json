@@ -1,0 +1,72 @@
+{
+  "// HOOKS": "Unified hook configuration for Claude Code 2.1+",
+  "// DOCS": "See hooks/README.md for detailed documentation",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "// PURPOSE": "Warn before git push — review changes first",
+        "matcher": "tool == \"Bash\" && tool_input.command matches \"git push\"",
+        "type": "message",
+        "message": "REMINDER: Review git diff and run tests before pushing. Are you on the staging branch?"
+      },
+      {
+        "// PURPOSE": "Block creation of random markdown files outside docs",
+        "matcher": "tool == \"Write\" && tool_input.file_path matches \"\\.md$\" && !(tool_input.file_path matches \"(README|CHANGELOG|CONTRIBUTING|docs/|commands/|agents/|rules/|skills/)\")",
+        "type": "message",
+        "message": "WARNING: Creating a new .md file outside standard directories. Documentation should go in docs/, commands/, agents/, rules/, or skills/ directories."
+      },
+      {
+        "// PURPOSE": "Remind about tmux for long-running commands",
+        "matcher": "tool == \"Bash\" && tool_input.command matches \"(npm run dev|npm start|python.*runserver|go run|cargo run)\"",
+        "type": "message",
+        "message": "REMINDER: Long-running dev servers should be run in tmux or a separate terminal for log access."
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "// PURPOSE": "Run Prettier after editing JS/TS files",
+        "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx|js|jsx)$\"",
+        "type": "command",
+        "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true",
+        "async": true,
+        "timeout": 10
+      },
+      {
+        "// PURPOSE": "Run type checking after editing TypeScript files",
+        "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx)$\"",
+        "type": "command",
+        "command": "npx tsc --noEmit --pretty 2>&1 | head -20 || true",
+        "async": true,
+        "timeout": 30
+      },
+      {
+        "// PURPOSE": "Run ruff after editing Python files",
+        "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.py$\"",
+        "type": "command",
+        "command": "ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null && ruff format \"$CLAUDE_FILE_PATH\" 2>/dev/null || true",
+        "async": true,
+        "timeout": 10
+      },
+      {
+        "// PURPOSE": "Run gofmt after editing Go files",
+        "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.go$\"",
+        "type": "command",
+        "command": "gofmt -w \"$CLAUDE_FILE_PATH\" 2>/dev/null || true",
+        "async": true,
+        "timeout": 10
+      }
+    ],
+
+    "Stop": [
+      {
+        "// PURPOSE": "Check for console.log in modified files",
+        "type": "command",
+        "command": "git diff --name-only --diff-filter=M 2>/dev/null | xargs grep -l 'console\\.log' 2>/dev/null && echo 'WARNING: console.log found in modified files' || true",
+        "async": true,
+        "timeout": 10
+      }
+    ]
+  }
+}

@@ -1,3 +1,7 @@
+---
+description: Generate changelog entries following Keep a Changelog format
+---
+
 # /changelog - Generate Changelog Entry
 
 Create changelog entries following Keep a Changelog format.

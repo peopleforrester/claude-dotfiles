@@ -5,7 +5,7 @@ description: |
   for OWASP Top 10, injection attacks, authentication flaws, and secrets exposure.
   Use PROACTIVELY after writing code that handles user input, authentication,
   API endpoints, or sensitive data.
-tools: ["Read", "Grep", "Glob", "Bash"]
+tools: ["Read", "Grep", "Glob"]
 model: opus
 ---
 

@@ -1,0 +1,26 @@
+{
+  "// PURPOSE": "Status line configuration for Claude Code terminal display",
+  "// LOCATION": "Place in ~/.claude/statusline.json",
+
+  "statusLine": {
+    "enabled": true,
+    "format": "{branch} | {model} | {tokens}",
+    "components": {
+      "branch": {
+        "// DESCRIPTION": "Show current git branch",
+        "command": "git branch --show-current 2>/dev/null || echo 'no-repo'",
+        "refresh": "on-change"
+      },
+      "model": {
+        "// DESCRIPTION": "Show active model",
+        "source": "model",
+        "format": "{name}"
+      },
+      "tokens": {
+        "// DESCRIPTION": "Show token usage",
+        "source": "tokens",
+        "format": "{used}/{limit}"
+      }
+    }
+  }
+}

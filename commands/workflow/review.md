@@ -1,3 +1,7 @@
+---
+description: Perform a thorough code review of recent changes
+---
+
 # /review - Code Review
 
 Perform a thorough code review of changes.

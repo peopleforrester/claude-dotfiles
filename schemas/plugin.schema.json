@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Claude Code Plugin Manifest",
+  "description": "Schema for .claude-plugin/plugin.json",
+  "type": "object",
+  "required": ["name", "version", "description", "components"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Plugin name (lowercase, hyphens only)"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Brief plugin description"
+    },
+    "author": {
+      "type": "string",
+      "description": "Plugin author"
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier"
+    },
+    "compatibility": {
+      "type": "string",
+      "description": "Minimum Claude Code version"
+    },
+    "components": {
+      "type": "object",
+      "properties": {
+        "skills": { "type": "string" },
+        "commands": { "type": "string" },
+        "agents": { "type": "string" },
+        "rules": { "type": "string" },
+        "contexts": { "type": "string" },
+        "settings": { "type": "string" },
+        "mcp": { "type": "string" }
+      },
+      "description": "Paths to component directories"
+    },
+    "install": {
+      "type": "object",
+      "description": "Default installation selections"
+    },
+    "optional": {
+      "type": "object",
+      "description": "Components requiring explicit opt-in"
+    }
+  }
+}
