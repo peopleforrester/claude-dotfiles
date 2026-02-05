@@ -7,6 +7,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-02-05
+
+### Added
+- **Rules System**: 7 always-follow constraint files in `rules/`
+  - `security.md` - OWASP Top 10, secrets management, input validation
+  - `coding-style.md` - Immutability, file organization, naming conventions
+  - `testing.md` - TDD workflow, 80% coverage minimum
+  - `git-workflow.md` - Conventional commits, PR process
+  - `performance.md` - Model selection, context window management
+  - `agents.md` - Subagent delegation patterns
+- **Agents System**: 9 specialized persona definitions in `agents/`
+  - `planner.md` - Implementation planning and risk assessment
+  - `architect.md` - System design and ADR generation
+  - `code-reviewer.md` - Quality and security code review
+  - `security-reviewer.md` - OWASP vulnerability analysis
+  - `tdd-guide.md` - Red-green-refactor enforcement
+  - `build-resolver.md` - Build/CI error diagnosis
+  - `doc-updater.md` - Documentation maintenance
+  - `refactor-cleaner.md` - Dead code removal
+- **Enhanced Commands**: 7 new slash commands in `commands/`
+  - `/tdd` - Start TDD workflow
+  - `/verify` - Pre-PR 8-step quality gate
+  - `/code-review` - Comprehensive code review
+  - `/security-review` - OWASP security audit
+  - `/build-fix` - Build error resolution
+  - `/refactor-clean` - Dead code removal
+  - `/update-docs` - Documentation sync
+- **Language Pattern Skills**: 4 new skills in `skills/patterns/`
+  - `python-patterns` - Protocols, dataclasses, async, Pydantic
+  - `typescript-patterns` - Branded types, discriminated unions, Zod
+  - `golang-patterns` - Error wrapping, errgroup, interfaces, generics
+  - `rust-patterns` - thiserror, ownership, traits, async Tokio
+- **Framework Pattern Skills**: 4 new skills in `skills/frameworks/`
+  - `react-patterns` - Hooks, composition, performance, error boundaries
+  - `nextjs-patterns` - App Router, server components, caching, middleware
+  - `fastapi-patterns` - Dependency injection, Pydantic v2, async, middleware
+  - `django-patterns` - ORM optimization, DRF, service layer, middleware
+- **Optimization Skills**: 3 new skills
+  - `verification-loop` - Pre-PR quality verification workflow
+  - `continuous-learning` - Cross-session knowledge building patterns
+  - `strategic-compact` - Context window optimization strategies
+
+### Changed
+- `install.sh` now supports `--rules`, `--agents`, `--commands` flags
+- `install.ps1` now supports `-Rules`, `-Agents`, `-Commands` parameters
+- `scripts/validate.py` validates rules, agents, and command files
+- README updated with rules, agents, and commands documentation
+- `--all` flag now installs rules, agents, and commands in addition to existing components
+
 ## [0.1.2] - 2026-02-03
 
 ### Added
@@ -54,7 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cursor (skills)
 - OpenAI Codex CLI (skills)
 
-[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/peopleforrester/claude-dotfiles/releases/tag/v0.1.0
