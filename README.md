@@ -104,10 +104,10 @@ make install-minimal # Just essentials
 | You Get | What It Does | Files |
 |---------|--------------|-------|
 | **[CLAUDE.md Templates](./claude-md/)** | Tell Claude about your project's stack, commands, and conventions | 13 templates |
-| **[Rules](./rules/)** | Always-follow constraints (security, style, testing, git) | 7 rules |
-| **[Agents](./agents/)** | Specialized personas (planner, architect, reviewer, TDD guide) | 9 agents |
-| **[Commands](./commands/)** | Slash commands (/tdd, /verify, /code-review, /security-review) | 7 commands |
-| **[Skills](./skills/)** | Pattern libraries (React, Next.js, FastAPI, Django, Rust, Go, TS, Python) | 22 skills |
+| **[Rules](./rules/)** | Always-follow constraints (common + language-specific) | 21 rules |
+| **[Agents](./agents/)** | Specialized personas (planner, architect, reviewers, TDD guide) | 14 agents |
+| **[Commands](./commands/)** | Slash commands (/tdd, /verify, /code-review, /orchestrate, /learn) | 20 commands |
+| **[Skills](./skills/)** | Pattern libraries (React, Next.js, FastAPI, Django, Spring Boot, Go, TS, Python) | 28 skills |
 | **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 13 hooks |
 | **[Settings](./settings/)** | Control what Claude can do automatically | 3 profiles |
 | **[MCP Configs](./mcp/)** | Connect Claude to GitHub, databases, Slack | 10 configs |
@@ -137,16 +137,25 @@ Browse [`claude-md/`](./claude-md/) for templates covering:
 
 ### Rules System
 
-Rules are always-loaded constraints that Claude follows automatically:
+Rules are always-loaded constraints organized in a modular structure:
+
+**Common rules** (apply to all projects):
 
 | Rule | What It Enforces |
 |------|------------------|
-| **[security.md](./rules/security.md)** | OWASP Top 10, secrets management, input validation |
-| **[coding-style.md](./rules/coding-style.md)** | Immutability, file organization, naming conventions |
-| **[testing.md](./rules/testing.md)** | TDD workflow, 80% coverage minimum |
-| **[git-workflow.md](./rules/git-workflow.md)** | Conventional commits, PR process |
-| **[performance.md](./rules/performance.md)** | Model selection, context management |
-| **[agents.md](./rules/agents.md)** | When to delegate to subagents |
+| **[security.md](./rules/common/security.md)** | OWASP Top 10, secrets management, input validation |
+| **[coding-style.md](./rules/common/coding-style.md)** | Immutability, file organization, naming conventions |
+| **[testing.md](./rules/common/testing.md)** | TDD workflow, 80% coverage minimum |
+| **[git-workflow.md](./rules/common/git-workflow.md)** | Conventional commits, PR process |
+| **[performance.md](./rules/common/performance.md)** | Model selection, context management |
+| **[agents.md](./rules/common/agents.md)** | When to delegate to subagents |
+
+**Language-specific rules** (in `rules/typescript/`, `rules/python/`, `rules/golang/`):
+- `coding-style.md` — Language-specific conventions and idioms
+- `testing.md` — Framework-specific test patterns
+- `security.md` — Language-specific security practices
+- `hooks.md` — Auto-formatting and linting hooks
+- `patterns.md` — Common architectural patterns
 
 ### Agents
 
@@ -156,12 +165,17 @@ Specialized personas you can invoke for focused tasks:
 |-------|-----------|---------|
 | **[planner](./agents/planner.md)** | Implementation planning, risk assessment | `/plan` |
 | **[architect](./agents/architect.md)** | System design, ADRs, trade-offs | `/architect` |
-| **[code-reviewer](./agents/code-reviewer.md)** | Quality, security, maintainability review | `/code-review` |
-| **[security-reviewer](./agents/security-reviewer.md)** | OWASP vulnerability analysis | `/security-review` |
+| **[code-reviewer](./agents/code-reviewer.md)** | Quality, security, maintainability review (read-only) | `/code-review` |
+| **[security-reviewer](./agents/security-reviewer.md)** | OWASP vulnerability analysis (read-only) | `/security-review` |
 | **[tdd-guide](./agents/tdd-guide.md)** | Red-green-refactor enforcement | `/tdd` |
 | **[build-resolver](./agents/build-resolver.md)** | Build/CI error diagnosis | `/build-fix` |
 | **[doc-updater](./agents/doc-updater.md)** | Documentation maintenance | `/update-docs` |
 | **[refactor-cleaner](./agents/refactor-cleaner.md)** | Dead code removal | `/refactor-clean` |
+| **[e2e-runner](./agents/e2e-runner.md)** | Playwright E2E testing | `/e2e` |
+| **[database-reviewer](./agents/database-reviewer.md)** | PostgreSQL/Supabase review (read-only) | — |
+| **[python-reviewer](./agents/python-reviewer.md)** | Python code review (read-only) | — |
+| **[go-reviewer](./agents/go-reviewer.md)** | Go code review (read-only) | — |
+| **[go-build-resolver](./agents/go-build-resolver.md)** | Go build error resolution | — |
 
 ### Slash Commands
 
@@ -174,6 +188,15 @@ Specialized personas you can invoke for focused tasks:
 | `/build-fix` | Diagnose and fix build errors |
 | `/refactor-clean` | Find and remove dead code |
 | `/update-docs` | Sync documentation with code changes |
+| `/orchestrate` | Multi-agent workflow coordination |
+| `/learn` | Extract reusable patterns from sessions |
+| `/checkpoint` | Save verification state for resumption |
+| `/eval` | Evaluate code against quality criteria |
+| `/test-coverage` | Analyze and report test coverage gaps |
+| `/e2e` | Generate end-to-end tests with Playwright |
+| `/sessions` | Manage session history and state |
+| `/instinct-status` | View learned instincts with confidence levels |
+| `/evolve` | Cluster instincts into skills or commands |
 
 ---
 

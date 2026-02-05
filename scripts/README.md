@@ -43,7 +43,7 @@ claude-dotfiles validator
 
 ✓ settings/permissions/balanced.json
 ✓ skills/development/tdd-workflow/SKILL.md
-! README.md: Broken link: [missing](./not-found.md)
+! README.md: Broken link: [some-link](./path/to/missing-file.md)
 
 Summary
   Files checked: 45

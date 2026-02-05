@@ -653,12 +653,25 @@ def validate_markdown_links(file_path: Path, repo_root: Path) -> List[str]:
         return errors  # Can't check links if we can't read the file
 
     # -------------------------------------------------------------------------
+    # Skip template files (their links are relative to where they'll be placed)
+    # -------------------------------------------------------------------------
+    if 'TEMPLATE' in file_path.name or 'SPEC' in file_path.name:
+        return errors
+
+    # -------------------------------------------------------------------------
+    # Strip fenced code blocks before checking links
+    # -------------------------------------------------------------------------
+    # Links inside code blocks (```...```) are examples, not real references.
+    # Remove them to avoid false positive warnings.
+    content_no_codeblocks = re.sub(r'```[\s\S]*?```', '', content)
+
+    # -------------------------------------------------------------------------
     # Find all markdown links
     # -------------------------------------------------------------------------
     # Pattern: [text](url)
     #   \[([^\]]+)\]  = [text] - capture the link text
     #   \(([^)]+)\)   = (url)  - capture the URL/path
-    links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', content)
+    links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', content_no_codeblocks)
 
     for text, link in links:
         # ---------------------------------------------------------------------
@@ -671,6 +684,16 @@ def validate_markdown_links(file_path: Path, repo_root: Path) -> List[str]:
         # Skip anchor-only links (#section)
         # ---------------------------------------------------------------------
         if link.startswith('#'):
+            continue
+
+        # ---------------------------------------------------------------------
+        # Skip placeholder/example links and GitHub relative links
+        # ---------------------------------------------------------------------
+        # Example links like (url), (link), (badge) are not real paths
+        if link in ('url', 'link', 'badge'):
+            continue
+        # GitHub relative links like ../../issues work on GitHub, not locally
+        if link.startswith('../../'):
             continue
 
         # ---------------------------------------------------------------------

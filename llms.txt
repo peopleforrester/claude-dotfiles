@@ -1,0 +1,118 @@
+# claude-dotfiles
+
+> Production-ready configurations, skills, and templates for Claude Code optimization.
+
+## Overview
+
+claude-dotfiles provides a curated collection of CLAUDE.md templates, skills, hooks, rules, agents, commands, settings profiles, and MCP server configurations for Claude Code 2.1+. It also supports Claude Desktop, Cursor, and OpenAI Codex CLI.
+
+## Installation
+
+```bash
+git clone https://github.com/peopleforrester/claude-dotfiles.git
+cd claude-dotfiles
+./install.sh --all
+```
+
+The installer copies selected components to `~/.claude/` (global) or `.claude/` (project-level).
+
+## Components
+
+### Templates (templates/)
+Starter CLAUDE.md files at three complexity levels:
+- minimal/ — Bare essentials (~30 lines)
+- standard/ — Recommended baseline (~80 lines)
+- power-user/ — Full featured (~100 lines)
+
+### CLAUDE.md Templates (claude-md/)
+Language and framework-specific CLAUDE.md templates:
+- Languages: TypeScript, Python, Go, Rust
+- Frameworks: React/Next.js, FastAPI, Django, Spring Boot
+- Domains: Data science, DevOps
+
+### Skills (skills/)
+SKILL.md workflow definitions with YAML frontmatter:
+- development/ — Code generation, backend patterns, testing patterns
+- documentation/ — ADR generation, changelog automation
+- git/ — Commit crafting, PR descriptions
+- quality/ — Code review, security scanning
+- optimization/ — Learning, context management, verification
+- patterns/ — Language-specific patterns (TypeScript, Python, Go, Rust)
+- frameworks/ — Framework patterns (React, Next.js, FastAPI, Django, Spring Boot)
+
+### Rules (rules/)
+Always-follow constraint files:
+- common/ — Security, coding style, testing, git workflow, performance, agents
+- typescript/ — TS-specific coding style, testing, security, hooks, patterns
+- python/ — Python-specific coding style, testing, security, hooks, patterns
+- golang/ — Go-specific coding style, testing, security, hooks, patterns
+
+### Agents (agents/)
+Specialized persona definitions:
+- planner, architect — Design and planning
+- code-reviewer, security-reviewer — Read-only review agents
+- tdd-guide — Red-green-refactor enforcement
+- build-resolver, go-build-resolver — Build error diagnosis
+- e2e-runner — Playwright E2E testing
+- database-reviewer, python-reviewer, go-reviewer — Specialized reviewers
+- doc-updater, refactor-cleaner — Maintenance agents
+
+### Commands (commands/)
+Slash commands for common workflows:
+- workflow/ — tdd, verify, orchestrate, learn, checkpoint, eval, sessions, multi-plan, multi-execute
+- quality/ — code-review, security-review, test-coverage, e2e
+- maintenance/ — build-fix, update-docs, refactor-clean
+- learning/ — instinct-status, instinct-import, instinct-export, evolve
+
+### Hooks (hooks/)
+Event-driven automation:
+- formatters/ — Prettier, Black, gofmt auto-formatting
+- validators/ — Lint checks, sensitive file protection
+- notifications/ — Desktop notifications on completion
+
+### Settings (settings/)
+settings.json permission profiles:
+- conservative — Maximum safety, manual approval
+- balanced — Recommended for most users
+- autonomous — Minimal interruption for experienced users
+
+### MCP Servers (mcp/)
+Model Context Protocol configurations for GitHub, Slack, Notion, PostgreSQL, and more.
+
+### Contexts (contexts/)
+Dynamic mode switching:
+- dev.md — Active development mode
+- review.md — Code review mode (read-only focus)
+- research.md — Exploration and investigation mode
+
+## File Format Conventions
+
+- CLAUDE.md: Header comment with token count, sections for Stack/Commands/Directories/Gotchas
+- SKILL.md: YAML frontmatter with name (64 char max) and description (1024 char max)
+- Agents: YAML frontmatter with name, description, tools list, model specification
+- Commands: YAML frontmatter with description field
+- Rules: Markdown with Always/Never sections for enforcement
+
+## Key Paths
+
+- ~/.claude/ — Global configuration directory
+- ~/.claude/skills/ — Global skills
+- ~/.claude/rules/ — Global rules
+- .claude/ — Project-level configuration
+- .claude/skills/ — Project skills
+- CLAUDE.md — Project instructions (read on every message)
+
+## Validation
+
+```bash
+python3 scripts/validate.py .       # Validate all configs
+node tests/run-all.js               # Run test suite
+node scripts/ci/validate-all.js     # CI validators
+```
+
+## Links
+
+- Repository: https://github.com/peopleforrester/claude-dotfiles
+- Claude Code Docs: https://docs.anthropic.com/claude-code
+- Skills Spec: https://github.com/anthropics/skills
+- MCP Spec: https://modelcontextprotocol.io

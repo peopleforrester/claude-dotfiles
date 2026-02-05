@@ -7,6 +7,84 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Framework Skills**: Django security, TDD, verification; Spring Boot patterns, security, TDD
+  - `skills/frameworks/django-security/` — OWASP, CSP, CSRF, secrets management
+  - `skills/frameworks/django-tdd/` — pytest-django, factory_boy, API testing
+  - `skills/frameworks/django-verification/` — Pre-deployment quality gates
+  - `skills/frameworks/springboot-patterns/` — Layered architecture, JPA, REST, DTOs
+  - `skills/frameworks/springboot-security/` — Spring Security 6.x, JWT, CORS, rate limiting
+  - `skills/frameworks/springboot-tdd/` — JUnit 5, MockMvc, Testcontainers, JaCoCo
+- **Project Guidelines Example**: `skills/development/project-guidelines-example/` — Reference template for CLAUDE.md
+- **Instinct Management Commands**: 4 new commands in `commands/learning/`
+  - `/instinct-status` — View learned instincts with confidence bars
+  - `/instinct-import` — Import instincts from teammates or community
+  - `/instinct-export` — Export instincts with privacy sanitization
+  - `/evolve` — Cluster instincts into skills, commands, or agents
+- **Language Rule Extensions**: `hooks.md` and `patterns.md` for TypeScript, Python, Go
+- **LLM Documentation**: `llms.txt` for LLM-optimized project discovery
+
+### Changed
+- README updated with v0.3.0 content: 14 agents, 20 commands, 28 skills, modular rules
+- Rules links in README now point to `rules/common/` (from `rules/`)
+- Validator now skips fenced code blocks, template files, placeholder links, and GitHub relative links
+- Warnings reduced from 51 to 0
+
+## [0.3.0] - 2026-02-05
+
+### Added
+- **Plugin Distribution**: `.claude-plugin/` with `plugin.json` and `marketplace.json`
+  - Enables single-command installation as Claude Code plugin
+  - Self-hosted marketplace configuration for discovery
+- **Language-Specific Rules**: Modular rules for TypeScript, Python, Go
+  - Each language has `coding-style.md`, `testing.md`, `security.md`, `hooks.md`, `patterns.md`
+  - Restructured `rules/` into `common/` base + language-specific directories
+- **Contexts System**: Dynamic mode switching in `contexts/`
+  - `dev.md` - Active development mode
+  - `review.md` - Code review mode (read-only focus)
+  - `research.md` - Exploration and investigation mode
+- **New Agents**: 5 additional specialized personas
+  - `e2e-runner.md` - Playwright E2E testing specialist
+  - `database-reviewer.md` - PostgreSQL/Supabase specialist
+  - `python-reviewer.md` - Python code review specialist
+  - `go-reviewer.md` - Go code review specialist
+  - `go-build-resolver.md` - Go build error resolution
+- **New Commands**: 9 additional slash commands
+  - `/orchestrate` - Multi-agent workflow coordination
+  - `/learn` - Extract reusable patterns from sessions
+  - `/checkpoint` - Save verification state for resumption
+  - `/eval` - Evaluate code against quality criteria
+  - `/test-coverage` - Analyze and report test coverage gaps
+  - `/e2e` - Generate end-to-end tests with Playwright
+  - `/sessions` - Manage session history and state
+  - `/multi-plan` - Multi-agent collaborative planning
+  - `/multi-execute` - Execute approved multi-agent plans
+- **New Skills**: 6 additional workflow definitions
+  - `continuous-learning-v2` - Instinct-based learning with confidence scoring
+  - `iterative-retrieval` - Progressive context refinement for subagents
+  - `eval-harness` - Structured evaluation framework with rubrics
+  - `backend-patterns` - API, database, caching, service patterns
+  - `python-testing` - pytest patterns, fixtures, parametrize, async
+  - `golang-testing` - Table-driven tests, benchmarks, fuzzing, race detection
+- **JSON Schemas**: Validation schemas in `schemas/`
+  - `hooks.schema.json` - Hook configuration validation
+  - `plugin.schema.json` - Plugin manifest validation
+  - `skill.schema.json` - Skill frontmatter validation
+- **Node.js Validators**: Cross-platform CI scripts in `scripts/ci/`
+  - `validate-agents.js`, `validate-commands.js`, `validate-skills.js`
+  - `validate-rules.js`, `validate-hooks.js`, `validate-all.js`
+- **Test Suite**: `tests/run-all.js` with 8 validation checks
+- **Linting Config**: `.markdownlint.json`, `commitlint.config.js`, `package.json`
+- **Session Management**: `scripts/session-manager.sh` for state persistence
+- **Package Manager Detection**: `scripts/detect-package-manager.sh`
+- **Enhanced Examples**: `user-CLAUDE.md`, `statusline.json`, session examples
+
+### Changed
+- Agent tool restrictions: reviewers are now read-only (removed Bash from code-reviewer, security-reviewer)
+- Added YAML frontmatter to 8 existing commands missing `description` field
+- CI workflow now includes multi-OS/multi-Node matrix testing
+- `rules/README.md` updated to document modular language structure
+
 ## [0.2.0] - 2026-02-05
 
 ### Added
@@ -103,7 +181,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cursor (skills)
 - OpenAI Codex CLI (skills)
 
-[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.0...v0.1.1
