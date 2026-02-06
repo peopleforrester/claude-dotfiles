@@ -105,9 +105,9 @@ make install-minimal # Just essentials
 |---------|--------------|-------|
 | **[CLAUDE.md Templates](./claude-md/)** | Tell Claude about your project's stack, commands, and conventions | 13 templates |
 | **[Rules](./rules/)** | Always-follow constraints (common + language-specific) | 21 rules |
-| **[Agents](./agents/)** | Specialized personas (planner, architect, reviewers, TDD guide) | 14 agents |
-| **[Commands](./commands/)** | Slash commands (/tdd, /verify, /code-review, /orchestrate, /learn) | 20 commands |
-| **[Skills](./skills/)** | Pattern libraries (React, Next.js, FastAPI, Django, Spring Boot, Go, TS, Python) | 28 skills |
+| **[Agents](./agents/)** | Specialized personas (planner, architect, reviewers, spec-interviewer) | 15 agents |
+| **[Commands](./commands/)** | Slash commands (/spec-new, /tdd, /verify, /orchestrate, /learn) | 26 commands |
+| **[Skills](./skills/)** | Pattern libraries (React, Next.js, FastAPI, Django, Spring Boot, Go, TS, Python) | 29 skills |
 | **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 13 hooks |
 | **[Settings](./settings/)** | Control what Claude can do automatically | 3 profiles |
 | **[MCP Configs](./mcp/)** | Connect Claude to GitHub, databases, Slack | 10 configs |

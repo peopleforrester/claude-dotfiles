@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-02-05
+
 ### Added
 - **Spec-Driven Development Workflow**: Interview-first specification system (Brain Spec lite)
   - `skills/development/spec-driven-development/` — Core spec workflow patterns and file format
@@ -31,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **LLM Documentation**: `llms.txt` for LLM-optimized project discovery
 
 ### Changed
-- README updated with v0.3.0 content: 14 agents, 20 commands, 28 skills, modular rules
+- README updated with current inventory: 15 agents, 26 commands, 29 skills, 21 rules
 - Rules links in README now point to `rules/common/` (from `rules/`)
 - Validator now skips fenced code blocks, template files, placeholder links, and GitHub relative links
 - Warnings reduced from 51 to 0
@@ -187,7 +189,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cursor (skills)
 - OpenAI Codex CLI (skills)
 
-[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/peopleforrester/claude-dotfiles/compare/v0.1.1...v0.1.2
