@@ -1,13 +1,8 @@
-<!-- Tokens: ~1,600 (target: 1,500) | Lines: 85 | Compatibility: Claude Code 2.1+ -->
 # claude-dotfiles
 
 Production-ready configurations, skills, and templates for Claude Code optimization.
 
-## Stack
-
-- **Language**: Markdown, JSON, YAML, Bash, Python (scripts only)
-- **Target**: Claude Code 2.1+, Claude Desktop, Cursor, OpenAI Codex CLI
-- **Package Manager**: None (copy-based installation)
+**Stack**: Markdown, JSON, YAML, Bash, Python (scripts only) | Target: Claude Code 2.1+
 
 ## Commands
 
@@ -68,14 +63,6 @@ description: |                  # Required, 1024 chars max
 - Hooks `$CLAUDE_FILE_PATH`: only available in PostToolUse
 - MCP servers: require Claude Desktop restart after config changes
 
-## Validation
-
-Before committing:
-- [ ] JSON parses without errors
-- [ ] SKILL.md frontmatter is valid YAML
-- [ ] Bash scripts work on macOS and Linux
-- [ ] Token counts documented for CLAUDE.md templates
-
 ## Testing
 
 ```bash
@@ -83,9 +70,3 @@ mkdir /tmp/test-project && cd /tmp/test-project
 cp -r ~/.claude-dotfiles/templates/standard/* .
 claude  # Ask Claude to describe the setup
 ```
-
-## References
-
-- Skills Spec: https://github.com/anthropics/skills
-- Claude Code Docs: https://docs.anthropic.com/claude-code
-- MCP Spec: https://modelcontextprotocol.io
