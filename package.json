@@ -1,6 +1,6 @@
 {
   "name": "claude-dotfiles",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Production-ready configurations, skills, and templates for Claude Code optimization",
   "private": true,
   "license": "MIT",
@@ -21,7 +21,8 @@
     "lint:fix": "markdownlint '**/*.md' --ignore node_modules --fix"
   },
   "devDependencies": {
-    "markdownlint-cli": "^0.41.0"
+    "@commitlint/config-conventional": "^19.0.0",
+    "markdownlint-cli": "^0.48.0"
   },
   "engines": {
     "node": ">=18.0.0"

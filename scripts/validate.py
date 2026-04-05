@@ -47,65 +47,9 @@ import sys           # For command-line arguments and exit codes
 from pathlib import Path  # Modern path handling (better than os.path)
 from typing import List, Tuple, Optional  # Type hints for documentation
 
-
-# =============================================================================
-# TERMINAL COLORS
-# =============================================================================
-# ANSI escape codes for colorful terminal output.
-# These make validation results easier to scan at a glance:
-#   - Green for success
-#   - Red for errors
-#   - Yellow for warnings
-#   - Blue for info
-# =============================================================================
-
-class Colors:
-    """
-    ANSI escape codes for terminal colors.
-
-    These are special character sequences that terminals interpret as
-    formatting instructions. The format is: \033[XXm where XX is a code:
-      - 91 = Bright Red
-      - 92 = Bright Green
-      - 93 = Bright Yellow
-      - 94 = Bright Blue
-      - 1  = Bold
-      - 0  = Reset all formatting
-
-    Example usage:
-        print(f"{Colors.RED}Error!{Colors.END}")  # Prints "Error!" in red
-    """
-    RED = '\033[91m'      # For errors and failures
-    GREEN = '\033[92m'    # For success messages
-    YELLOW = '\033[93m'   # For warnings
-    BLUE = '\033[94m'     # For informational messages
-    BOLD = '\033[1m'      # For emphasis
-    END = '\033[0m'       # Resets formatting to default
-
-
-def color(text: str, c: str) -> str:
-    """
-    Apply color to text if running in a terminal.
-
-    This function wraps text with ANSI color codes, but only if stdout
-    is connected to a terminal (TTY). This prevents color codes from
-    polluting output when the script's output is redirected to a file
-    or piped to another command.
-
-    Args:
-        text: The text to colorize
-        c: The color code (one of Colors.RED, Colors.GREEN, etc.)
-
-    Returns:
-        The text wrapped with color codes (if TTY) or unchanged (if not TTY)
-
-    Example:
-        print(color("Success!", Colors.GREEN))  # Green if TTY, plain if not
-    """
-    # sys.stdout.isatty() returns True if stdout is a terminal
-    if sys.stdout.isatty():
-        return f"{c}{text}{Colors.END}"
-    return text
+# Add scripts/ to path for shared lib imports
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.terminal import Colors, color
 
 
 # =============================================================================
@@ -208,29 +152,10 @@ def validate_json(file_path: Path) -> Tuple[bool, Optional[str]]:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # Note: Our JSON files use "// KEY": "description" for comments.
-        # This is actually valid JSON - it's just a key that starts with "//".
-        # We don't need to strip these; json.loads() handles them fine.
-        #
-        # The code below processes lines but doesn't actually modify anything.
-        # It's preserved for potential future use (e.g., if we wanted to
-        # strip actual // comments which are NOT valid JSON).
-        lines = content.split('\n')
-        cleaned_lines = []
-        for line in lines:
-            # Currently just keeps all lines as-is
-            stripped = line.strip()
-            if stripped.startswith('"//'):
-                # This is our comment pattern - valid JSON, keep it
-                cleaned_lines.append(line)
-            else:
-                cleaned_lines.append(line)
-
-        cleaned_content = '\n'.join(cleaned_lines)
-
-        # json.loads() parses JSON and returns Python objects.
-        # If the JSON is invalid, it raises json.JSONDecodeError.
-        json.loads(cleaned_content)
+        # Our JSON files use "// KEY": "description" for comments.
+        # This is valid JSON (just a key starting with "//"), so
+        # json.loads() handles them without any preprocessing.
+        json.loads(content)
 
         return True, None
 

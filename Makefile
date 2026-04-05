@@ -23,7 +23,7 @@ test: validate tokens test-install test-json test-shell
 # Test JSON syntax with Python
 test-json:
 	@echo "🔍 Testing JSON files..."
-	@find . -name "*.json" -not -path "./.git/*" -exec python3 -c "import json; json.load(open('{}'))" \; -print 2>/dev/null | grep -v "^$$" || true
+	@find . -name "*.json" -not -path "./.git/*" -not -path "./node_modules/*" -print0 | xargs -0 -I{} python3 -c "import json; json.load(open('{}'))"
 	@echo "✓ All JSON files valid"
 
 # Test shell script syntax

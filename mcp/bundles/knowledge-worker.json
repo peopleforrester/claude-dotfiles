@@ -12,7 +12,7 @@
         "@modelcontextprotocol/server-notion"
       ],
       "env": {
-        "NOTION_API_KEY": "secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "NOTION_API_KEY": "YOUR_NOTION_API_KEY_HERE"
       }
     },
 
@@ -24,7 +24,7 @@
         "@modelcontextprotocol/server-slack"
       ],
       "env": {
-        "SLACK_BOT_TOKEN": "xoxb-xxxxxxxxxxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx",
+        "SLACK_BOT_TOKEN": "YOUR_SLACK_BOT_TOKEN_HERE",
         "SLACK_TEAM_ID": "T01XXXXXXXX"
       }
     },
@@ -37,7 +37,7 @@
         "@modelcontextprotocol/server-brave-search"
       ],
       "env": {
-        "BRAVE_API_KEY": "BSAxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "BRAVE_API_KEY": "YOUR_BRAVE_API_KEY_HERE"
       }
     },
 

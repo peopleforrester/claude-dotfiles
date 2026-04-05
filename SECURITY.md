@@ -15,7 +15,7 @@ responsibly.
 ### How to Report
 
 1. **Do not** open a public issue for security vulnerabilities
-2. Email the maintainer directly at [your-email@example.com]
+2. Use [GitHub's private vulnerability reporting](https://github.com/peopleforrester/claude-dotfiles/security/advisories/new) to submit a report
 3. Include:
    - Description of the vulnerability
    - Steps to reproduce

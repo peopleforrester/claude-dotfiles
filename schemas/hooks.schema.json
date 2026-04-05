@@ -12,7 +12,9 @@
         "PreCompact": { "$ref": "#/$defs/hookArray" },
         "SessionStart": { "$ref": "#/$defs/hookArray" },
         "SessionEnd": { "$ref": "#/$defs/hookArray" },
-        "Stop": { "$ref": "#/$defs/hookArray" }
+        "Stop": { "$ref": "#/$defs/hookArray" },
+        "Notification": { "$ref": "#/$defs/hookArray" },
+        "SubagentStop": { "$ref": "#/$defs/hookArray" }
       },
       "additionalProperties": false
     }

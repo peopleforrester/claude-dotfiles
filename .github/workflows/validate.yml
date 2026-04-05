@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: '3.11'
 
@@ -36,19 +36,18 @@ jobs:
 
   validate-node:
     name: Node.js Validators
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [18, 20, 22]
       fail-fast: false
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -61,7 +60,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck
@@ -69,9 +68,7 @@ jobs:
       - name: Validate shell scripts
         run: |
           echo "Running shellcheck..."
-          find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" | while read -r file; do
-            shellcheck "$file" || true
-          done
+          find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" -print0 | xargs -0 shellcheck
 
   validate-json:
     name: JSON Syntax
@@ -79,7 +76,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Validate all JSON files
         run: |
@@ -98,14 +95,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Check for broken links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        uses: tcort/github-action-markdown-link-check@e7c7a18363c842693fadde5d41a3bd3573a7a225 # v1.1.2
         with:
           use-quiet-mode: 'yes'
           config-file: '.github/markdown-link-check.json'
-        continue-on-error: true
 
   yaml-lint:
     name: Lint YAML
@@ -113,7 +109,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install yamllint
         run: pip install yamllint
@@ -121,6 +117,5 @@ jobs:
       - name: Lint YAML files
         run: |
           if find . -name "*.yml" -o -name "*.yaml" | grep -q .; then
-            yamllint -d relaxed . || true
+            yamllint -d relaxed .
           fi
-        continue-on-error: true
