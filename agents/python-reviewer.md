@@ -16,7 +16,7 @@ to ecosystem best practices.
 
 ## Expertise
 
-- Python 3.10+ features (match statements, type unions, TypeVar)
+- Python 3.12+ features (match statements, type unions, TypeVar, ExceptionGroup)
 - Type hint systems (typing, Protocol, TypedDict, Pydantic)
 - Async patterns (asyncio, TaskGroup, async context managers)
 - Package management (uv, pyproject.toml)

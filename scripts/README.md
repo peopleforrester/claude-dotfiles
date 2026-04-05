@@ -6,8 +6,8 @@ Utility scripts for validating, counting tokens, syncing, and backing up configu
 
 | Script | Purpose | Language |
 |--------|---------|----------|
-| [validate.py](#validatepy) | Validate JSON, YAML, SKILL.md files | Python 3.10+ |
-| [token-count.py](#token-countpy) | Count tokens in CLAUDE.md files | Python 3.10+ |
+| [validate.py](#validatepy) | Validate JSON, YAML, SKILL.md files | Python 3.12+ |
+| [token-count.py](#token-countpy) | Count tokens in CLAUDE.md files | Python 3.12+ |
 | [sync-configs.sh](#sync-configssh) | Sync configs across machines | Bash |
 | [backup-claude.sh](#backup-claudesh) | Backup ~/.claude directory | Bash |
 

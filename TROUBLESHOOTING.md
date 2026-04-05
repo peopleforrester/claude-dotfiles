@@ -79,7 +79,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ### "Command not found" for MCP server
 
-Ensure Node.js 18+ is installed:
+Ensure Node.js 22+ is installed:
 ```bash
 node --version
 npx --version
