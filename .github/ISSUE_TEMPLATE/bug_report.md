@@ -31,7 +31,7 @@ What actually happened.
 - OS: [e.g., macOS 14.0, Ubuntu 22.04, Windows 11]
 - Claude Code version: [e.g., 2.1.3]
 - Shell: [e.g., bash, zsh, PowerShell]
-- Node version (if applicable): [e.g., 20.10.0]
+- Node version (if applicable): [e.g., 22.14.0]
 
 ## Relevant Files
 

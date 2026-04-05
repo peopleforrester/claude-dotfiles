@@ -37,7 +37,7 @@ scripts/            # Utility scripts
 - SKILL.md files: YAML frontmatter with name, description required
 - JSON configs: Use `"// KEY":` comment pattern
 - Bash scripts: POSIX-compliant, work on macOS + Linux
-- Python scripts: 3.10+, minimal external dependencies
+- Python scripts: 3.12+, minimal external dependencies
 
 ## Implementation Patterns
 
