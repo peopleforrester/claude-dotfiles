@@ -50,6 +50,9 @@ import sys           # System-specific parameters (argv, exit, stdout)
 from pathlib import Path              # Object-oriented filesystem paths
 from typing import List, Tuple, Optional  # Type hints for documentation
 
+# Add scripts/ to path for shared lib imports
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.terminal import Colors, color
 
 # =============================================================================
 # TIKTOKEN IMPORT (OPTIONAL DEPENDENCY)
@@ -107,61 +110,6 @@ LINE_LIMITS = {
 }
 
 
-# =============================================================================
-# TERMINAL COLORS
-# =============================================================================
-# ANSI escape codes for colorful terminal output.
-# Makes it easy to spot issues at a glance:
-#   - Green = within target
-#   - Yellow = between target and max
-#   - Red = exceeds max
-# =============================================================================
-
-class Colors:
-    """
-    ANSI escape codes for terminal text formatting.
-
-    These codes tell the terminal to change text color/style.
-    Format: \033[XXm where XX is the code number.
-
-    Standard color codes:
-      91 = Bright Red
-      92 = Bright Green
-      93 = Bright Yellow
-      94 = Bright Blue
-      1  = Bold
-      2  = Dim (faint)
-      0  = Reset all formatting
-    """
-    RED = '\033[91m'      # Errors, over-budget warnings
-    GREEN = '\033[92m'    # Success, within target
-    YELLOW = '\033[93m'   # Warnings, between target and max
-    BLUE = '\033[94m'     # Info messages
-    BOLD = '\033[1m'      # Headers and emphasis
-    DIM = '\033[2m'       # Reduced emphasis (like "(est)" marker)
-    END = '\033[0m'       # Reset to default formatting
-
-
-def color(text: str, c: str) -> str:
-    """
-    Apply ANSI color codes to text if running in a terminal.
-
-    When stdout is piped or redirected, color codes are disabled to
-    prevent escape sequences from appearing in output files.
-
-    Args:
-        text: The text to colorize
-        c: Color code from Colors class
-
-    Returns:
-        Colorized text (if TTY) or plain text (if not TTY)
-
-    Example:
-        print(color("Success!", Colors.GREEN))
-    """
-    if sys.stdout.isatty():
-        return f"{c}{text}{Colors.END}"
-    return text
 
 
 # =============================================================================

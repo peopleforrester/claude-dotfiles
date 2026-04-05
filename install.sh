@@ -41,7 +41,7 @@ set -euo pipefail
 # =============================================================================
 
 # VERSION: Semantic version of the install script, shown in --version output
-VERSION="0.1.0"
+VERSION="0.4.0"
 
 # SCRIPT_DIR: Absolute path to the directory containing this script.
 # This is computed dynamically so the script works regardless of where
