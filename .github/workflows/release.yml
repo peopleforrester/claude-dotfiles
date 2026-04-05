@@ -11,49 +11,11 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  release:
-    name: Create Release
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0
-
-      - name: Get version from tag
-        id: version
-        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
-      - name: Generate release notes
-        id: notes
-        run: |
-          # Get previous tag
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-
-          if [ -n "$PREV_TAG" ]; then
-            echo "Generating notes from $PREV_TAG to ${GITHUB_REF#refs/tags/}"
-            NOTES=$(git log "$PREV_TAG"..HEAD --pretty=format:"- %s" --no-merges)
-          else
-            echo "First release - generating notes from all commits"
-            NOTES=$(git log --pretty=format:"- %s" --no-merges | head -50)
-          fi
-
-          # Write to file for multiline handling
-          echo "$NOTES" > release_notes.txt
-
-      - name: Create Release
-        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2.6.1
-        with:
-          name: Release v${{ steps.version.outputs.version }}
-          body_path: release_notes.txt
-          draft: false
-          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   validate-before-release:
     name: Validate Before Release
     runs-on: ubuntu-latest
@@ -65,7 +27,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version: '3.11'
+          python-version: '3.13'
 
       - name: Install dependencies
         run: pip install tiktoken
@@ -78,6 +40,28 @@ jobs:
 
       - name: Verify install script
         run: |
-          # Test that install script is valid bash
           bash -n install.sh
           echo "Install script syntax is valid"
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: validate-before-release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2.6.1
+        with:
+          name: Release v${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+          generate_release_notes: true

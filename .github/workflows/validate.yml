@@ -9,6 +9,13 @@ on:
   pull_request:
     branches: [main, staging]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate-python:
     name: Python Validators
@@ -21,12 +28,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version: '3.11'
+          python-version: '3.13'
 
       - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install tiktoken
+        run: pip install tiktoken
 
       - name: Run validation script
         run: python scripts/validate.py .
@@ -39,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        node-version: [22, 24]
       fail-fast: false
 
     steps:
@@ -62,9 +67,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Install shellcheck
-        run: sudo apt-get install -y shellcheck
-
       - name: Validate shell scripts
         run: |
           echo "Running shellcheck..."
@@ -81,13 +83,17 @@ jobs:
       - name: Validate all JSON files
         run: |
           echo "Validating JSON files..."
-          find . -name "*.json" -not -path "./node_modules/*" -not -path "./.git/*" | while read -r file; do
-            if ! python3 -c "import json; json.load(open('$file'))" 2>/dev/null; then
+          exit_code=0
+          while IFS= read -r -d '' file; do
+            if ! python3 -c "import json, sys; json.load(open(sys.argv[1]))" "$file" 2>/dev/null; then
               echo "Invalid JSON: $file"
-              exit 1
+              exit_code=1
             fi
-          done
-          echo "All JSON files are valid"
+          done < <(find . -name "*.json" -not -path "./node_modules/*" -not -path "./.git/*" -print0)
+          if [ "$exit_code" -eq 0 ]; then
+            echo "All JSON files are valid"
+          fi
+          exit $exit_code
 
   markdown-links:
     name: Check Markdown Links
