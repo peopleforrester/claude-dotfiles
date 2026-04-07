@@ -113,6 +113,6 @@ node scripts/ci/validate-all.js     # CI validators
 ## Links
 
 - Repository: https://github.com/peopleforrester/claude-dotfiles
-- Claude Code Docs: https://docs.anthropic.com/claude-code
+- Claude Code Docs: https://code.claude.com/docs/en
 - Skills Spec: https://github.com/anthropics/skills
 - MCP Spec: https://modelcontextprotocol.io

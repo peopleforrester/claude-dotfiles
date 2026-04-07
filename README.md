@@ -13,7 +13,7 @@
 **Production-ready configurations for Claude Code**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Claude Code 2.1+](https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet)](https://docs.anthropic.com/claude-code)
+[![Claude Code 2.1+](https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet)](https://code.claude.com/docs/en)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#compatibility)
 [![Built with Claude](https://img.shields.io/badge/Built%20with-Claude%20Code-orange)](BUILT_WITH_CLAUDE.md)
 
