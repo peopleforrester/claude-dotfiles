@@ -72,6 +72,11 @@ run('Plugin manifest integrity', `node -e "
   assert(plugin.components.agents, 'Missing agents path');
 "`);
 
+// Unit tests for helper scripts
+run('Unit: token-count parsing', 'python3 tests/test_token_count.py');
+run('Unit: protect-sensitive-files', 'python3 tests/test_protect_sensitive_files.py');
+run('Unit: validate-agents model enum', 'node tests/test_validate_agents.js');
+
 // Schema validation
 run('Schema structure', `node -e "
   const fs = require('fs');

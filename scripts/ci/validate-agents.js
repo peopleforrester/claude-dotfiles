@@ -43,12 +43,15 @@ for (const file of files) {
     }
   }
 
-  // Check model value
-  const modelMatch = frontmatter.match(/model:\s*(\w+)/);
+  // Check model value — accept either short names (opus|sonnet|haiku) or
+  // full model IDs like claude-opus-4-7 or claude-haiku-4-5-20251001.
+  const modelMatch = frontmatter.match(/model:\s*([A-Za-z0-9_-]+)/);
   if (modelMatch) {
-    const validModels = ['opus', 'sonnet', 'haiku'];
-    if (!validModels.includes(modelMatch[1])) {
-      console.log(`WARNING: ${file} - Unknown model: ${modelMatch[1]} (expected: ${validModels.join(', ')})`);
+    const value = modelMatch[1];
+    const shortForm = /^(opus|sonnet|haiku)$/;
+    const fullId = /^claude-(opus|sonnet|haiku)-\d+-\d+(-\d{8})?$/;
+    if (!shortForm.test(value) && !fullId.test(value)) {
+      console.log(`WARNING: ${file} - Unknown model: ${value} (expected short name opus|sonnet|haiku or full ID like claude-sonnet-4-7)`);
     }
   }
 
