@@ -90,7 +90,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
           }
         ]
       },
@@ -100,7 +100,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
           }
         ]
       },
@@ -110,7 +110,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "black \"$CLAUDE_FILE_PATH\" 2>/dev/null && ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && black \"$FILE\" 2>/dev/null && ruff check --fix \"$FILE\" 2>/dev/null || true"
           }
         ]
       }

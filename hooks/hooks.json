@@ -29,7 +29,7 @@
         "// PURPOSE": "Run Prettier after editing JS/TS files",
         "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx|js|jsx)$\"",
         "type": "command",
-        "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true",
+        "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true",
         "async": true,
         "timeout": 10
       },
@@ -45,7 +45,7 @@
         "// PURPOSE": "Run ruff after editing Python files",
         "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.py$\"",
         "type": "command",
-        "command": "ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null && ruff format \"$CLAUDE_FILE_PATH\" 2>/dev/null || true",
+        "command": "FILE=$(cat | jq -r '.tool_input.file_path') && ruff check --fix \"$FILE\" 2>/dev/null && ruff format \"$FILE\" 2>/dev/null || true",
         "async": true,
         "timeout": 10
       },
@@ -53,7 +53,7 @@
         "// PURPOSE": "Run gofmt after editing Go files",
         "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.go$\"",
         "type": "command",
-        "command": "gofmt -w \"$CLAUDE_FILE_PATH\" 2>/dev/null || true",
+        "command": "FILE=$(cat | jq -r '.tool_input.file_path') && gofmt -w \"$FILE\" 2>/dev/null || true",
         "async": true,
         "timeout": 10
       }

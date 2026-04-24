@@ -25,7 +25,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "./scripts/format-custom.sh \"$CLAUDE_FILE_PATH\""
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && ./scripts/format-custom.sh \"$FILE\""
           }
         ]
       }

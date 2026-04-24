@@ -10,7 +10,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "black \"$CLAUDE_FILE_PATH\" 2>/dev/null && ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && black \"$FILE\" 2>/dev/null && ruff check --fix \"$FILE\" 2>/dev/null || true"
         }
       ]
     },
@@ -20,7 +20,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "black \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && black \"$FILE\" 2>/dev/null || true"
         }
       ]
     }
@@ -33,7 +33,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "uv run black \"$CLAUDE_FILE_PATH\" 2>/dev/null && uv run ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && uv run black \"$FILE\" 2>/dev/null && uv run ruff check --fix \"$FILE\" 2>/dev/null || true"
         }
       ]
     }

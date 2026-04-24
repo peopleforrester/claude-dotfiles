@@ -10,7 +10,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "gofmt -w \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && gofmt -w \"$FILE\" 2>/dev/null || true"
         }
       ]
     }
@@ -24,7 +24,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "goimports -w \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && goimports -w \"$FILE\" 2>/dev/null || true"
         }
       ]
     }
@@ -37,7 +37,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "goimports -w \"$CLAUDE_FILE_PATH\" 2>/dev/null && golangci-lint run \"$CLAUDE_FILE_PATH\" --fix 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && goimports -w \"$FILE\" 2>/dev/null && golangci-lint run \"$FILE\" --fix 2>/dev/null || true"
         }
       ]
     }

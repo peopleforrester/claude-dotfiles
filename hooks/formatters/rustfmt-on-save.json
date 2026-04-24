@@ -10,7 +10,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "rustfmt \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && rustfmt \"$FILE\" 2>/dev/null || true"
         }
       ]
     }
@@ -23,7 +23,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "cargo fmt -- \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && cargo fmt -- \"$FILE\" 2>/dev/null || true"
         }
       ]
     }

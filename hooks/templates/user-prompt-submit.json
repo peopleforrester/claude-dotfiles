@@ -1,0 +1,21 @@
+{
+  "// TEMPLATE": "UserPromptSubmit hook — runs before the model processes each user message",
+  "// USAGE": "Merge into your hooks.json under hooks.UserPromptSubmit",
+
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "// PURPOSE": "Policy gate: remind about branch workflow before commits",
+        "type": "prompt",
+        "prompt": "Before any git commit: verify you are on the staging branch, not main.",
+        "if": "user_prompt matches \"commit|push|merge\""
+      },
+      {
+        "// PURPOSE": "Log user prompts for session replay (local only)",
+        "type": "command",
+        "command": "echo \"[$(date +%H:%M:%S)] prompt submitted\" >> /tmp/claude-session.log",
+        "async": true
+      }
+    ]
+  }
+}
