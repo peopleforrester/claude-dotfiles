@@ -58,6 +58,33 @@ Training-data-era tutorials frequently contradict these.
   cross-session user/feedback/reference facts, while `PROJECT_STATE.md`
   captures in-flight plan state.
 
+## Model IDs
+
+April 2026 GA models (use these in `settings.json` and skill `model:` fields):
+
+| Tier   | Model ID                           |
+|--------|------------------------------------|
+| Opus   | `claude-opus-4-7`                  |
+| Sonnet | `claude-sonnet-4-7`                |
+| Haiku  | `claude-haiku-4-5-20251001`        |
+
+Old IDs like `claude-sonnet-4-5-20250929` still resolve but should be replaced
+to keep behavior current. Short forms (`opus`, `sonnet`, `haiku`) are accepted
+in agent frontmatter and resolve to the current GA model in that tier.
+
+## Deny List Limits
+
+`permissions.deny` patterns are simple matchers. They block obvious cases
+(`rm -rf *`, `sudo *`) but are easily defeated:
+
+- Alternate flag order: `rm -r -f path` vs `rm -rf path`
+- Long flags: `rm --recursive --force path`
+- Absolute binary paths: `/bin/rm -rf path`
+- Different binaries: `find . -delete`
+
+Use deny lists as defense-in-depth. For real isolation, enable the
+`sandbox.*` config and the `protect-sensitive-files.py` hook.
+
 ## Docs Host
 
 - Canonical docs moved from `docs.anthropic.com/en/docs/claude-code/*` to

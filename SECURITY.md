@@ -41,7 +41,8 @@ When using claude-dotfiles:
 ### Permissions
 
 - Start with `conservative` profile if unsure
-- Review the `deny` list in settings.json
+- Review the `deny` list in settings.json — note that deny patterns are
+  defense-in-depth, not a sandbox (see GOTCHAS.md for limits)
 - Be cautious with `autonomous` profile
 
 ### Hooks
@@ -58,10 +59,11 @@ When using claude-dotfiles:
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+| Version    | Supported          | Notes                                    |
+| ---------- | ------------------ | ---------------------------------------- |
+| 0.4.x      | :white_check_mark: | Current pre-1.0 release                  |
+| < 0.4      | :x:                | Upgrade to 0.4.x or later                |
+| 1.x.x      | n/a                | 1.0 has not shipped yet                  |
 
 ## Security Features
 
