@@ -107,7 +107,7 @@ make install-minimal # Just essentials
 | **[Rules](./rules/)** | Always-follow constraints (common + language-specific) | 21 rules |
 | **[Agents](./agents/)** | Specialized personas (planner, architect, reviewers, spec-interviewer) | 15 agents |
 | **[Skills](./skills/)** | User-invocable slash commands AND pattern libraries (commands merged into skills in 0.5.0) | 70 skills |
-| **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 11 hooks |
+| **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 14 hooks |
 | **[Settings](./settings/)** | Control what Claude can do automatically | 3 profiles |
 | **[MCP Configs](./mcp/)** | Connect Claude to GitHub, databases, Slack | 10 configs |
 

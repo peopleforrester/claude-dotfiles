@@ -7,6 +7,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-04-26
+
+### Added
+- `agents/worktree-isolated-example.md` — demonstrates `isolation: worktree`
+- `hooks/templates/{instructions-loaded,user-prompt-submit,prompt-handler}.json`
+  — examples of new April 2026 hook events and the `prompt` handler type
+- `GOTCHAS.md` — single source of truth for verified April 2026 behaviors
+  (hook events, skill frontmatter, sandbox primitives, model IDs, deny limits)
+- `settings/permissions/{sandbox-on,sandbox-off,autoMode-strict,autoMode-permissive}.json`
+  — composable primitives replacing the legacy three-profile taxonomy
+- `settings/permissions/README.md` — composition guide
+- `scripts/migrate-commands-to-skills.py` — one-shot migration tool
+- Test suite: `tests/test_token_count.py`, `tests/test_protect_sensitive_files.py`,
+  `tests/test_validate_agents.js`, `tests/test_inventory.js`
+
+### Changed
+- **BREAKING**: `commands/` directory removed — all 31 commands migrated to
+  `skills/<category>/<name>/SKILL.md` with `user-invocable: true`. Slash command
+  names (`/tdd`, `/verify`, `/orchestrate`, etc.) are unchanged for users.
+- **BREAKING**: Permission profiles renamed and re-conceived
+  - `conservative` → use `autoMode-strict` or `sandbox-off`
+  - `balanced` → use `sandbox-off` (closest match)
+  - `autonomous` → use `autoMode-permissive` or `sandbox-on`
+  - `install.sh --profile <legacy>` now errors with migration guidance
+- `settings.json` model bumped to `claude-sonnet-4-7` (April 2026 GA)
+- `schemas/hooks.schema.json` adds 18 April 2026 events plus `http`/`prompt`/
+  `agent` handler types and `if`/`once`/`shell`/`statusMessage` fields
+- `schemas/skill.schema.json` makes `description` optional (only `name` required)
+  and adds 10 new fields: `argument-hint`, `effort`, `model`, `allowed-tools`,
+  `disable-model-invocation`, `user-invocable`, `context`, `agent`, `paths`,
+  `shell`
+- Repo-wide replacement of `$CLAUDE_FILE_PATH` with stdin-jq pattern across
+  hook configs, docs, and rules
+
+### Fixed
+- `scripts/token-count.py` regex now matches comma-formatted token counts
+  (`~1,400` parsed as 1400 instead of silently matching `1`)
+- `hooks/validators/protect-sensitive-files.py` reads tool invocation from
+  stdin JSON and fails closed on missing/malformed input. Removes the silent
+  bypass that triggered when `$CLAUDE_FILE_PATH` was unpopulated.
+- `scripts/ci/validate-agents.js` accepts full model IDs in addition to
+  short names
+- `scripts/ci/validate-hooks.js` reads valid event names from
+  `schemas/hooks.schema.json` instead of a hardcoded subset
+- Documentation host migrated from `docs.anthropic.com/claude-code` to
+  `code.claude.com/docs/en`
+- README inventory counts now match filesystem reality (CI-asserted)
+- `SECURITY.md` supported-versions table corrected (no fictional 1.x entry)
+
+### Removed
+- `commands/` directory (all content migrated to `skills/`)
+- `scripts/ci/validate-commands.js` (now covered by `validate-skills.js`)
+- `settings/permissions/{conservative,balanced,autonomous}.json`
+- `npm run validate:commands` script entry
+
 ## [0.4.0] - 2026-02-05
 
 ### Added

@@ -1,7 +1,7 @@
 {
   "// METADATA": "Plugin manifest for Claude Code plugin system",
   "name": "claude-dotfiles",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Production-ready configurations, skills, and templates for Claude Code optimization",
   "author": "peopleforrester",
   "license": "MIT",

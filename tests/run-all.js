@@ -77,6 +77,7 @@ run('Plugin manifest integrity', `node -e "
 run('Unit: token-count parsing', 'python3 tests/test_token_count.py');
 run('Unit: protect-sensitive-files', 'python3 tests/test_protect_sensitive_files.py');
 run('Unit: validate-agents model enum', 'node tests/test_validate_agents.js');
+run('Unit: README inventory matches filesystem', 'node tests/test_inventory.js');
 
 // Schema validation
 run('Schema structure', `node -e "
