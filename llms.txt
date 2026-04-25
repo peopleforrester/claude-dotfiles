@@ -72,9 +72,10 @@ Event-driven automation:
 
 ### Settings (settings/)
 settings.json permission profiles:
-- conservative — Maximum safety, manual approval
-- balanced — Recommended for most users
-- autonomous — Minimal interruption for experienced users
+- sandbox-on — defaultMode: auto inside an isolated bash sandbox
+- sandbox-off — acceptEdits with no isolation, bash always asks
+- autoMode-strict — defaultMode: auto, escalate writes/edits/bash/network
+- autoMode-permissive — defaultMode: auto, allow routine work, escalate destructive ops
 
 ### MCP Servers (mcp/)
 Model Context Protocol configurations for GitHub, Slack, Notion, PostgreSQL, and more.

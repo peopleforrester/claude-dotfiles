@@ -58,7 +58,7 @@ description: |                  # Required, 1024 chars max
 ### settings.json
 - Use `"// SECTION":` for documentation comments
 - Always include security deny list
-- Three profiles: conservative, balanced, autonomous
+- Four profiles: sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive
 
 ## Gotchas
 

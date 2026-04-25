@@ -202,19 +202,25 @@ Specialized personas you can invoke for focused tasks:
 
 ## 🛡️ Permission Profiles
 
-Control how much autonomy Claude has:
+Four profiles compose the two April-2026 primitives — `sandbox.*` (isolation)
+and `defaultMode: auto` (classifier-driven decisions):
 
-| Profile | Claude Can... | Best For |
-|---------|---------------|----------|
-| **Conservative** | Read files, ask before changes | Learning, sensitive projects |
-| **Balanced** ⭐ | Edit files, ask before shell commands | Daily development |
-| **Autonomous** | Most actions without asking | Trusted automation |
+| Profile | Sandbox | Default Mode | Best For |
+|---------|---------|--------------|----------|
+| **sandbox-on** ⭐ | yes | `auto` | Trusted automation with isolation |
+| **sandbox-off** | no | `acceptEdits` | Local trusted dev, no isolation |
+| **autoMode-strict** | yes | `auto` | First time on auto mode |
+| **autoMode-permissive** | yes | `auto` | Routine work flows through |
 
 All profiles block access to `.env`, `~/.ssh/`, `~/.aws/`, and dangerous commands.
+The legacy `conservative`/`balanced`/`autonomous` profiles were removed in 0.5.0.
 
 ```bash
-./install.sh --profile balanced  # Recommended
+./install.sh --profile sandbox-on  # Recommended
 ```
+
+See [`settings/permissions/README.md`](./settings/permissions/README.md) for
+when to choose which profile.
 
 ---
 

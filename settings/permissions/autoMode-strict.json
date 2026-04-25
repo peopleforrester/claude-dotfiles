@@ -1,0 +1,46 @@
+{
+  "// PROFILE": "autoMode-strict — defaultMode auto with high escalation threshold",
+  "// USE CASE": "Auto-classify decisions, but escalate any mutation, network call, or unknown bash to the user. Good first step into auto mode.",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/credentials*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Bash(rm -rf /)",
+      "Bash(sudo *)"
+    ],
+    "defaultMode": "auto"
+  },
+
+  "auto": {
+    "// CLASSIFIER": "Strict — escalate on every tool that mutates state or reaches the network",
+    "escalateOn": [
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)"
+    ],
+    "allowOn": []
+  },
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": ["git"]
+  },
+
+  "includeCoAuthoredBy": true
+}

@@ -1,0 +1,49 @@
+{
+  "// PROFILE": "sandbox-on — sandboxed bash, automatic decisions inside the box",
+  "// USE CASE": "Trusted automation with strong isolation. Bash runs in a sandbox; auto mode handles edits and reads without prompting.",
+  "// COMPOSE": "Pair with the project's own deny list. Auto mode escalates anything outside the sandbox.",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/credentials*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Bash(rm -rf /)",
+      "Bash(sudo *)"
+    ],
+    "defaultMode": "auto"
+  },
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": ["git"],
+    "network": {
+      "allowLocalBinding": true,
+      "denyExternal": true
+    }
+  },
+
+  "auto": {
+    "// CLASSIFIER": "Inside-the-box decisions are automatic. Outside-the-box bash escalates.",
+    "escalateOn": [
+      "Bash(*)",
+      "Write",
+      "Edit",
+      "MultiEdit"
+    ],
+    "allowOn": []
+  },
+
+  "includeCoAuthoredBy": true
+}

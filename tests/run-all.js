@@ -36,11 +36,8 @@ run('Validate hooks', 'node scripts/ci/validate-hooks.js');
 run('Parse JSON configs', `node -e "
   const fs = require('fs');
   const path = require('path');
-  const files = [
+  const fixed = [
     'settings/settings.json',
-    'settings/permissions/balanced.json',
-    'settings/permissions/conservative.json',
-    'settings/permissions/autonomous.json',
     '.claude-plugin/plugin.json',
     '.claude-plugin/marketplace.json',
     'hooks/hooks.json',
@@ -48,6 +45,11 @@ run('Parse JSON configs', `node -e "
     'schemas/plugin.schema.json',
     'schemas/skill.schema.json',
   ];
+  const profilesDir = path.join('${rootDir.replace(/'/g, "\\'")}', 'settings/permissions');
+  const profileFiles = fs.readdirSync(profilesDir)
+    .filter(f => f.endsWith('.json'))
+    .map(f => path.join('settings/permissions', f));
+  const files = [...fixed, ...profileFiles];
   let errors = 0;
   for (const f of files) {
     try {

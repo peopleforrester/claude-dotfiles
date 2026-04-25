@@ -10,7 +10,7 @@
 # - Support for macOS, Linux, and Windows (via Git Bash/WSL)
 # - Automatic backup of existing configurations before installation
 # - Multiple installation modes: full, minimal, or component-by-component
-# - Three permission profiles: conservative, balanced, autonomous
+# - Four permission profiles: sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive
 # - Symlink or copy-based installation methods
 #
 # Usage examples:
@@ -112,10 +112,11 @@ INSTALL_AGENTS=false    # --agents: Install agents (specialized personas)
 INSTALL_COMMANDS=false  # --commands: Install commands (slash commands)
 
 # PROFILE: Which permission profile to use. Options are:
-#   - conservative: Maximum safety, asks before most actions
-#   - balanced (default): Auto-accepts edits, asks for bash commands
-#   - autonomous: Minimal interruptions, for experienced users
-PROFILE="balanced"
+#   - sandbox-on (default): defaultMode auto inside an isolated bash sandbox
+#   - sandbox-off: acceptEdits with no isolation, bash always asks
+#   - autoMode-strict: defaultMode auto, escalate writes/edits/bash/network
+#   - autoMode-permissive: defaultMode auto, allow routine work, escalate destructive ops
+PROFILE="sandbox-on"
 
 # USE_SYMLINK: If true, create symlinks instead of copying files.
 # Symlinks mean changes to the source repo are immediately reflected.
@@ -414,24 +415,41 @@ copy_or_link() {
 # Installs the settings.json file with the selected permission profile.
 #
 # The profile is determined by the PROFILE variable, which can be:
-#   - conservative: settings/permissions/conservative.json
-#   - balanced: settings/permissions/balanced.json
-#   - autonomous: settings/permissions/autonomous.json
+#   - sandbox-on:           settings/permissions/sandbox-on.json
+#   - sandbox-off:          settings/permissions/sandbox-off.json
+#   - autoMode-strict:      settings/permissions/autoMode-strict.json
+#   - autoMode-permissive:  settings/permissions/autoMode-permissive.json
+#
+# Legacy profile names (conservative, balanced, autonomous) print an error
+# pointing the user at the new taxonomy.
 #
 # Also creates a settings.local.json template for personal overrides.
 # This file is meant to be gitignored and contain user-specific settings.
 # -----------------------------------------------------------------------------
 install_settings() {
+    # Migrate legacy profile names with a clear error rather than silently
+    # falling back — silent fallbacks were the source of "wrong profile got
+    # installed" surprises in 0.3.x.
+    case "${PROFILE}" in
+        conservative|balanced|autonomous)
+            print_error "Profile '${PROFILE}' was removed in 0.5.0."
+            print_error "Use one of: sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive"
+            print_error "See settings/permissions/README.md for guidance."
+            exit 1
+            ;;
+    esac
+
     print_step "Installing settings (${PROFILE} profile)..."
 
     # Build paths to source and destination
     local settings_src="${SCRIPT_DIR}/settings/permissions/${PROFILE}.json"
     local settings_dest="${CLAUDE_DIR}/settings.json"
 
-    # Fall back to balanced profile if requested profile doesn't exist
+    # Fail loudly if the requested profile is unknown — never silently swap.
     if [ ! -f "$settings_src" ]; then
-        print_warning "Profile '${PROFILE}' not found, using balanced"
-        settings_src="${SCRIPT_DIR}/settings/permissions/balanced.json"
+        print_error "Profile '${PROFILE}' not found at ${settings_src}"
+        print_error "Available profiles: sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive"
+        exit 1
     fi
 
     # Copy or symlink the settings file
@@ -966,16 +984,18 @@ run_interactive() {
     # -------------------------------------------------------------------------
     echo ""
     echo "Permission profile:"
-    echo "  1) conservative - Ask before most actions"
-    echo "  2) balanced     - Auto-accept edits, ask for bash (recommended)"
-    echo "  3) autonomous   - Minimal interruptions"
+    echo "  1) sandbox-on            - Auto mode inside an isolated bash sandbox (recommended)"
+    echo "  2) sandbox-off           - acceptEdits, no isolation, bash always asks"
+    echo "  3) autoMode-strict       - Auto mode; escalate writes/edits/bash/network"
+    echo "  4) autoMode-permissive   - Auto mode; allow routine work, escalate destructive"
     echo ""
-    read -rp "Profile [1-3, default=2]: " profile_choice
+    read -rp "Profile [1-4, default=1]: " profile_choice
 
     case $profile_choice in
-        1) PROFILE="conservative" ;;
-        3) PROFILE="autonomous" ;;
-        *) PROFILE="balanced" ;;  # Default for 2 or any other input
+        2) PROFILE="sandbox-off" ;;
+        3) PROFILE="autoMode-strict" ;;
+        4) PROFILE="autoMode-permissive" ;;
+        *) PROFILE="sandbox-on" ;;  # Default for 1 or any other input
     esac
 
     # -------------------------------------------------------------------------
@@ -1099,8 +1119,9 @@ Options:
   --mcp              Install MCP configurations only
   --settings         Install settings only
 
-  --profile PROFILE  Permission profile: conservative, balanced, autonomous
-                     (default: balanced)
+  --profile PROFILE  Permission profile: sandbox-on, sandbox-off,
+                     autoMode-strict, autoMode-permissive
+                     (default: sandbox-on)
 
   --template NAME    Install template to current directory
                      (minimal, standard, power-user)
@@ -1116,7 +1137,7 @@ Examples:
   $(basename "$0")                    # Interactive mode
   $(basename "$0") --all              # Install everything
   $(basename "$0") --minimal          # Just settings
-  $(basename "$0") --profile autonomous --all
+  $(basename "$0") --profile autoMode-permissive --all
   $(basename "$0") --template standard
 EOF
 }
