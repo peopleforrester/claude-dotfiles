@@ -44,7 +44,7 @@
         "matcher": "Write(*.py)|Edit(*.py)",
         "hooks": [{
           "type": "command",
-          "command": "uv run ruff format \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && uv run ruff format \"$FILE\" 2>/dev/null || true"
         }]
       }
     ]

@@ -11,7 +11,7 @@ Run gofmt and goimports after editing Go files:
 {
   "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.go$\"",
   "type": "command",
-  "command": "gofmt -w \"$CLAUDE_FILE_PATH\" && goimports -w \"$CLAUDE_FILE_PATH\" 2>/dev/null",
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && gofmt -w \"$FILE\" && goimports -w \"$FILE\" 2>/dev/null",
   "async": true
 }
 ```

@@ -11,7 +11,7 @@ Run Prettier after editing JS/TS files:
 {
   "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx|js|jsx)$\"",
   "type": "command",
-  "command": "npx prettier --write \"$CLAUDE_FILE_PATH\"",
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\"",
   "async": true
 }
 ```
@@ -33,7 +33,7 @@ Flag console.log statements in modified files:
 {
   "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx)$\"",
   "type": "command",
-  "command": "grep -n 'console\\.log' \"$CLAUDE_FILE_PATH\" && echo 'WARNING: console.log found'",
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && grep -n 'console\\.log' \"$FILE\" && echo 'WARNING: console.log found'",
   "async": true
 }
 ```

@@ -22,7 +22,7 @@ automatically format files after Claude writes or edits them.
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/my-hook.sh \"$CLAUDE_FILE_PATH\""
+            "command": ".claude/hooks/my-hook.sh"
           }
         ]
       }
@@ -31,10 +31,18 @@ automatically format files after Claude writes or edits them.
 }
 ```
 
-## Available Variables
+## Reading the Tool Invocation Payload
 
-- `$CLAUDE_FILE_PATH` - Path of the file that was written/edited (PostToolUse only)
-- `$CLAUDE_TOOL_NAME` - Name of the tool that was used
+Hooks receive the full tool invocation as JSON on stdin. Read fields with `jq`:
+
+```bash
+#!/usr/bin/env bash
+FILE=$(cat | jq -r '.tool_input.file_path')
+TOOL=$(jq -r '.tool_name' <<< "$INPUT")  # capture stdin once if reading multiple
+# ...
+```
+
+The legacy `$CLAUDE_FILE_PATH` env var is unreliable — see GOTCHAS.md.
 
 ## Hook Types
 

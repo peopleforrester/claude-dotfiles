@@ -70,13 +70,17 @@ Copy the hook configuration into your `settings.json`:
         "matcher": "Write(*.ts)|Edit(*.ts)",
         "hooks": [{
           "type": "command",
-          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\""
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\""
         }]
       }
     ]
   }
 }
 ```
+
+> Hooks receive the tool invocation payload on stdin as JSON. Read the file
+> path with `jq -r '.tool_input.file_path'`. The legacy `$CLAUDE_FILE_PATH`
+> env var is unreliable — see [GOTCHAS.md](../GOTCHAS.md).
 
 ### Method 2: Reference External Script
 
@@ -118,12 +122,25 @@ Bash(git commit *)   # Bash commands starting with "git commit"
 | `Bash(npm *)` | npm commands |
 | `""` (empty) | All operations |
 
-## Available Variables
+## Tool Invocation Payload (stdin)
 
-| Variable | Context | Value |
-|----------|---------|-------|
-| `$CLAUDE_FILE_PATH` | PostToolUse (Write/Edit) | Path of modified file |
-| `$CLAUDE_TOOL_NAME` | All hooks | Name of tool used |
+Hooks receive the full tool invocation as JSON on stdin. Extract fields with
+`jq` rather than relying on environment variables.
+
+| Field | Example | Meaning |
+|-------|---------|---------|
+| `.tool_name` | `"Edit"` | Name of the tool that triggered the hook |
+| `.tool_input.file_path` | `"/path/to/file.ts"` | Path being read/written/edited |
+| `.tool_input.command` | `"git push"` | Bash command being executed |
+
+```bash
+# In a hook command:
+FILE=$(cat | jq -r '.tool_input.file_path')
+TOOL=$(cat | jq -r '.tool_name')   # use a single read in real hooks
+```
+
+The legacy `$CLAUDE_FILE_PATH` env var only populates for a subset of
+PostToolUse invocations and is empty elsewhere; do not rely on it.
 
 ## Creating Custom Hooks
 
@@ -133,7 +150,7 @@ Bash(git commit *)   # Bash commands starting with "git commit"
 #!/usr/bin/env bash
 # my-hook.sh
 
-FILE_PATH="$1"  # or use $CLAUDE_FILE_PATH
+FILE_PATH=$(jq -r '.tool_input.file_path')  # read from stdin JSON
 
 # Your logic here
 echo "Processing: $FILE_PATH"
@@ -148,7 +165,9 @@ exit 0
 #!/usr/bin/env python3
 import sys
 
-file_path = sys.argv[1] if len(sys.argv) > 1 else None
+import json
+payload = json.load(sys.stdin)
+file_path = payload.get("tool_input", {}).get("file_path")
 
 # Your logic here
 print(f"Processing: {file_path}")
@@ -185,11 +204,11 @@ Multiple hooks can run for the same event:
       "hooks": [
         {
           "type": "command",
-          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
         },
         {
           "type": "command",
-          "command": "npx eslint --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx eslint --fix \"$FILE\" 2>/dev/null || true"
         }
       ]
     }
@@ -220,7 +239,8 @@ Add logging to your hook scripts:
 
 ```bash
 #!/usr/bin/env bash
-echo "Hook triggered: $CLAUDE_FILE_PATH" >> /tmp/claude-hooks.log
+FILE=$(jq -r '.tool_input.file_path')
+echo "Hook triggered: $FILE" >> /tmp/claude-hooks.log
 # ... rest of hook
 ```
 

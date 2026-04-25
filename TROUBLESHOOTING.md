@@ -135,7 +135,7 @@ Patterns use glob-style matching:
 Add error handling:
 ```json
 {
-  "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
 }
 ```
 
