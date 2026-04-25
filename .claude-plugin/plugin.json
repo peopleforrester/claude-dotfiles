@@ -7,10 +7,9 @@
   "license": "MIT",
   "compatibility": "Claude Code 2.1+",
 
-  "// COMPONENTS": "Paths relative to plugin root",
+  "// COMPONENTS": "Paths relative to plugin root (commands merged into skills in 0.5.0)",
   "components": {
     "skills": "skills/",
-    "commands": "commands/",
     "agents": "agents/",
     "rules": "rules/",
     "contexts": "contexts/",
@@ -21,7 +20,6 @@
   "// INSTALLATION": "What gets installed by default",
   "install": {
     "skills": true,
-    "commands": true,
     "agents": true,
     "rules": ["common"],
     "contexts": true,

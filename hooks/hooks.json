@@ -12,9 +12,9 @@
       },
       {
         "// PURPOSE": "Block creation of random markdown files outside docs",
-        "matcher": "tool == \"Write\" && tool_input.file_path matches \"\\.md$\" && !(tool_input.file_path matches \"(README|CHANGELOG|CONTRIBUTING|docs/|commands/|agents/|rules/|skills/)\")",
+        "matcher": "tool == \"Write\" && tool_input.file_path matches \"\\.md$\" && !(tool_input.file_path matches \"(README|CHANGELOG|CONTRIBUTING|docs/|agents/|rules/|skills/)\")",
         "type": "message",
-        "message": "WARNING: Creating a new .md file outside standard directories. Documentation should go in docs/, commands/, agents/, rules/, or skills/ directories."
+        "message": "WARNING: Creating a new .md file outside standard directories. Documentation should go in docs/, agents/, rules/, or skills/ directories."
       },
       {
         "// PURPOSE": "Remind about tmux for long-running commands",

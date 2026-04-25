@@ -57,12 +57,10 @@ Specialized persona definitions:
 - database-reviewer, python-reviewer, go-reviewer — Specialized reviewers
 - doc-updater, refactor-cleaner — Maintenance agents
 
-### Commands (commands/)
-Slash commands for common workflows:
-- workflow/ — tdd, verify, orchestrate, learn, checkpoint, eval, sessions, multi-plan, multi-execute
-- quality/ — code-review, security-review, test-coverage, e2e
-- maintenance/ — build-fix, update-docs, refactor-clean
-- learning/ — instinct-status, instinct-import, instinct-export, evolve
+### User-Invocable Skills (skills/)
+The legacy commands/ directory was merged into skills/ in 0.5.0. Slash commands
+are now skills with `user-invocable: true` in their frontmatter, organized by
+category (workflow/, quality/, maintenance/, learning/, git/, docs/).
 
 ### Hooks (hooks/)
 Event-driven automation:

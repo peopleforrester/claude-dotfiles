@@ -27,7 +27,6 @@ console.log('claude-dotfiles test suite\n');
 
 // Structural validation
 run('Validate agents', 'node scripts/ci/validate-agents.js');
-run('Validate commands', 'node scripts/ci/validate-commands.js');
 run('Validate skills', 'node scripts/ci/validate-skills.js');
 run('Validate rules', 'node scripts/ci/validate-rules.js');
 run('Validate hooks', 'node scripts/ci/validate-hooks.js');
@@ -70,8 +69,8 @@ run('Plugin manifest integrity', `node -e "
   assert(plugin.version, 'Missing version');
   assert(plugin.components, 'Missing components');
   assert(plugin.components.skills, 'Missing skills path');
-  assert(plugin.components.commands, 'Missing commands path');
   assert(plugin.components.agents, 'Missing agents path');
+  assert(!plugin.components.commands, 'commands path should not exist (migrated to skills in 0.5.0)');
 "`);
 
 // Unit tests for helper scripts
