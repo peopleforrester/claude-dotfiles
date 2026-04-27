@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Claude Code Hooks Configuration",
-  "description": "Schema for hooks.json configuration files",
+  "description": "Schema for hooks.json configuration files (April 2026 event set)",
   "type": "object",
   "properties": {
     "hooks": {
@@ -9,12 +9,30 @@
       "properties": {
         "PreToolUse": { "$ref": "#/$defs/hookArray" },
         "PostToolUse": { "$ref": "#/$defs/hookArray" },
+        "PostToolUseFailure": { "$ref": "#/$defs/hookArray" },
         "PreCompact": { "$ref": "#/$defs/hookArray" },
+        "PostCompact": { "$ref": "#/$defs/hookArray" },
         "SessionStart": { "$ref": "#/$defs/hookArray" },
         "SessionEnd": { "$ref": "#/$defs/hookArray" },
         "Stop": { "$ref": "#/$defs/hookArray" },
+        "StopFailure": { "$ref": "#/$defs/hookArray" },
         "Notification": { "$ref": "#/$defs/hookArray" },
-        "SubagentStop": { "$ref": "#/$defs/hookArray" }
+        "SubagentStart": { "$ref": "#/$defs/hookArray" },
+        "SubagentStop": { "$ref": "#/$defs/hookArray" },
+        "InstructionsLoaded": { "$ref": "#/$defs/hookArray" },
+        "UserPromptSubmit": { "$ref": "#/$defs/hookArray" },
+        "PermissionRequest": { "$ref": "#/$defs/hookArray" },
+        "PermissionDenied": { "$ref": "#/$defs/hookArray" },
+        "TaskCreated": { "$ref": "#/$defs/hookArray" },
+        "TaskCompleted": { "$ref": "#/$defs/hookArray" },
+        "TeammateIdle": { "$ref": "#/$defs/hookArray" },
+        "ConfigChange": { "$ref": "#/$defs/hookArray" },
+        "CwdChanged": { "$ref": "#/$defs/hookArray" },
+        "FileChanged": { "$ref": "#/$defs/hookArray" },
+        "WorktreeCreate": { "$ref": "#/$defs/hookArray" },
+        "WorktreeRemove": { "$ref": "#/$defs/hookArray" },
+        "Elicitation": { "$ref": "#/$defs/hookArray" },
+        "ElicitationResult": { "$ref": "#/$defs/hookArray" }
       },
       "additionalProperties": false
     }
@@ -34,8 +52,8 @@
         },
         "type": {
           "type": "string",
-          "enum": ["command", "message"],
-          "description": "Hook type: command runs a shell command, message shows text"
+          "enum": ["command", "message", "http", "prompt", "agent"],
+          "description": "Hook handler type: command runs a shell command, message shows text, http posts JSON to a URL, prompt injects text into the next model turn, agent delegates to a named subagent"
         },
         "command": {
           "type": "string",
@@ -45,10 +63,40 @@
           "type": "string",
           "description": "Message to display (for type: message)"
         },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "HTTP endpoint (for type: http)"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Prompt text to inject (for type: prompt)"
+        },
+        "agent": {
+          "type": "string",
+          "description": "Subagent name to invoke (for type: agent)"
+        },
+        "if": {
+          "type": "string",
+          "description": "Conditional expression gating execution"
+        },
         "async": {
           "type": "boolean",
           "default": false,
           "description": "Run asynchronously without blocking"
+        },
+        "once": {
+          "type": "boolean",
+          "default": false,
+          "description": "Fire only the first time conditions are met in a session"
+        },
+        "shell": {
+          "type": "string",
+          "description": "Shell interpreter to use (e.g., bash, zsh)"
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "Status line message to show while the hook is running"
         },
         "timeout": {
           "type": "integer",

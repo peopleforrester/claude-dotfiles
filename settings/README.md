@@ -78,7 +78,7 @@ Hooks can be added to any profile. See the power-user template for examples:
         "matcher": "Write(*.ts)|Edit(*.ts)",
         "hooks": [{
           "type": "command",
-          "command": "npx prettier --write \"$CLAUDE_FILE_PATH\""
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\""
         }]
       }
     ]

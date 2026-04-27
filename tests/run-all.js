@@ -27,7 +27,6 @@ console.log('claude-dotfiles test suite\n');
 
 // Structural validation
 run('Validate agents', 'node scripts/ci/validate-agents.js');
-run('Validate commands', 'node scripts/ci/validate-commands.js');
 run('Validate skills', 'node scripts/ci/validate-skills.js');
 run('Validate rules', 'node scripts/ci/validate-rules.js');
 run('Validate hooks', 'node scripts/ci/validate-hooks.js');
@@ -36,11 +35,8 @@ run('Validate hooks', 'node scripts/ci/validate-hooks.js');
 run('Parse JSON configs', `node -e "
   const fs = require('fs');
   const path = require('path');
-  const files = [
+  const fixed = [
     'settings/settings.json',
-    'settings/permissions/balanced.json',
-    'settings/permissions/conservative.json',
-    'settings/permissions/autonomous.json',
     '.claude-plugin/plugin.json',
     '.claude-plugin/marketplace.json',
     'hooks/hooks.json',
@@ -48,6 +44,11 @@ run('Parse JSON configs', `node -e "
     'schemas/plugin.schema.json',
     'schemas/skill.schema.json',
   ];
+  const profilesDir = path.join('${rootDir.replace(/'/g, "\\'")}', 'settings/permissions');
+  const profileFiles = fs.readdirSync(profilesDir)
+    .filter(f => f.endsWith('.json'))
+    .map(f => path.join('settings/permissions', f));
+  const files = [...fixed, ...profileFiles];
   let errors = 0;
   for (const f of files) {
     try {
@@ -68,9 +69,15 @@ run('Plugin manifest integrity', `node -e "
   assert(plugin.version, 'Missing version');
   assert(plugin.components, 'Missing components');
   assert(plugin.components.skills, 'Missing skills path');
-  assert(plugin.components.commands, 'Missing commands path');
   assert(plugin.components.agents, 'Missing agents path');
+  assert(!plugin.components.commands, 'commands path should not exist (migrated to skills in 0.5.0)');
 "`);
+
+// Unit tests for helper scripts
+run('Unit: token-count parsing', 'python3 tests/test_token_count.py');
+run('Unit: protect-sensitive-files', 'python3 tests/test_protect_sensitive_files.py');
+run('Unit: validate-agents model enum', 'node tests/test_validate_agents.js');
+run('Unit: README inventory matches filesystem', 'node tests/test_inventory.js');
 
 // Schema validation
 run('Schema structure', `node -e "

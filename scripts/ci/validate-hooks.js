@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const hooksDir = path.join(__dirname, '..', '..', 'hooks');
+const schemaPath = path.join(__dirname, '..', '..', 'schemas', 'hooks.schema.json');
 let errors = 0;
 let fileCount = 0;
 
@@ -14,7 +15,12 @@ if (!fs.existsSync(hooksDir)) {
   process.exit(0);
 }
 
-const validHookTypes = ['PreToolUse', 'PostToolUse', 'PreCompact', 'SessionStart', 'SessionEnd', 'Stop'];
+// Source of truth for valid hook events: the schema. Hardcoding a subset
+// here was the M1 drift bug — events like InstructionsLoaded, PostCompact,
+// and UserPromptSubmit triggered "Unknown hook type" warnings despite being
+// valid per April 2026 schema.
+const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+const validHookTypes = Object.keys(schema.properties.hooks.properties);
 
 function walkDir(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });

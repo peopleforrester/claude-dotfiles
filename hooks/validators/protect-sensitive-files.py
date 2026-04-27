@@ -24,9 +24,10 @@ of protection for sensitive files provides defense-in-depth:
 
 HOW IT WORKS:
 1. Claude Code calls this script BEFORE reading/writing/editing a file
-2. The script checks if the file matches any protected pattern
-3. If protected: Exit with code 1 (blocks the operation)
-4. If not protected: Exit with code 0 (allows the operation)
+2. The script reads the tool invocation payload from stdin as JSON
+3. It extracts tool_input.file_path and checks it against protected patterns
+4. If protected OR the path is missing: exit 1 (fail-closed, blocks operation)
+5. If safe: exit 0 (allows the operation)
 
 CONFIGURATION:
 Add this hook to your settings.json:
@@ -38,12 +39,15 @@ Add this hook to your settings.json:
         "matcher": "Read(*)|Write(*)|Edit(*)",
         "hooks": [{
           "type": "command",
-          "command": "python3 ~/.claude/hooks/protect-sensitive-files.py \"$CLAUDE_FILE_PATH\""
+          "command": "python3 ~/.claude/hooks/protect-sensitive-files.py"
         }]
       }
     ]
   }
 }
+
+The hook reads stdin JSON — it does not accept command-line arguments or
+the $CLAUDE_FILE_PATH env var (both are unreliable; see GOTCHAS.md).
 
 MATCHER EXPLAINED:
 "Read(*)|Write(*)|Edit(*)"
@@ -52,9 +56,10 @@ MATCHER EXPLAINED:
 - Edit(*): Matches any file edit operation
 - | (pipe): OR operator - matches any of these
 
-ENVIRONMENT VARIABLE:
-$CLAUDE_FILE_PATH: Set by Claude Code to the path being accessed
-This is how the hook knows which file is being operated on.
+FAIL-CLOSED BEHAVIOR:
+If stdin is empty, malformed, or missing tool_input.file_path, the hook
+exits 1 (blocks the operation). This prevents silent bypass in scenarios
+where Claude Code does not populate the expected fields.
 
 CUSTOMIZATION:
 Modify PROTECTED_PATTERNS and PROTECTED_DIRECTORIES to customize what's blocked.
@@ -68,8 +73,8 @@ The default configuration protects common credential and key file locations.
 # This script must run on any system with Python 3 installed.
 # =============================================================================
 
-import sys           # For command-line arguments and exit codes
-import os            # For path operations (not used but commonly needed)
+import json          # For parsing the tool invocation payload from stdin
+import sys           # For stdin, stderr, and exit codes
 from pathlib import Path  # Modern path handling (cross-platform)
 
 # =============================================================================
@@ -313,61 +318,67 @@ def main():
     """
     Main entry point for the protection hook.
 
-    Reads the filepath from command-line arguments, checks if it's protected,
-    and exits with appropriate code.
+    Reads the tool invocation payload from stdin as JSON, extracts
+    tool_input.file_path, and decides whether to allow or block the operation.
 
     EXIT CODES:
     - 0: File is not protected, operation is allowed
-    - 1: File is protected, operation is blocked
+    - 1: File is protected OR payload is missing/malformed (fail-closed)
 
-    USAGE:
-        python protect-sensitive-files.py /path/to/file
-
-    The filepath is typically passed by Claude Code via $CLAUDE_FILE_PATH
-    environment variable, which is substituted in the hook command.
+    STDIN FORMAT (as supplied by Claude Code):
+        {"tool_input": {"file_path": "/path/to/file", ...}, ...}
     """
     # =========================================================================
-    # ARGUMENT VALIDATION
+    # READ AND PARSE STDIN PAYLOAD
     # =========================================================================
-    # Check that we received a filepath argument
+    # Claude Code passes the full tool invocation as JSON on stdin.
+    # Any failure here blocks the operation — we never default-allow.
     # =========================================================================
-    if len(sys.argv) < 2:
-        print("Usage: protect-sensitive-files.py <filepath>", file=sys.stderr)
-        # Don't block if no filepath provided - this shouldn't happen
-        # but we don't want to break Claude Code if it does
-        sys.exit(0)
+    try:
+        raw = sys.stdin.read()
+    except Exception as e:
+        print(f"BLOCKED: Could not read stdin: {e}", file=sys.stderr)
+        sys.exit(1)
 
-    filepath = sys.argv[1]
+    if not raw.strip():
+        print("BLOCKED: Empty stdin; expected tool invocation JSON",
+              file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        payload = json.loads(raw)
+    except json.JSONDecodeError as e:
+        print(f"BLOCKED: Malformed JSON on stdin: {e}", file=sys.stderr)
+        sys.exit(1)
 
     # =========================================================================
-    # HANDLE EMPTY OR PLACEHOLDER VALUES
+    # EXTRACT file_path WITH FAIL-CLOSED DEFAULTS
     # =========================================================================
-    # If Claude Code passes an empty string or the literal placeholder,
-    # allow the operation (this means no file is being accessed)
+    # If either tool_input or file_path is missing/empty, block the operation.
+    # A silent default-allow here was the pre-April-2026 bypass bug.
     # =========================================================================
-    if not filepath or filepath == "$CLAUDE_FILE_PATH":
-        sys.exit(0)
+    tool_input = payload.get("tool_input") if isinstance(payload, dict) else None
+    if not isinstance(tool_input, dict):
+        print("BLOCKED: Missing tool_input in stdin payload", file=sys.stderr)
+        sys.exit(1)
+
+    filepath = tool_input.get("file_path")
+    if not filepath or not isinstance(filepath, str):
+        print("BLOCKED: Missing or empty tool_input.file_path",
+              file=sys.stderr)
+        sys.exit(1)
 
     # =========================================================================
     # CHECK PROTECTION STATUS
     # =========================================================================
-    # Run the protection check and handle the result
-    # =========================================================================
     protected, reason = is_protected(filepath)
 
     if protected:
-        # File is protected - print reason and exit with error
-        # This output will be shown to the user explaining why the
-        # operation was blocked
         print(f"BLOCKED: {reason}", file=sys.stderr)
         print(f"File: {filepath}", file=sys.stderr)
         sys.exit(1)
 
-    # =========================================================================
-    # ALLOW OPERATION
-    # =========================================================================
     # File is not protected, allow the operation to proceed
-    # =========================================================================
     sys.exit(0)
 
 

@@ -292,9 +292,9 @@ def extract_existing_token_comment(content: str) -> Optional[int]:
         ~?            = Optional tilde (approximate marker)
         (\d+)         = Capture one or more digits (the count)
     """
-    match = re.search(r'<!--\s*Tokens:\s*~?(\d+)', content)
+    match = re.search(r'<!--\s*Tokens:\s*~?([\d,]+)', content)
     if match:
-        return int(match.group(1))
+        return int(match.group(1).replace(',', ''))
     return None
 
 

@@ -1,0 +1,61 @@
+{
+  "// PROFILE": "autoMode-permissive — defaultMode auto with broad allowOn list",
+  "// USE CASE": "Trusted automation. Auto mode lets routine edits, reads, and dev bash through without prompting; only destructive or external-network operations escalate.",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/credentials*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Bash(rm -rf /)",
+      "Bash(sudo *)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | bash)"
+    ],
+    "defaultMode": "auto"
+  },
+
+  "auto": {
+    "// CLASSIFIER": "Permissive — let routine work through, escalate only destructive bash and external network",
+    "allowOn": [
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Bash(npm *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(uv *)",
+      "Bash(pytest *)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)",
+      "Bash(go *)",
+      "Bash(cargo *)"
+    ],
+    "escalateOn": [
+      "Bash(rm *)",
+      "Bash(git push *)",
+      "Bash(git merge *)",
+      "WebFetch(*)"
+    ]
+  },
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": ["git"]
+  },
+
+  "includeCoAuthoredBy": true
+}

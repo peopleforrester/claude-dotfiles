@@ -2,6 +2,7 @@
   "// ABOUT": "GitHub MCP Server - Repository and issue management",
   "// DOCS": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
   "// INSTALL": "npx @modelcontextprotocol/server-github",
+  "// NOTE_2026": "GitHub now ships an official Go-based server at https://github.com/github/github-mcp-server. The npx package below still works but the Go binary is the recommended option for production deployments. Replace 'command' and 'args' with the Go binary path when you switch.",
 
   "mcpServers": {
     "github": {

@@ -1,0 +1,23 @@
+{
+  "// TEMPLATE": "Prompt handler type — injects text into the model's next turn",
+  "// USAGE": "The 'prompt' handler type is useful for policy gates, session context injection, and dynamic instructions",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "// PURPOSE": "Inject security reminder before any file write in sensitive dirs",
+        "matcher": "(tool == \"Write\" || tool == \"Edit\") && tool_input.file_path matches \"(auth|security|crypto)/\"",
+        "type": "prompt",
+        "prompt": "SECURITY: You are editing a security-sensitive file. Double-check for injection vulnerabilities, credential exposure, and OWASP Top 10 before proceeding."
+      }
+    ],
+    "SessionStart": [
+      {
+        "// PURPOSE": "Load dynamic project context at session start",
+        "type": "prompt",
+        "prompt": "Read PROJECT_STATE.md if it exists, then reconcile against git log before starting work.",
+        "once": true
+      }
+    ]
+  }
+}

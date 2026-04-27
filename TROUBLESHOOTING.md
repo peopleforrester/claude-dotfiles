@@ -135,7 +135,7 @@ Patterns use glob-style matching:
 Add error handling:
 ```json
 {
-  "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
 }
 ```
 
@@ -143,7 +143,7 @@ Add error handling:
 
 - Check [README.md](./README.md) for documentation links
 - Open an issue: https://github.com/peopleforrester/claude-dotfiles/issues
-- Review Claude Code docs: https://docs.anthropic.com/claude-code
+- Review Claude Code docs: https://code.claude.com/docs/en
 
 ## Debug Mode
 

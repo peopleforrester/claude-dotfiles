@@ -13,7 +13,7 @@
 **Production-ready configurations for Claude Code**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Claude Code 2.1+](https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet)](https://docs.anthropic.com/claude-code)
+[![Claude Code 2.1+](https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet)](https://code.claude.com/docs/en)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#compatibility)
 [![Built with Claude](https://img.shields.io/badge/Built%20with-Claude%20Code-orange)](BUILT_WITH_CLAUDE.md)
 
@@ -103,12 +103,11 @@ make install-minimal # Just essentials
 
 | You Get | What It Does | Files |
 |---------|--------------|-------|
-| **[CLAUDE.md Templates](./claude-md/)** | Tell Claude about your project's stack, commands, and conventions | 13 templates |
+| **[CLAUDE.md Templates](./claude-md/)** | Tell Claude about your project's stack, commands, and conventions | 15 templates |
 | **[Rules](./rules/)** | Always-follow constraints (common + language-specific) | 21 rules |
 | **[Agents](./agents/)** | Specialized personas (planner, architect, reviewers, spec-interviewer) | 15 agents |
-| **[Commands](./commands/)** | Slash commands (/spec-new, /tdd, /verify, /orchestrate, /learn) | 26 commands |
-| **[Skills](./skills/)** | Pattern libraries (React, Next.js, FastAPI, Django, Spring Boot, Go, TS, Python) | 29 skills |
-| **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 13 hooks |
+| **[Skills](./skills/)** | User-invocable slash commands AND pattern libraries (commands merged into skills in 0.5.0) | 70 skills |
+| **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 14 hooks |
 | **[Settings](./settings/)** | Control what Claude can do automatically | 3 profiles |
 | **[MCP Configs](./mcp/)** | Connect Claude to GitHub, databases, Slack | 10 configs |
 
@@ -202,19 +201,25 @@ Specialized personas you can invoke for focused tasks:
 
 ## 🛡️ Permission Profiles
 
-Control how much autonomy Claude has:
+Four profiles compose the two April-2026 primitives — `sandbox.*` (isolation)
+and `defaultMode: auto` (classifier-driven decisions):
 
-| Profile | Claude Can... | Best For |
-|---------|---------------|----------|
-| **Conservative** | Read files, ask before changes | Learning, sensitive projects |
-| **Balanced** ⭐ | Edit files, ask before shell commands | Daily development |
-| **Autonomous** | Most actions without asking | Trusted automation |
+| Profile | Sandbox | Default Mode | Best For |
+|---------|---------|--------------|----------|
+| **sandbox-on** ⭐ | yes | `auto` | Trusted automation with isolation |
+| **sandbox-off** | no | `acceptEdits` | Local trusted dev, no isolation |
+| **autoMode-strict** | yes | `auto` | First time on auto mode |
+| **autoMode-permissive** | yes | `auto` | Routine work flows through |
 
 All profiles block access to `.env`, `~/.ssh/`, `~/.aws/`, and dangerous commands.
+The legacy `conservative`/`balanced`/`autonomous` profiles were removed in 0.5.0.
 
 ```bash
-./install.sh --profile balanced  # Recommended
+./install.sh --profile sandbox-on  # Recommended
 ```
+
+See [`settings/permissions/README.md`](./settings/permissions/README.md) for
+when to choose which profile.
 
 ---
 

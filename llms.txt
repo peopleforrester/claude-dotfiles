@@ -57,12 +57,10 @@ Specialized persona definitions:
 - database-reviewer, python-reviewer, go-reviewer — Specialized reviewers
 - doc-updater, refactor-cleaner — Maintenance agents
 
-### Commands (commands/)
-Slash commands for common workflows:
-- workflow/ — tdd, verify, orchestrate, learn, checkpoint, eval, sessions, multi-plan, multi-execute
-- quality/ — code-review, security-review, test-coverage, e2e
-- maintenance/ — build-fix, update-docs, refactor-clean
-- learning/ — instinct-status, instinct-import, instinct-export, evolve
+### User-Invocable Skills (skills/)
+The legacy commands/ directory was merged into skills/ in 0.5.0. Slash commands
+are now skills with `user-invocable: true` in their frontmatter, organized by
+category (workflow/, quality/, maintenance/, learning/, git/, docs/).
 
 ### Hooks (hooks/)
 Event-driven automation:
@@ -72,9 +70,10 @@ Event-driven automation:
 
 ### Settings (settings/)
 settings.json permission profiles:
-- conservative — Maximum safety, manual approval
-- balanced — Recommended for most users
-- autonomous — Minimal interruption for experienced users
+- sandbox-on — defaultMode: auto inside an isolated bash sandbox
+- sandbox-off — acceptEdits with no isolation, bash always asks
+- autoMode-strict — defaultMode: auto, escalate writes/edits/bash/network
+- autoMode-permissive — defaultMode: auto, allow routine work, escalate destructive ops
 
 ### MCP Servers (mcp/)
 Model Context Protocol configurations for GitHub, Slack, Notion, PostgreSQL, and more.
@@ -113,6 +112,6 @@ node scripts/ci/validate-all.js     # CI validators
 ## Links
 
 - Repository: https://github.com/peopleforrester/claude-dotfiles
-- Claude Code Docs: https://docs.anthropic.com/claude-code
+- Claude Code Docs: https://code.claude.com/docs/en
 - Skills Spec: https://github.com/anthropics/skills
 - MCP Spec: https://modelcontextprotocol.io

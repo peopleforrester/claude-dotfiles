@@ -28,8 +28,8 @@ scripts/            # Utility scripts
 
 ## Code Standards
 
-- CLAUDE.md templates: 60-100 lines optimal, max 150
-- SKILL.md files: YAML frontmatter with name, description required
+- CLAUDE.md templates: 60-100 lines optimal, max 150 (upstream Claude Code truncates around 200 lines)
+- SKILL.md files: YAML frontmatter — `name` required, `description` recommended
 - JSON configs: Use `"// KEY":` comment pattern
 - Bash scripts: POSIX-compliant, work on macOS + Linux
 - Python scripts: 3.12+, minimal external dependencies
@@ -53,14 +53,14 @@ description: |                  # Required, 1024 chars max
 ### settings.json
 - Use `"// SECTION":` for documentation comments
 - Always include security deny list
-- Three profiles: conservative, balanced, autonomous
+- Four profiles: sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive
 
 ## Gotchas
 
 - settings.json: `~/.claude/` (global) vs `.claude/` (project)
 - Skills: `~/.claude/skills/` (global) vs `.claude/skills/` (project)
 - CLAUDE.md inheritance: reads from repo root AND parent directories
-- Hooks `$CLAUDE_FILE_PATH`: only available in PostToolUse
+- Hooks: `$CLAUDE_FILE_PATH` is unreliable; read the file path from stdin JSON via `jq -r '.tool_input.file_path'`
 - MCP servers: require Claude Desktop restart after config changes
 
 ## Testing
@@ -70,3 +70,9 @@ mkdir /tmp/test-project && cd /tmp/test-project
 cp -r ~/.claude-dotfiles/templates/standard/* .
 claude  # Ask Claude to describe the setup
 ```
+
+## References
+
+- Skills Spec: https://github.com/anthropics/skills
+- Claude Code Docs: https://code.claude.com/docs/en
+- MCP Spec: https://modelcontextprotocol.io

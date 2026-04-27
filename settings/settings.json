@@ -1,8 +1,8 @@
 {
   "// ABOUT": "Complete reference configuration for Claude Code settings.json",
   "// DOCS": "See README.md for detailed documentation of each option",
-  "// MODEL": "The Claude model to use for responses",
-  "model": "claude-sonnet-4-5-20250929",
+  "// MODEL": "The Claude model to use for responses (April 2026 GA: opus 4.7, sonnet 4.7, haiku 4.5)",
+  "model": "claude-sonnet-4-7",
 
   "// PERMISSIONS": "Controls what Claude can do automatically vs needs to ask",
   "permissions": {
@@ -34,7 +34,8 @@
       "Bash(rm *)"
     ],
 
-    "// DENY": "Operations that are never allowed",
+    "// DENY": "Operations that are never allowed (defense-in-depth, not a sandbox)",
+    "// DENY_NOTE": "Patterns are simple matchers — easily defeated by alternate flags (rm -r -f), absolute paths (/bin/rm), long flags (rm --recursive --force), or different binaries. Pair with the sandbox.* config and protect-sensitive-files.py hook for real isolation.",
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -90,7 +91,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
           }
         ]
       },
@@ -100,7 +101,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
           }
         ]
       },
@@ -110,7 +111,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "black \"$CLAUDE_FILE_PATH\" 2>/dev/null && ruff check --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && black \"$FILE\" 2>/dev/null && ruff check --fix \"$FILE\" 2>/dev/null || true"
           }
         ]
       }

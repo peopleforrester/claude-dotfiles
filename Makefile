@@ -17,7 +17,7 @@ tokens:
 	@python3 scripts/token-count.py .
 
 # Run all tests
-test: validate tokens test-install test-json test-shell
+test: validate tokens test-install test-json test-shell lint-shell
 	@echo "✅ All tests passed!"
 
 # Test JSON syntax with Python
@@ -35,6 +35,16 @@ test-shell:
 		fi; \
 	done
 	@echo "✓ All shell scripts valid"
+
+# Lint shell scripts with shellcheck (skip silently if not installed)
+lint-shell:
+	@echo "🔍 Linting shell scripts with shellcheck..."
+	@if command -v shellcheck >/dev/null 2>&1; then \
+		find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" -print0 \
+			| xargs -0 shellcheck --severity=warning && echo "✓ shellcheck passed"; \
+	else \
+		echo "⚠ shellcheck not installed; install via 'brew install shellcheck' or 'apt install shellcheck'"; \
+	fi
 
 # Test install script in dry-run mode
 test-install:

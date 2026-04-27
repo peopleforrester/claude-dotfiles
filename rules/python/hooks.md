@@ -11,7 +11,7 @@ Run ruff for linting and formatting after editing Python files:
 {
   "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.py$\"",
   "type": "command",
-  "command": "ruff check --fix \"$CLAUDE_FILE_PATH\" && ruff format \"$CLAUDE_FILE_PATH\"",
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && ruff check --fix \"$FILE\" && ruff format \"$FILE\"",
   "async": true
 }
 ```
@@ -22,7 +22,7 @@ Run mypy or pyright after edits:
 {
   "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.py$\"",
   "type": "command",
-  "command": "mypy \"$CLAUDE_FILE_PATH\" --ignore-missing-imports 2>&1 | head -20",
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && mypy \"$FILE\" --ignore-missing-imports 2>&1 | head -20",
   "async": true
 }
 ```
@@ -33,7 +33,7 @@ Flag print() statements (use logging module instead):
 {
   "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.py$\"",
   "type": "command",
-  "command": "grep -n 'print(' \"$CLAUDE_FILE_PATH\" | grep -v '# noqa' && echo 'WARNING: print() found, use logging instead'",
+  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && grep -n 'print(' \"$FILE\" | grep -v '# noqa' && echo 'WARNING: print() found, use logging instead'",
   "async": true
 }
 ```

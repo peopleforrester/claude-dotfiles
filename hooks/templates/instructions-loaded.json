@@ -1,0 +1,22 @@
+{
+  "// TEMPLATE": "InstructionsLoaded hook — runs once when CLAUDE.md and rules are loaded",
+  "// USAGE": "Merge into your hooks.json under hooks.InstructionsLoaded",
+
+  "hooks": {
+    "InstructionsLoaded": [
+      {
+        "// PURPOSE": "Log which instructions files were loaded for debugging",
+        "type": "command",
+        "command": "echo \"[$(date +%H:%M:%S)] Instructions loaded\" >> /tmp/claude-hooks.log",
+        "async": true,
+        "once": true
+      },
+      {
+        "// PURPOSE": "Inject project-specific context from a dynamic source",
+        "type": "prompt",
+        "prompt": "Session initialized. Check PROJECT_STATE.md if it exists before starting work.",
+        "once": true
+      }
+    ]
+  }
+}

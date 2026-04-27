@@ -84,7 +84,7 @@ After tool execution, look for learnable patterns:
 {
   "matcher": "tool == \"Edit\" && result.success == true",
   "type": "command",
-  "command": "echo 'Pattern observed: successful edit to $CLAUDE_FILE_PATH'",
+  "command": "FILE=$(jq -r '.tool_input.file_path') && echo \"Pattern observed: successful edit to $FILE\"",
   "async": true
 }
 ```
