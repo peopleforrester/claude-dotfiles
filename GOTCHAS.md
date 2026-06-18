@@ -60,17 +60,20 @@ Training-data-era tutorials frequently contradict these.
 
 ## Model IDs
 
-April 2026 GA models (use these in `settings.json` and skill `model:` fields):
+June 2026 GA models (use these in `settings.json` and skill `model:` fields):
 
 | Tier   | Model ID                           |
 |--------|------------------------------------|
-| Opus   | `claude-opus-4-7`                  |
-| Sonnet | `claude-sonnet-4-7`                |
+| Opus   | `claude-opus-4-8`                  |
+| Sonnet | `claude-sonnet-4-6`                |
 | Haiku  | `claude-haiku-4-5-20251001`        |
 
-Old IDs like `claude-sonnet-4-5-20250929` still resolve but should be replaced
-to keep behavior current. Short forms (`opus`, `sonnet`, `haiku`) are accepted
-in agent frontmatter and resolve to the current GA model in that tier.
+There is no `claude-sonnet-4-7` — the Sonnet line runs 4.5 → 4.6, and a
+nonexistent ID 404s at runtime. `claude-opus-4-7` is still active but Opus 4.8
+is the current flagship. Old IDs like `claude-sonnet-4-5-20250929` still resolve
+but should be replaced to keep behavior current. Short forms (`opus`, `sonnet`,
+`haiku`) are accepted in agent frontmatter and resolve to the current GA model
+in that tier.
 
 ## Deny List Limits
 

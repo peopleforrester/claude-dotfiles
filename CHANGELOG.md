@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-06-18
+
+### Fixed
+- **Invalid default model ID.** `settings/settings.json` set `claude-sonnet-4-7`,
+  which does not exist (the Sonnet line is 4.5 → 4.6) and would 404 at runtime.
+  Corrected the default to `claude-sonnet-4-6`.
+- Refreshed model IDs to the June 2026 GA lineup (Opus 4.8, Sonnet 4.6, Haiku 4.5)
+  in `GOTCHAS.md`, `schemas/skill.schema.json`, the agent-model validator's example
+  text, and its test fixtures — removing all references to the nonexistent
+  `claude-sonnet-4-7`.
+
+### Changed
+- Bumped dev dependencies: `markdownlint-cli` 0.48 → 0.49,
+  `@commitlint/config-conventional` 19 → 21.
+- Raised the Node engine floor to `>=22.12.0` to match
+  `@commitlint/config-conventional` 21's requirement.
+
 ## [0.5.0] - 2026-04-26
 
 ### Added

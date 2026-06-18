@@ -70,3 +70,6 @@ build/
 # Logs
 *.log
 logs/
+
+# Local Claude Code session history (do not push)
+.claude-history/

@@ -1,8 +1,8 @@
 {
   "// ABOUT": "Complete reference configuration for Claude Code settings.json",
   "// DOCS": "See README.md for detailed documentation of each option",
-  "// MODEL": "The Claude model to use for responses (April 2026 GA: opus 4.7, sonnet 4.7, haiku 4.5)",
-  "model": "claude-sonnet-4-7",
+  "// MODEL": "The Claude model to use for responses (June 2026 GA: opus 4.8, sonnet 4.6, haiku 4.5). Omit to inherit Claude Code's default.",
+  "model": "claude-sonnet-4-6",
 
   "// PERMISSIONS": "Controls what Claude can do automatically vs needs to ask",
   "permissions": {
