@@ -1,4 +1,4 @@
-# Claude Code Gotchas — April 2026
+# Claude Code Gotchas — July 2026
 
 Non-obvious behaviors verified against `code.claude.com/docs/en` as of 2026-04.
 Training-data-era tutorials frequently contradict these.
@@ -60,7 +60,7 @@ Training-data-era tutorials frequently contradict these.
 
 ## Model IDs
 
-June 2026 GA models (use these in `settings.json` and skill `model:` fields):
+July 2026 GA models (use these in `settings.json` and skill `model:` fields):
 
 | Tier   | Model ID                           |
 |--------|------------------------------------|

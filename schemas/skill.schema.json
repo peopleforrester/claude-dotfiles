@@ -27,7 +27,7 @@
     },
     "model": {
       "type": "string",
-      "description": "Recommended model ID (June 2026 GA: claude-opus-4-8, claude-sonnet-4-6, claude-haiku-4-5-20251001)"
+      "description": "Recommended model ID (July 2026 GA: claude-opus-4-8, claude-sonnet-4-6, claude-haiku-4-5-20251001)"
     },
     "allowed-tools": {
       "type": "array",
