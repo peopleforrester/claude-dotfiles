@@ -48,7 +48,7 @@ function expect(label, cond) {
 console.log('tests/test_validate_agents.js');
 
 // Short names still accepted
-for (const m of ['opus', 'sonnet', 'haiku']) {
+for (const m of ['opus', 'sonnet', 'haiku', 'fable']) {
   const root = makeTempAgent(m);
   const { code, out } = runValidator(root);
   expect(`short name '${m}' accepted without warning`,
@@ -57,8 +57,10 @@ for (const m of ['opus', 'sonnet', 'haiku']) {
 
 // Full model IDs accepted
 const fullIds = [
+  'claude-opus-5',
+  'claude-sonnet-5',
+  'claude-fable-5',
   'claude-opus-4-8',
-  'claude-opus-4-7',
   'claude-sonnet-4-6',
   'claude-haiku-4-5-20251001',
 ];

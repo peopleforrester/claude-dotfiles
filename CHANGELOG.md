@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-02
+
+Reconciles the repo against the live Claude Code lineup and CLI (v2.1.220),
+verified against `platform.claude.com` and `code.claude.com/docs/en` on
+2026-08-02. Backed by the research spike
+`mrf-knowledge/claude-code/2026-08-02_config-best-practices-august-2026.md`.
+
+### Fixed
+- **Agent-model validator rejected current model IDs.** The regex in
+  `scripts/ci/validate-agents.js` required two numeric segments
+  (`^claude-...-\d+-\d+`), so single-segment IDs like `claude-opus-5`,
+  `claude-sonnet-5`, and `claude-fable-5` were flagged "Unknown model".
+  Widened the pattern and added the `fable` short form. Covered by new
+  fixtures in `tests/test_validate_agents.js`.
+
+### Changed
+- **Default model → the `sonnet` alias** in `settings/settings.json`
+  (was the now-legacy `claude-sonnet-4-6`). An alias tracks the current
+  generation and will not go stale; on the Anthropic API `sonnet` resolves
+  to Sonnet 5 and `opus` to Opus 5 as of August 2026.
+- Refreshed the `GOTCHAS.md` model table to the August 2026 lineup
+  (Fable 5, Opus 5, Sonnet 5, Haiku 4.5), added a provider-specific alias
+  resolution table, and marked Opus 4.8/4.7/4.6 and Sonnet 4.6/4.5 legacy.
+- Updated `schemas/skill.schema.json` model description to the August lineup
+  and clarified that aliases are accepted.
+
+### Added
+- `DirectoryAdded` hook event (CLI v2.1.219) to `schemas/hooks.schema.json`
+  and the GOTCHAS event list.
+
+### Security
+- Resolved 4 newly-disclosed high-severity advisories in the dev-dependency
+  chain (`brace-expansion` GHSA-3jxr-9vmj-r5cp / GHSA-mh99-v99m-4gvg,
+  `js-yaml` GHSA-52cp-r559-cp3m, `linkify-it` GHSA-v245-v573-v5vm) via
+  `npm audit fix` (lockfile-only; no declared-range change). `npm audit`
+  now reports 0 vulnerabilities.
+
 ## [0.5.2] - 2026-07-12
 
 ### Changed

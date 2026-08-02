@@ -1,8 +1,8 @@
 {
   "// ABOUT": "Complete reference configuration for Claude Code settings.json",
   "// DOCS": "See README.md for detailed documentation of each option",
-  "// MODEL": "The Claude model to use for responses (July 2026 GA: opus 4.8, sonnet 4.6, haiku 4.5). Omit to inherit Claude Code's default.",
-  "model": "claude-sonnet-4-6",
+  "// MODEL": "The model for responses. An alias (opus|sonnet|haiku|fable) tracks the current generation and will not go stale; on the Anthropic API as of Aug 2026 sonnet=Sonnet 5, opus=Opus 5. Pin a full ID (e.g. claude-sonnet-5) only when a generation is required; omit to inherit Claude Code's default.",
+  "model": "sonnet",
 
   "// PERMISSIONS": "Controls what Claude can do automatically vs needs to ask",
   "permissions": {

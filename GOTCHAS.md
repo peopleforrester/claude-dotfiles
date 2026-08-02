@@ -1,6 +1,8 @@
-# Claude Code Gotchas — July 2026
+# Claude Code Gotchas — August 2026
 
-Non-obvious behaviors verified against `code.claude.com/docs/en` as of 2026-04.
+Model IDs and aliases verified live against `platform.claude.com` and
+`code.claude.com/docs/en` on 2026-08-02 (CLI v2.1.220). Other behaviors were
+verified against `code.claude.com/docs/en` as of 2026-04.
 Training-data-era tutorials frequently contradict these.
 
 ## Hooks
@@ -14,9 +16,10 @@ Training-data-era tutorials frequently contradict these.
 - **New events.** `InstructionsLoaded`, `UserPromptSubmit`, `PermissionRequest`,
   `PermissionDenied`, `PostToolUseFailure`, `PostCompact`, `SubagentStart`,
   `TaskCreated`, `TaskCompleted`, `TeammateIdle`, `ConfigChange`, `CwdChanged`,
-  `FileChanged`, `WorktreeCreate`, `WorktreeRemove`, `StopFailure`,
-  `Elicitation`, `ElicitationResult`. Use `UserPromptSubmit` for policy gates
-  that previously lived on `PreToolUse`.
+  `DirectoryAdded`, `FileChanged`, `WorktreeCreate`, `WorktreeRemove`,
+  `StopFailure`, `Elicitation`, `ElicitationResult`. Use `UserPromptSubmit` for
+  policy gates that previously lived on `PreToolUse`. `DirectoryAdded` (CLI
+  v2.1.219) fires after `/add-dir` or an SDK `register_repo_root` call.
 - **`once: true`** fires a hook only on the first matching trigger per session.
 - **`if:` expressions** gate execution without wrapping the command in shell
   logic.
@@ -60,20 +63,34 @@ Training-data-era tutorials frequently contradict these.
 
 ## Model IDs
 
-July 2026 GA models (use these in `settings.json` and skill `model:` fields):
+August 2026 GA models (use these in `settings.json` and skill `model:` fields):
 
-| Tier   | Model ID                           |
-|--------|------------------------------------|
-| Opus   | `claude-opus-4-8`                  |
-| Sonnet | `claude-sonnet-4-6`                |
-| Haiku  | `claude-haiku-4-5-20251001`        |
+| Tier   | Model ID                           | Notes                              |
+|--------|------------------------------------|------------------------------------|
+| Fable  | `claude-fable-5`                   | Most capable; not the default; `/model fable` |
+| Opus   | `claude-opus-5`                    | Recommended for complex agentic coding; default Opus since CLI v2.1.219 |
+| Sonnet | `claude-sonnet-5`                  | Claude Code default; intro $2/$10 per MTok through Aug 31, 2026 |
+| Haiku  | `claude-haiku-4-5-20251001`        | Fastest; only current model with extended (non-adaptive) thinking |
 
-There is no `claude-sonnet-4-7` — the Sonnet line runs 4.5 → 4.6, and a
-nonexistent ID 404s at runtime. `claude-opus-4-7` is still active but Opus 4.8
-is the current flagship. Old IDs like `claude-sonnet-4-5-20250929` still resolve
-but should be replaced to keep behavior current. Short forms (`opus`, `sonnet`,
-`haiku`) are accepted in agent frontmatter and resolve to the current GA model
-in that tier.
+Opus 4.8, Opus 4.7, Opus 4.6, Sonnet 4.6, and Sonnet 4.5 are now **legacy**
+(still callable, migrate off). Single-segment version IDs like `claude-opus-5`
+are correct and current; the older `claude-<tier>-4-8` two-segment form is
+legacy. Short forms (`opus`, `sonnet`, `haiku`, `fable`) are accepted in agent
+frontmatter and resolve to the current model in that tier.
+
+**Alias resolution is provider-specific.** The `opus` / `sonnet` aliases do not
+resolve to the same version everywhere:
+
+| Provider                | `opus`   | `sonnet`   |
+|-------------------------|----------|------------|
+| Anthropic API           | Opus 5   | Sonnet 5   |
+| Claude Platform on AWS  | Opus 5   | Sonnet 4.6 |
+| Amazon Bedrock, Google Cloud | Opus 5 | Sonnet 4.5 |
+| Microsoft Foundry       | Opus 4.6 | Sonnet 4.5 |
+
+Where an alias resolves to an older model, pin the full ID or set
+`ANTHROPIC_DEFAULT_OPUS_MODEL` / `ANTHROPIC_DEFAULT_SONNET_MODEL`. Opus 5 via
+alias needs Claude Code v2.1.219+; Sonnet 5 needs v2.1.197+.
 
 ## Deny List Limits
 

@@ -43,15 +43,17 @@ for (const file of files) {
     }
   }
 
-  // Check model value — accept either short names (opus|sonnet|haiku) or
-  // full model IDs like claude-opus-4-8 or claude-haiku-4-5-20251001.
+  // Check model value — accept either short names (opus|sonnet|haiku|fable)
+  // or full model IDs. Version IDs may be single-segment (claude-opus-5,
+  // claude-sonnet-5, claude-fable-5), two-segment (claude-opus-4-8), or
+  // carry a dated snapshot suffix (claude-haiku-4-5-20251001).
   const modelMatch = frontmatter.match(/model:\s*([A-Za-z0-9_-]+)/);
   if (modelMatch) {
     const value = modelMatch[1];
-    const shortForm = /^(opus|sonnet|haiku)$/;
-    const fullId = /^claude-(opus|sonnet|haiku)-\d+-\d+(-\d{8})?$/;
+    const shortForm = /^(opus|sonnet|haiku|fable)$/;
+    const fullId = /^claude-(opus|sonnet|haiku|fable)-\d+(-\d+)?(-\d{8})?$/;
     if (!shortForm.test(value) && !fullId.test(value)) {
-      console.log(`WARNING: ${file} - Unknown model: ${value} (expected short name opus|sonnet|haiku or full ID like claude-sonnet-4-6)`);
+      console.log(`WARNING: ${file} - Unknown model: ${value} (expected short name opus|sonnet|haiku|fable or full ID like claude-sonnet-5)`);
     }
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "claude-dotfiles",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "Production-ready configurations, skills, and templates for Claude Code optimization",
   "private": true,
   "license": "MIT",
