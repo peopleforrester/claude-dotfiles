@@ -38,9 +38,10 @@
 #      "hooks": {
 #        "PreToolUse": [
 #          {
-#            "matcher": "Bash(git commit *)",
+#            "matcher": "Bash",
 #            "hooks": [{
 #              "type": "command",
+#              "if": "Bash(git commit *)",
 #              "command": "~/.claude/hooks/lint-before-commit.sh"
 #            }]
 #          }

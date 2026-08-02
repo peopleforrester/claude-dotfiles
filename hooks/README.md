@@ -67,9 +67,10 @@ Copy the hook configuration into your `settings.json`:
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write(*.ts)|Edit(*.ts)",
+        "matcher": "Edit|Write",
         "hooks": [{
           "type": "command",
+          "if": "Edit(*.ts)",
           "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\""
         }]
       }
@@ -200,10 +201,11 @@ Multiple hooks can run for the same event:
 {
   "PostToolUse": [
     {
-      "matcher": "Write(*.ts)|Edit(*.ts)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
+          "if": "Edit(*.ts)",
           "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
         },
         {

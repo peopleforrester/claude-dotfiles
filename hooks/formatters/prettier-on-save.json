@@ -1,72 +1,12 @@
 {
   "// ABOUT": "Prettier auto-formatting for TypeScript, JavaScript, and web files",
-  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks. The matcher is the tool name (Edit|Write); prettier skips files it can't parse, so one hook covers every supported type.",
   "// REQUIRES": "prettier installed (npm install -D prettier)",
 
   "PostToolUse": [
     {
-      "// DESCRIPTION": "Format TypeScript files",
-      "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-        }
-      ]
-    },
-    {
-      "// DESCRIPTION": "Format JavaScript files",
-      "matcher": "Write(*.js)|Write(*.jsx)|Edit(*.js)|Edit(*.jsx)",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-        }
-      ]
-    },
-    {
-      "// DESCRIPTION": "Format JSON files",
-      "matcher": "Write(*.json)|Edit(*.json)",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-        }
-      ]
-    },
-    {
-      "// DESCRIPTION": "Format CSS/SCSS files",
-      "matcher": "Write(*.css)|Write(*.scss)|Write(*.less)|Edit(*.css)|Edit(*.scss)|Edit(*.less)",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-        }
-      ]
-    },
-    {
-      "// DESCRIPTION": "Format Markdown files",
-      "matcher": "Write(*.md)|Write(*.mdx)|Edit(*.md)|Edit(*.mdx)",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-        }
-      ]
-    },
-    {
-      "// DESCRIPTION": "Format HTML files",
-      "matcher": "Write(*.html)|Write(*.htm)|Edit(*.html)|Edit(*.htm)",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-        }
-      ]
-    },
-    {
-      "// DESCRIPTION": "Format YAML files",
-      "matcher": "Write(*.yml)|Write(*.yaml)|Edit(*.yml)|Edit(*.yaml)",
+      "// DESCRIPTION": "Format edited files with Prettier (ts, tsx, js, jsx, json, css, scss, less, md, mdx, html, yml, yaml, and more)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",

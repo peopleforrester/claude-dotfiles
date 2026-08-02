@@ -10,11 +10,14 @@ const ROOT = path.join(__dirname, '..');
 function countFiles(dir, predicate) {
   if (!fs.existsSync(dir)) return 0;
   let count = 0;
+  const PRUNE = new Set(['__pycache__', 'node_modules', '.git', 'dist', 'build', '.venv']);
   function walk(d) {
     for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
       const full = path.join(d, entry.name);
-      if (entry.isDirectory()) walk(full);
-      else if (predicate(entry.name, full)) count++;
+      if (entry.isDirectory()) {
+        if (PRUNE.has(entry.name)) continue;
+        walk(full);
+      } else if (predicate(entry.name, full)) count++;
     }
   }
   walk(dir);

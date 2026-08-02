@@ -1,16 +1,18 @@
 {
   "// ABOUT": "TypeScript type checking after file modifications",
-  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks. The matcher is the tool name (Edit|Write); the command guards on extension.",
   "// NOTE": "This may slow down editing - consider using only for critical files",
 
   "PostToolUse": [
     {
-      "// DESCRIPTION": "Type check TypeScript files after modification",
-      "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
+      "// DESCRIPTION": "Type check the project after editing TypeScript",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "npx tsc --noEmit 2>&1 | head -20 || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.ts|*.tsx) npx tsc --noEmit 2>&1 | head -20 || true;; esac",
+          "async": true,
+          "timeout": 30
         }
       ]
     }
@@ -19,11 +21,11 @@
   "// ALTERNATIVE_SINGLE_FILE": "Check only the modified file (faster)",
   "PostToolUse_single_file": [
     {
-      "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx tsc --noEmit \"$FILE\" 2>&1 | head -10 || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.ts|*.tsx) npx tsc --noEmit \"$FILE\" 2>&1 | head -10 || true;; esac"
         }
       ]
     }
@@ -32,11 +34,11 @@
   "// WITH_PROJECT_REFERENCES": "For monorepos with project references",
   "PostToolUse_project_refs": [
     {
-      "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "npx tsc --build --noEmit 2>&1 | head -20 || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.ts|*.tsx) npx tsc --build --noEmit 2>&1 | head -20 || true;; esac"
         }
       ]
     }

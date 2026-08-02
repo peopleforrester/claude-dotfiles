@@ -1,5 +1,5 @@
 {
-  "// PROFILE": "balanced - Auto-accept edits, ask for bash commands",
+  "// PROFILE": "standard - Auto-accept edits (defaultMode acceptEdits); bash still prompts",
 
   "// PERMISSIONS": "What Claude can do automatically vs. needs to ask",
   "permissions": {
@@ -30,13 +30,13 @@
     "defaultMode": "acceptEdits"
   },
 
-  "// SANDBOX": "Container-based isolation for bash commands",
+  "// SANDBOX": "Container-based isolation for bash commands. No domains pre-allowed; first access to a new domain prompts.",
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
     "excludedCommands": ["git"],
     "network": {
-      "allowLocalBinding": true
+      "allowedDomains": []
     }
   },
 

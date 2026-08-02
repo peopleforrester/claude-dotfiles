@@ -6,105 +6,85 @@
   "properties": {
     "hooks": {
       "type": "object",
+      "description": "Map of event name to an array of matcher groups. Each matcher group pairs a matcher with a nested `hooks` array of handlers.",
       "properties": {
-        "PreToolUse": { "$ref": "#/$defs/hookArray" },
-        "PostToolUse": { "$ref": "#/$defs/hookArray" },
-        "PostToolUseFailure": { "$ref": "#/$defs/hookArray" },
-        "PreCompact": { "$ref": "#/$defs/hookArray" },
-        "PostCompact": { "$ref": "#/$defs/hookArray" },
-        "SessionStart": { "$ref": "#/$defs/hookArray" },
-        "SessionEnd": { "$ref": "#/$defs/hookArray" },
-        "Stop": { "$ref": "#/$defs/hookArray" },
-        "StopFailure": { "$ref": "#/$defs/hookArray" },
-        "Notification": { "$ref": "#/$defs/hookArray" },
-        "SubagentStart": { "$ref": "#/$defs/hookArray" },
-        "SubagentStop": { "$ref": "#/$defs/hookArray" },
-        "InstructionsLoaded": { "$ref": "#/$defs/hookArray" },
-        "UserPromptSubmit": { "$ref": "#/$defs/hookArray" },
-        "PermissionRequest": { "$ref": "#/$defs/hookArray" },
-        "PermissionDenied": { "$ref": "#/$defs/hookArray" },
-        "TaskCreated": { "$ref": "#/$defs/hookArray" },
-        "TaskCompleted": { "$ref": "#/$defs/hookArray" },
-        "TeammateIdle": { "$ref": "#/$defs/hookArray" },
-        "ConfigChange": { "$ref": "#/$defs/hookArray" },
-        "CwdChanged": { "$ref": "#/$defs/hookArray" },
-        "DirectoryAdded": { "$ref": "#/$defs/hookArray" },
-        "FileChanged": { "$ref": "#/$defs/hookArray" },
-        "WorktreeCreate": { "$ref": "#/$defs/hookArray" },
-        "WorktreeRemove": { "$ref": "#/$defs/hookArray" },
-        "Elicitation": { "$ref": "#/$defs/hookArray" },
-        "ElicitationResult": { "$ref": "#/$defs/hookArray" }
+        "PreToolUse": { "$ref": "#/$defs/matcherGroupArray" },
+        "PostToolUse": { "$ref": "#/$defs/matcherGroupArray" },
+        "PostToolUseFailure": { "$ref": "#/$defs/matcherGroupArray" },
+        "PostToolBatch": { "$ref": "#/$defs/matcherGroupArray" },
+        "PreCompact": { "$ref": "#/$defs/matcherGroupArray" },
+        "PostCompact": { "$ref": "#/$defs/matcherGroupArray" },
+        "SessionStart": { "$ref": "#/$defs/matcherGroupArray" },
+        "SessionEnd": { "$ref": "#/$defs/matcherGroupArray" },
+        "Setup": { "$ref": "#/$defs/matcherGroupArray" },
+        "Stop": { "$ref": "#/$defs/matcherGroupArray" },
+        "StopFailure": { "$ref": "#/$defs/matcherGroupArray" },
+        "Notification": { "$ref": "#/$defs/matcherGroupArray" },
+        "MessageDisplay": { "$ref": "#/$defs/matcherGroupArray" },
+        "SubagentStart": { "$ref": "#/$defs/matcherGroupArray" },
+        "SubagentStop": { "$ref": "#/$defs/matcherGroupArray" },
+        "InstructionsLoaded": { "$ref": "#/$defs/matcherGroupArray" },
+        "UserPromptSubmit": { "$ref": "#/$defs/matcherGroupArray" },
+        "UserPromptExpansion": { "$ref": "#/$defs/matcherGroupArray" },
+        "PermissionRequest": { "$ref": "#/$defs/matcherGroupArray" },
+        "PermissionDenied": { "$ref": "#/$defs/matcherGroupArray" },
+        "TaskCreated": { "$ref": "#/$defs/matcherGroupArray" },
+        "TaskCompleted": { "$ref": "#/$defs/matcherGroupArray" },
+        "TeammateIdle": { "$ref": "#/$defs/matcherGroupArray" },
+        "ConfigChange": { "$ref": "#/$defs/matcherGroupArray" },
+        "CwdChanged": { "$ref": "#/$defs/matcherGroupArray" },
+        "DirectoryAdded": { "$ref": "#/$defs/matcherGroupArray" },
+        "FileChanged": { "$ref": "#/$defs/matcherGroupArray" },
+        "WorktreeCreate": { "$ref": "#/$defs/matcherGroupArray" },
+        "WorktreeRemove": { "$ref": "#/$defs/matcherGroupArray" },
+        "Elicitation": { "$ref": "#/$defs/matcherGroupArray" },
+        "ElicitationResult": { "$ref": "#/$defs/matcherGroupArray" }
       },
       "additionalProperties": false
     }
   },
   "required": ["hooks"],
   "$defs": {
-    "hookArray": {
+    "matcherGroupArray": {
       "type": "array",
-      "items": { "$ref": "#/$defs/hookEntry" }
+      "items": { "$ref": "#/$defs/matcherGroup" }
     },
-    "hookEntry": {
+    "matcherGroup": {
       "type": "object",
+      "description": "A matcher paired with the handlers that run when it matches.",
       "properties": {
         "matcher": {
           "type": "string",
-          "description": "Expression to match tool and input (e.g., 'tool == \"Edit\" && tool_input.file_path matches \".ts$\"')"
+          "description": "Tool-name matcher. A bare tool name ('Bash'), a '|'- or ','-separated list ('Edit|Write'), '*'/'' for all, or a JavaScript regular expression when it contains any other character ('^Notebook'). NOT an expression: 'tool == \"Bash\"' is treated as a regex and will not match. Scope to inputs with a handler-level `if` instead."
         },
+        "hooks": {
+          "type": "array",
+          "description": "Handlers that run when the matcher matches.",
+          "items": { "$ref": "#/$defs/handler" }
+        }
+      },
+      "required": ["hooks"]
+    },
+    "handler": {
+      "type": "object",
+      "properties": {
         "type": {
           "type": "string",
-          "enum": ["command", "message", "http", "prompt", "agent"],
-          "description": "Hook handler type: command runs a shell command, message shows text, http posts JSON to a URL, prompt injects text into the next model turn, agent delegates to a named subagent"
+          "enum": ["command", "http", "mcp_tool", "prompt", "agent"],
+          "description": "Handler type. command: run a shell command (stdin JSON, exit 2 blocks, exit 0 may emit JSON output such as systemMessage). http: POST the event JSON to a URL. mcp_tool: call a tool on a connected MCP server. prompt: single-turn model yes/no decision. agent: spawn a subagent to decide (experimental)."
         },
-        "command": {
-          "type": "string",
-          "description": "Shell command to execute (for type: command)"
-        },
-        "message": {
-          "type": "string",
-          "description": "Message to display (for type: message)"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "description": "HTTP endpoint (for type: http)"
-        },
-        "prompt": {
-          "type": "string",
-          "description": "Prompt text to inject (for type: prompt)"
-        },
-        "agent": {
-          "type": "string",
-          "description": "Subagent name to invoke (for type: agent)"
-        },
-        "if": {
-          "type": "string",
-          "description": "Conditional expression gating execution"
-        },
-        "async": {
-          "type": "boolean",
-          "default": false,
-          "description": "Run asynchronously without blocking"
-        },
-        "once": {
-          "type": "boolean",
-          "default": false,
-          "description": "Fire only the first time conditions are met in a session"
-        },
-        "shell": {
-          "type": "string",
-          "description": "Shell interpreter to use (e.g., bash, zsh)"
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Status line message to show while the hook is running"
-        },
-        "timeout": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 300,
-          "description": "Timeout in seconds"
-        }
+        "command": { "type": "string", "description": "Shell command for type: command (or the executable when `args` is set)." },
+        "args": { "type": "array", "items": { "type": "string" }, "description": "Argument vector; when present, `command` is spawned directly with no shell." },
+        "url": { "type": "string", "format": "uri", "description": "HTTP endpoint for type: http." },
+        "prompt": { "type": "string", "description": "Prompt text for type: prompt." },
+        "agent": { "type": "string", "description": "Subagent name for type: agent." },
+        "if": { "type": "string", "description": "Permission-rule syntax filtering when the handler runs, e.g. 'Bash(git push *)' or 'Edit(*.ts)'. Only evaluated on tool events." },
+        "timeout": { "type": "number", "description": "Seconds before cancel. Default 600." },
+        "async": { "type": "boolean", "description": "Run in the background without blocking." },
+        "asyncRewake": { "type": "boolean", "description": "Run in the background and wake Claude on exit code 2. Implies async." },
+        "statusMessage": { "type": "string", "description": "Spinner message shown while the handler runs." },
+        "shell": { "type": "string", "enum": ["bash", "powershell"], "description": "Shell for the command. Ignored when `args` is set." },
+        "once": { "type": "boolean", "description": "Run once per session then remove. Honored only in skill/agent frontmatter, ignored in settings files." }
       },
       "required": ["type"]
     }

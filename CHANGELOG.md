@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-08-02
+
+Full reconciliation of the hook, sandbox, permission, and skill surfaces against
+the live Claude Code docs (CLI v2.1.220), verified against `code.claude.com/docs`
+on 2026-08-02. Backed by the research spike
+`mrf-knowledge/claude-code/2026-08-02_config-best-practices-august-2026.md`.
+
+### Fixed
+- **Hook configs did not work.** Every shipped hook example used an invalid
+  matcher (`Write(*.ts)|Edit(*.ts)`, `tool == "Bash" && ...`), which Claude Code
+  treats as a regex against the tool name and never matches. Matchers are tool
+  names; rewrote all of them to `Bash` / `Edit|Write` and scoped inputs with a
+  handler-level `if` or an in-command guard. Affected `hooks/hooks.json`, all
+  `hooks/formatters/*`, `hooks/validators/*`, `hooks/integrations/*`,
+  `hooks/templates/prompt-handler.json`, `settings/settings.json`, all five
+  templates, `settings/settings.local.example.json`, `examples/demo-project`, and
+  the hook docs.
+- **`message` is not a hook handler type.** Three `hooks/hooks.json` reminders
+  used `type: "message"` (and one skill example). Converted to `command` handlers
+  that emit `{"systemMessage": ...}` on exit 0 or block with exit 2. Valid types
+  are `command`, `http`, `mcp_tool`, `prompt`, `agent`.
+- **Fabricated sandbox keys.** `sandbox.network.denyExternal` and
+  `sandbox.network.allowLocalBinding` do not exist. Replaced with real keys
+  (`allowedDomains`, `strictAllowlist`) across `settings/settings.json`, all
+  templates, and the permission profiles/docs.
+- **Stale three-profile docs.** `settings/README.md`, `SECURITY.md`,
+  `scripts/README.md`, `BUILT_WITH_CLAUDE.md`, and the standard-template comment
+  still referenced the Conservative/Balanced/Autonomous profiles removed in
+  0.5.0. Updated to the four sandbox/autoMode profiles.
+- **Skill schema drift.** `context` was typed as an array of paths but is the
+  string `fork`; `effort` was missing `xhigh`/`max`. Corrected both.
+
+### Changed
+- Hook schema rewritten to the real nested shape (event → matcher groups →
+  `hooks[]` handlers), the correct handler-type enum, all 31 events (added
+  `Setup`, `UserPromptExpansion`, `PostToolBatch`, `MessageDisplay`,
+  `DirectoryAdded`), and valid handler fields (`if`, `timeout`, `async`,
+  `asyncRewake`, `statusMessage`, `shell`, `once`).
+- `validate-hooks.js` now validates the nested structure, errors on invalid
+  handler types, warns on expression/permission-form matchers, and checks
+  top-level event sections (previously only `hooks`-wrapped files).
+- `validate-agents.js` warns on agent names containing `:` (reserved for plugin
+  namespacing, v2.1.218).
+- GOTCHAS documents the nested hook shape, matcher rules, the `Manual` display
+  name for `default` mode, real sandbox keys, and `context: fork` background.
+- Skill schema gained `when_to_use`, `arguments`, `disallowed-tools`,
+  `background`, and `hooks` fields.
+
+### Added
+- `test_inventory.js` prunes generated directories (`__pycache__`, etc.) so a
+  stray `.pyc` no longer inflates the hook count.
+
 ## [0.6.0] - 2026-08-02
 
 Reconciles the repo against the live Claude Code lineup and CLI (v2.1.220),

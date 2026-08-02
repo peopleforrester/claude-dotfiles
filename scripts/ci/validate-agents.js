@@ -43,6 +43,12 @@ for (const file of files) {
     }
   }
 
+  // Agent names can't contain ':' (reserved for plugin namespacing, v2.1.218+).
+  const nameMatch = frontmatter.match(/name:\s*([^\n]+)/);
+  if (nameMatch && nameMatch[1].includes(':')) {
+    console.log(`WARNING: ${file} - name '${nameMatch[1].trim()}' contains ':', reserved for plugin namespacing`);
+  }
+
   // Check model value — accept either short names (opus|sonnet|haiku|fable)
   // or full model IDs. Version IDs may be single-segment (claude-opus-5,
   // claude-sonnet-5, claude-fable-5), two-segment (claude-opus-4-8), or

@@ -11,21 +11,23 @@
 
   "PreToolUse": [
     {
-      "// DESCRIPTION": "Run Husky pre-commit checks before Claude commits",
-      "matcher": "Bash(git commit *)",
+      "// DESCRIPTION": "Run Husky pre-commit checks before Claude commits. Matcher is the tool name (Bash); `if` scopes to git commit.",
+      "matcher": "Bash",
       "hooks": [
         {
           "type": "command",
+          "if": "Bash(git commit *)",
           "command": "if [ -f .husky/pre-commit ]; then .husky/pre-commit; fi"
         }
       ]
     },
     {
       "// DESCRIPTION": "Run Husky commit-msg validation",
-      "matcher": "Bash(git commit *)",
+      "matcher": "Bash",
       "hooks": [
         {
           "type": "command",
+          "if": "Bash(git commit *)",
           "command": "if [ -f .husky/commit-msg ]; then echo 'Husky commit-msg will run on actual commit'; fi"
         }
       ]

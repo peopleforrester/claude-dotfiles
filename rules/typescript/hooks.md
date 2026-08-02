@@ -3,27 +3,35 @@
 
 Extends `common/hooks.md` with TypeScript-specific hook configurations.
 
+An event maps to matcher groups; the `matcher` is a tool name (not an
+expression), and each group nests a `hooks` array of handlers. Scope on the
+edited file inside the command (or with a handler-level `if`).
+
 ## PostToolUse Hooks
 
 ### Auto-Format
 Run Prettier after editing JS/TS files:
 ```json
 {
-  "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx|js|jsx)$\"",
-  "type": "command",
-  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\"",
-  "async": true
+  "matcher": "Edit|Write",
+  "hooks": [{
+    "type": "command",
+    "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.ts|*.tsx|*.js|*.jsx) npx prettier --write \"$FILE\";; esac",
+    "async": true
+  }]
 }
 ```
 
 ### Type Checking
-Run TypeScript compiler after edits:
+Run the TypeScript compiler after edits:
 ```json
 {
-  "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx)$\"",
-  "type": "command",
-  "command": "npx tsc --noEmit --pretty 2>&1 | head -20",
-  "async": true
+  "matcher": "Edit|Write",
+  "hooks": [{
+    "type": "command",
+    "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.ts|*.tsx) npx tsc --noEmit --pretty 2>&1 | head -20;; esac",
+    "async": true
+  }]
 }
 ```
 
@@ -31,10 +39,12 @@ Run TypeScript compiler after edits:
 Flag console.log statements in modified files:
 ```json
 {
-  "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\.(ts|tsx)$\"",
-  "type": "command",
-  "command": "FILE=$(cat | jq -r '.tool_input.file_path') && grep -n 'console\\.log' \"$FILE\" && echo 'WARNING: console.log found'",
-  "async": true
+  "matcher": "Edit|Write",
+  "hooks": [{
+    "type": "command",
+    "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.ts|*.tsx) grep -n 'console\\.log' \"$FILE\" && echo 'WARNING: console.log found';; esac",
+    "async": true
+  }]
 }
 ```
 
@@ -44,7 +54,9 @@ Flag console.log statements in modified files:
 Check all modified files for console.log before session ends:
 ```json
 {
-  "type": "command",
-  "command": "git diff --name-only --diff-filter=M '*.ts' '*.tsx' | xargs grep -l 'console.log' 2>/dev/null"
+  "hooks": [{
+    "type": "command",
+    "command": "git diff --name-only --diff-filter=M '*.ts' '*.tsx' | xargs grep -l 'console.log' 2>/dev/null"
+  }]
 }
 ```

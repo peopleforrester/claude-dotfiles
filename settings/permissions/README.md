@@ -1,4 +1,4 @@
-# Permission Profiles (April 2026)
+# Permission Profiles (August 2026)
 
 These four profiles compose two orthogonal Claude Code primitives:
 
@@ -48,8 +48,8 @@ Treat these as starting points. Common edits:
 jq '.auto.escalateOn += ["Bash(npm publish *)"]' \
   settings/permissions/autoMode-permissive.json
 
-# Loosen sandbox network policy
-jq '.sandbox.network.denyExternal = false' \
+# Allow a domain the sandboxed automation needs to reach
+jq '.sandbox.network.allowedDomains += ["api.github.com"]' \
   settings/permissions/sandbox-on.json
 ```
 

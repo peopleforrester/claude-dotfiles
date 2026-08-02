@@ -46,11 +46,12 @@
     Install only the settings.json file.
 
 .PARAMETER Profile
-    Permission profile to use. Determines how much autonomy Claude has.
-    - conservative: Ask before most actions (safest)
-    - balanced: Auto-accept edits, ask for bash commands (recommended)
-    - autonomous: Minimal interruptions (for experienced users)
-    Default: balanced
+    Permission profile to use. Composes sandbox isolation with defaultMode.
+    - sandbox-on: Sandboxed bash, auto mode inside the box (recommended)
+    - sandbox-off: No sandbox, acceptEdits, bash always asks
+    - autoMode-strict: Auto mode; anything mutating state escalates to you
+    - autoMode-permissive: Auto mode; routine work flows, destructive bash escalates
+    Default: sandbox-on
 
 .PARAMETER Template
     Install a CLAUDE.md template to the current directory.
@@ -79,9 +80,9 @@
     Install everything with default settings.
 
 .EXAMPLE
-    .\install.ps1 -All -Profile autonomous
+    .\install.ps1 -All -Profile autoMode-permissive
 
-    Install everything with autonomous permission profile.
+    Install everything with the autoMode-permissive permission profile.
 
 .EXAMPLE
     .\install.ps1 -Template standard
@@ -160,8 +161,8 @@ param(
     [switch]$Commands,
 
     # Permission profile selection with validation
-    [ValidateSet("conservative", "balanced", "autonomous")]
-    [string]$Profile = "balanced",
+    [ValidateSet("sandbox-on", "sandbox-off", "autoMode-strict", "autoMode-permissive")]
+    [string]$Profile = "sandbox-on",
 
     # Template to install to current directory
     [string]$Template,
@@ -415,10 +416,11 @@ function Install-Settings {
     $settingsSrc = Join-Path $Script:SCRIPT_DIR "settings\permissions\$Profile.json"
     $settingsDest = Join-Path $Script:CLAUDE_DIR "settings.json"
 
-    # Handle missing profile gracefully
+    # Fail loud if the profile file is missing (ValidateSet should prevent this)
     if (-not (Test-Path $settingsSrc)) {
-        Write-Warning "Profile '$Profile' not found, using balanced"
-        $settingsSrc = Join-Path $Script:SCRIPT_DIR "settings\permissions\balanced.json"
+        Write-Error "Profile file not found: $settingsSrc"
+        Write-Error "Valid profiles: sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive"
+        exit 1
     }
 
     # Copy the settings file
@@ -806,16 +808,18 @@ function Start-Interactive {
     # Choose permission profile
     Write-Host ""
     Write-Host "Permission profile:"
-    Write-Host "  1) conservative - Ask before most actions"
-    Write-Host "  2) balanced     - Auto-accept edits, ask for bash (recommended)"
-    Write-Host "  3) autonomous   - Minimal interruptions"
+    Write-Host "  1) sandbox-on           - Sandboxed bash, auto mode inside (recommended)"
+    Write-Host "  2) sandbox-off          - No sandbox, acceptEdits, bash asks"
+    Write-Host "  3) autoMode-strict      - Auto mode; anything mutating escalates"
+    Write-Host "  4) autoMode-permissive  - Auto mode; routine flows, destructive escalates"
     Write-Host ""
 
-    $profileChoice = Read-Host "Profile [1-3, default=2]"
+    $profileChoice = Read-Host "Profile [1-4, default=1]"
     switch ($profileChoice) {
-        "1" { $script:Profile = "conservative" }
-        "3" { $script:Profile = "autonomous" }
-        default { $script:Profile = "balanced" }
+        "2" { $script:Profile = "sandbox-off" }
+        "3" { $script:Profile = "autoMode-strict" }
+        "4" { $script:Profile = "autoMode-permissive" }
+        default { $script:Profile = "sandbox-on" }
     }
 
     # Symlink option
@@ -910,8 +914,8 @@ Options:
   -MCP              Install MCP configurations only
   -Settings         Install settings only
 
-  -Profile PROFILE  Permission profile: conservative, balanced, autonomous
-                    (default: balanced)
+  -Profile PROFILE  Permission profile: sandbox-on, sandbox-off,
+                    autoMode-strict, autoMode-permissive (default: sandbox-on)
 
   -Template NAME    Install template to current directory
                     (minimal, standard, power-user)
@@ -927,7 +931,7 @@ Examples:
   .\install.ps1                       # Interactive mode
   .\install.ps1 -All                  # Install everything
   .\install.ps1 -Minimal              # Just settings
-  .\install.ps1 -Profile autonomous -All
+  .\install.ps1 -Profile autoMode-permissive -All
   .\install.ps1 -Template standard
 "@
 }

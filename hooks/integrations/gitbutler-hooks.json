@@ -12,8 +12,8 @@
   "PostToolUse": [
     {
       "// DESCRIPTION": "Notify GitButler after file modifications",
-      "// NOTE": "GitButler auto-detects file changes, this is for explicit refresh",
-      "matcher": "Write(*)|Edit(*)",
+      "// NOTE": "GitButler auto-detects file changes, this is for explicit refresh. Matcher is the tool name (Edit|Write).",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",

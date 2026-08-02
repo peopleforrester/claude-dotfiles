@@ -59,57 +59,22 @@
     "defaultMode": "acceptEdits"
   },
 
-  "// SANDBOX": "Sandboxed execution with network access",
+  "// SANDBOX": "Sandboxed execution. No domains pre-allowed; first access to a new domain prompts. Add domains to allowedDomains as needed.",
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
     "excludedCommands": ["git", "docker"],
     "network": {
-      "allowLocalBinding": true
+      "allowedDomains": []
     }
   },
 
-  "// HOOKS": "Auto-formatting and notifications",
+  "// HOOKS": "Auto-format edited files. The matcher is the tool name (Edit|Write); prettier skips files it can't parse.",
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-          }
-        ]
-      },
-      {
-        "matcher": "Write(*.js)|Write(*.jsx)|Edit(*.js)|Edit(*.jsx)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-          }
-        ]
-      },
-      {
-        "matcher": "Write(*.json)|Edit(*.json)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-          }
-        ]
-      },
-      {
-        "matcher": "Write(*.css)|Write(*.scss)|Edit(*.css)|Edit(*.scss)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-          }
-        ]
-      },
-      {
-        "matcher": "Write(*.md)|Edit(*.md)",
+        "// DESCRIPTION": "Prettier on every edited file (ts, js, json, css, md, and more)",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",

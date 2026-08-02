@@ -1,16 +1,16 @@
 {
   "// ABOUT": "Go formatting with gofmt and goimports",
-  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks. The matcher is the tool name (Edit|Write); the command guards on extension.",
   "// REQUIRES": "Go installed, goimports (go install golang.org/x/tools/cmd/goimports@latest)",
 
   "PostToolUse": [
     {
       "// DESCRIPTION": "Format Go files with gofmt",
-      "matcher": "Write(*.go)|Edit(*.go)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && gofmt -w \"$FILE\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.go) gofmt -w \"$FILE\" 2>/dev/null || true;; esac"
         }
       ]
     }
@@ -20,11 +20,11 @@
   "PostToolUse_goimports": [
     {
       "// DESCRIPTION": "Format Go files with goimports (includes gofmt + import organization)",
-      "matcher": "Write(*.go)|Edit(*.go)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && goimports -w \"$FILE\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.go) goimports -w \"$FILE\" 2>/dev/null || true;; esac"
         }
       ]
     }
@@ -33,11 +33,11 @@
   "// WITH_GOLANGCI_LINT": "Add linting after formatting",
   "PostToolUse_with_lint": [
     {
-      "matcher": "Write(*.go)|Edit(*.go)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && goimports -w \"$FILE\" 2>/dev/null && golangci-lint run \"$FILE\" --fix 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.go) goimports -w \"$FILE\" 2>/dev/null && golangci-lint run \"$FILE\" --fix 2>/dev/null || true;; esac"
         }
       ]
     }

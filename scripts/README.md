@@ -41,7 +41,7 @@ claude-dotfiles validator
 
 → Validating directory: /path/to/repo
 
-✓ settings/permissions/balanced.json
+✓ settings/permissions/sandbox-on.json
 ✓ skills/development/tdd-workflow/SKILL.md
 ! README.md: Broken link: [some-link](./path/to/missing-file.md)
 

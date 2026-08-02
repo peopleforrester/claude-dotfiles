@@ -28,9 +28,10 @@
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
     "excludedCommands": ["git"],
+    "// NETWORK": "strictAllowlist denies non-allowlisted hosts without prompting (v2.1.219+; honored from user/managed settings). allowedDomains is empty here — add the domains this automation needs.",
     "network": {
-      "allowLocalBinding": true,
-      "denyExternal": true
+      "strictAllowlist": true,
+      "allowedDomains": []
     }
   },
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// ABOUTME: Validates hook configuration files for correct JSON syntax.
-// ABOUTME: Checks hook types, matchers, and required fields.
+// ABOUTME: Validates hook configuration files for correct structure and types.
+// ABOUTME: Checks event names, nested handler shape, handler types, and matcher form.
 
 const fs = require('fs');
 const path = require('path');
@@ -15,12 +15,59 @@ if (!fs.existsSync(hooksDir)) {
   process.exit(0);
 }
 
-// Source of truth for valid hook events: the schema. Hardcoding a subset
-// here was the M1 drift bug — events like InstructionsLoaded, PostCompact,
-// and UserPromptSubmit triggered "Unknown hook type" warnings despite being
-// valid per April 2026 schema.
+// Source of truth for valid events and handler types: the schema. Hardcoding a
+// subset here was the M1 drift bug — valid events triggered "Unknown hook type".
 const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
-const validHookTypes = Object.keys(schema.properties.hooks.properties);
+const validEvents = Object.keys(schema.properties.hooks.properties);
+const validHandlerTypes = (schema.$defs && schema.$defs.handler &&
+  schema.$defs.handler.properties.type.enum) ||
+  ['command', 'http', 'mcp_tool', 'prompt', 'agent'];
+
+// A key is an event key if it is an exact event name or an event-prefixed
+// variant like "PostToolUse_uv" (example files stack alternatives in one file).
+function isEventKey(key) {
+  return validEvents.some(ev => key === ev || key.startsWith(ev + '_'));
+}
+
+// Matchers are tool names ("Bash", "Edit|Write"), "*"/"" for all, or a regex.
+// They are NOT expressions and NOT permission rules. Flag the two mistakes that
+// silently never match: an expression (`tool == "Bash"`) and a permission-rule
+// form (`Bash(git push *)`) used where a matcher belongs.
+function looksLikeBadMatcher(m) {
+  if (typeof m !== 'string') return false;
+  if (m.includes('==') || m.includes('&&') || m.includes('tool_input') ||
+      m.includes(' matches ')) return true;
+  if (/^[A-Za-z][\w-]*\([^)]*\)/.test(m)) return true;
+  return false;
+}
+
+function validateEventArray(fileName, eventKey, arr) {
+  if (!Array.isArray(arr)) {
+    console.log(`ERROR: ${fileName} - ${eventKey} should be an array`);
+    errors++;
+    return;
+  }
+  for (const group of arr) {
+    if (group === null || typeof group !== 'object') continue;
+    if (looksLikeBadMatcher(group.matcher)) {
+      console.log(`WARNING: ${fileName} - ${eventKey} matcher '${group.matcher}' is not a tool-name matcher; use a tool name (Bash, Edit|Write) and scope inputs with a handler 'if'`);
+    }
+    const handlers = group.hooks;
+    if (handlers === undefined) continue;
+    if (!Array.isArray(handlers)) {
+      console.log(`ERROR: ${fileName} - ${eventKey} group 'hooks' must be an array of handlers`);
+      errors++;
+      continue;
+    }
+    for (const h of handlers) {
+      if (h === null || typeof h !== 'object') continue;
+      if (h.type !== undefined && !validHandlerTypes.includes(h.type)) {
+        console.log(`ERROR: ${fileName} - ${eventKey} handler type '${h.type}' is invalid (allowed: ${validHandlerTypes.join(', ')})`);
+        errors++;
+      }
+    }
+  }
+}
 
 function walkDir(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -45,14 +92,13 @@ function validateHookFile(filePath, fileName) {
     return;
   }
 
-  // Filter out comment keys for JSON parsing
+  // Strip string-valued "// comment" keys before parsing.
   const cleanedContent = content.replace(/"\/\/[^"]*":\s*"[^"]*",?\n?/g, '');
 
   let parsed;
   try {
     parsed = JSON.parse(cleanedContent);
   } catch (err) {
-    // Try original content (comments might be valid JSON)
     try {
       parsed = JSON.parse(content);
     } catch (err2) {
@@ -61,23 +107,18 @@ function validateHookFile(filePath, fileName) {
       return;
     }
   }
+  if (parsed === null || typeof parsed !== 'object') return;
 
-  // Validate hooks.json structure
-  if (parsed.hooks) {
-    for (const [hookType, hookArray] of Object.entries(parsed.hooks)) {
-      if (!validHookTypes.includes(hookType)) {
-        console.log(`WARNING: ${fileName} - Unknown hook type: ${hookType}`);
-      }
-      if (!Array.isArray(hookArray)) {
-        console.log(`ERROR: ${fileName} - ${hookType} should be an array`);
-        errors++;
-        continue;
-      }
-      for (const hook of hookArray) {
-        if (!hook.type && !hook['// PURPOSE']) {
-          console.log(`WARNING: ${fileName} - Hook in ${hookType} missing 'type' field`);
-        }
-      }
+  // Events live either under a top-level "hooks" map (settings-style) or at the
+  // top level (example files copy one event section into settings.json).
+  const underHooksMap = parsed.hooks && typeof parsed.hooks === 'object';
+  const root = underHooksMap ? parsed.hooks : parsed;
+
+  for (const [key, val] of Object.entries(root)) {
+    if (isEventKey(key)) {
+      validateEventArray(fileName, key, val);
+    } else if (underHooksMap && !key.startsWith('//')) {
+      console.log(`WARNING: ${fileName} - Unknown hook type: ${key}`);
     }
   }
 }

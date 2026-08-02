@@ -4,11 +4,18 @@ This directory contains `settings.json` profiles for different use cases.
 
 ## Permission Profiles
 
-| Profile | File | Use Case |
-|---------|------|----------|
-| **Conservative** | `permissions/conservative.json` | Learning, sensitive projects |
-| **Balanced** | `permissions/balanced.json` | Daily development (recommended) |
-| **Autonomous** | `permissions/autonomous.json` | Trusted automation |
+The legacy Conservative / Balanced / Autonomous bundles were removed in 0.5.0.
+The current profiles in [`permissions/`](./permissions/) compose two orthogonal
+Claude Code primitives — `sandbox.*` isolation and `defaultMode` — rather than
+presetting a single dial. See [`permissions/README.md`](./permissions/README.md)
+for the full guide.
+
+| Profile | File | Sandbox | Default Mode | Use Case |
+|---------|------|---------|--------------|----------|
+| **sandbox-on** | `permissions/sandbox-on.json` | yes | `auto` | Trusted automation with strong isolation |
+| **sandbox-off** | `permissions/sandbox-off.json` | no | `acceptEdits` | Local trusted dev, no isolation |
+| **autoMode-strict** | `permissions/autoMode-strict.json` | yes | `auto` | First time on auto mode; anything mutating escalates |
+| **autoMode-permissive** | `permissions/autoMode-permissive.json` | yes | `auto` | Routine work flows through; destructive bash escalates |
 
 ## File Locations
 
@@ -18,20 +25,14 @@ Claude Code loads settings from these locations (in order of priority):
 2. **Project local**: `.claude/settings.local.json` (gitignored overrides)
 3. **Global settings**: `~/.claude/settings.json` (lowest priority)
 
-## Profile Comparison
+Note: `defaultMode: "auto"` is honored only from user (`~/.claude/settings.json`)
+or managed settings, not from project or local settings, so a repository cannot
+grant itself auto mode.
 
-| Setting | Conservative | Balanced | Autonomous |
-|---------|-------------|----------|------------|
-| `defaultMode` | `prompt` | `acceptEdits` | `acceptEdits` |
-| Auto-allow reads | Yes | Yes | Yes |
-| Auto-allow writes | No | No | Yes |
-| Auto-allow edits | No | Yes | Yes |
-| Auto-allow npm/pnpm | No | Yes | Yes |
-| Auto-allow git status | No | Yes | Yes |
-| Auto-allow git commit | No | No | Yes |
-| Auto-allow git push | No | No | No (ask) |
-| Sandbox enabled | Yes | Yes | Yes |
-| Auto-allow sandboxed bash | No | Yes | Yes |
+## Permission Modes
+
+`defaultMode` accepts: `default` (displayed as **Manual**; `manual` is an accepted
+alias in v2.1.200+), `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions`.
 
 ## Security Defaults
 
@@ -51,6 +52,9 @@ All profiles include these security defaults in the `deny` list:
 ]
 ```
 
+Deny patterns are simple matchers and defense-in-depth, not a sandbox. See
+[`../GOTCHAS.md`](../GOTCHAS.md) for their limits.
+
 ## Customization
 
 Create a `settings.local.json` file for personal overrides that won't be committed:
@@ -68,16 +72,19 @@ Create a `settings.local.json` file for personal overrides that won't be committ
 
 ## Hooks Configuration
 
-Hooks can be added to any profile. See the power-user template for examples:
+Hooks can be added to any profile. An event maps to an array of matcher groups,
+each pairing a `matcher` (a tool name, not an expression) with a nested `hooks`
+array of handlers:
 
 ```json
 {
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write(*.ts)|Edit(*.ts)",
+        "matcher": "Edit|Write",
         "hooks": [{
           "type": "command",
+          "if": "Edit(*.ts)",
           "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\""
         }]
       }
@@ -86,9 +93,11 @@ Hooks can be added to any profile. See the power-user template for examples:
 }
 ```
 
+See the power-user template and [`../hooks/`](../hooks/) for more examples.
+
 ## Sandbox Configuration
 
-The sandbox provides container-based isolation for bash commands:
+The sandbox provides OS-level filesystem and network isolation for bash commands:
 
 ```json
 {
@@ -97,13 +106,23 @@ The sandbox provides container-based isolation for bash commands:
     "autoAllowBashIfSandboxed": true,
     "excludedCommands": ["git", "docker"],
     "network": {
-      "allowLocalBinding": true
+      "allowedDomains": []
     }
   }
 }
 ```
 
-- `enabled`: Enable sandbox for bash commands
-- `autoAllowBashIfSandboxed`: Skip permission prompts for sandboxed commands
-- `excludedCommands`: Commands that run outside the sandbox
-- `network.allowLocalBinding`: Allow binding to localhost ports
+- `enabled`: enable the sandbox for bash commands
+- `autoAllowBashIfSandboxed`: skip permission prompts for sandboxed commands
+- `excludedCommands`: commands that run outside the sandbox
+- `network.allowedDomains`: domains bash may reach. Empty means none are
+  pre-allowed; the first access to a new domain prompts. Set
+  `network.strictAllowlist: true` (v2.1.219+, user/managed settings) to deny
+  non-allowlisted hosts without prompting.
+- `filesystem.allowWrite` / `denyWrite` / `denyRead` / `allowRead`: widen or
+  narrow filesystem access; `filesystem.disabled: true` (v2.1.216+) keeps network
+  isolation while turning filesystem isolation off.
+- `credentials.files` / `credentials.envVars`: block credential files and
+  secret env vars from sandboxed commands.
+
+There is no `network.allowLocalBinding` or `network.denyExternal` key.

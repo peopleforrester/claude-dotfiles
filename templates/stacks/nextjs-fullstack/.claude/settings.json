@@ -32,24 +32,27 @@
     "autoAllowBashIfSandboxed": true,
     "excludedCommands": ["git"],
     "network": {
-      "allowLocalBinding": true
+      "allowedDomains": []
     }
   },
 
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
+        "// DESCRIPTION": "Prettier on edited files (matcher is the tool name; prettier skips files it can't parse)",
+        "matcher": "Edit|Write",
         "hooks": [{
           "type": "command",
           "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
         }]
       },
       {
-        "matcher": "Write(*.prisma)|Edit(*.prisma)",
+        "// DESCRIPTION": "Format Prisma schema after edit",
+        "matcher": "Edit|Write",
         "hooks": [{
           "type": "command",
-          "command": "npx prisma format 2>/dev/null || true"
+          "if": "Edit(*.prisma)",
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.prisma) npx prisma format 2>/dev/null || true;; esac"
         }]
       }
     ]

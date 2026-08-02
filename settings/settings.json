@@ -58,7 +58,7 @@
     "// ADDITIONAL_DIRECTORIES": "Extra directories Claude can access",
     "additionalDirectories": [],
 
-    "// DEFAULT_MODE": "Options: prompt, acceptEdits, ignore",
+    "// DEFAULT_MODE": "Options: default (shown as 'Manual', accepts 'manual' alias in v2.1.200+), acceptEdits, plan, auto, dontAsk, bypassPermissions",
     "defaultMode": "acceptEdits"
   },
 
@@ -73,10 +73,9 @@
     "// EXCLUDED_COMMANDS": "Commands that run outside the sandbox",
     "excludedCommands": ["git", "docker"],
 
-    "// NETWORK": "Network access configuration",
+    "// NETWORK": "No domains are pre-allowed; first access to a new domain prompts. Pre-allow with allowedDomains, or set strictAllowlist:true to deny non-allowlisted hosts without prompting (v2.1.219+, user/managed settings only).",
     "network": {
-      "// ALLOW_LOCAL_BINDING": "Allow binding to localhost ports",
-      "allowLocalBinding": true
+      "allowedDomains": []
     }
   },
 
@@ -86,32 +85,24 @@
 
     "PostToolUse": [
       {
-        "// DESCRIPTION": "Format TypeScript/JavaScript files after edit",
-        "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
+        "// DESCRIPTION": "Format JS/TS files after edit (matcher is the tool name; the command guards on extension)",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-          }
-        ]
-      },
-      {
-        "// DESCRIPTION": "Format JavaScript files after edit",
-        "matcher": "Write(*.js)|Write(*.jsx)|Edit(*.js)|Edit(*.jsx)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
+            "if": "Edit(*.ts)",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.ts|*.tsx|*.js|*.jsx) npx prettier --write \"$FILE\" 2>/dev/null || true;; esac"
           }
         ]
       },
       {
         "// DESCRIPTION": "Format Python files after edit",
-        "matcher": "Write(*.py)|Edit(*.py)",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(cat | jq -r '.tool_input.file_path') && black \"$FILE\" 2>/dev/null && ruff check --fix \"$FILE\" 2>/dev/null || true"
+            "if": "Edit(*.py)",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.py) black \"$FILE\" 2>/dev/null && ruff check --fix \"$FILE\" 2>/dev/null || true;; esac"
           }
         ]
       }

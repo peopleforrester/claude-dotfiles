@@ -32,21 +32,15 @@
     "autoAllowBashIfSandboxed": true,
     "excludedCommands": ["git"],
     "network": {
-      "allowLocalBinding": true
+      "allowedDomains": []
     }
   },
 
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write(*.ts)|Write(*.tsx)|Edit(*.ts)|Edit(*.tsx)",
-        "hooks": [{
-          "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
-        }]
-      },
-      {
-        "matcher": "Write(*.css)|Edit(*.css)",
+        "// DESCRIPTION": "Prettier on edited files. The matcher is the tool name; prettier skips files it can't parse.",
+        "matcher": "Edit|Write",
         "hooks": [{
           "type": "command",
           "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"

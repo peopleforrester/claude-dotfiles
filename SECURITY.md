@@ -40,10 +40,11 @@ When using claude-dotfiles:
 
 ### Permissions
 
-- Start with `conservative` profile if unsure
+- Start with the `autoMode-strict` profile if unsure — anything that mutates
+  state or reaches the network escalates to you
 - Review the `deny` list in settings.json — note that deny patterns are
   defense-in-depth, not a sandbox (see GOTCHAS.md for limits)
-- Be cautious with `autonomous` profile
+- Be cautious with the `sandbox-off` and `autoMode-permissive` profiles
 
 ### Hooks
 

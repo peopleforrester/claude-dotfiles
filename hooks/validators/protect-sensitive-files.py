@@ -36,7 +36,7 @@ Add this hook to your settings.json:
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Read(*)|Write(*)|Edit(*)",
+        "matcher": "Read|Write|Edit",
         "hooks": [{
           "type": "command",
           "command": "python3 ~/.claude/hooks/protect-sensitive-files.py"

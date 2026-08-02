@@ -18,10 +18,11 @@ automatically format files after Claude writes or edits them.
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write(*.py)|Edit(*.py)",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
+            "if": "Edit(*.py)",
             "command": ".claude/hooks/my-hook.sh"
           }
         ]

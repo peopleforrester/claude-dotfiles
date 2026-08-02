@@ -10,19 +10,32 @@ Training-data-era tutorials frequently contradict these.
 - **`$CLAUDE_FILE_PATH` is unreliable.** Read the path from stdin JSON via
   `jq -r '.tool_input.file_path'`. The env var only populates for a subset of
   PostToolUse invocations and is empty elsewhere.
-- **Handler types expanded.** In addition to `command` and `message`, hooks
-  now accept `http`, `prompt`, and `agent` handlers. The `prompt` type injects
-  text into the next model turn; `agent` delegates to a named subagent.
-- **New events.** `InstructionsLoaded`, `UserPromptSubmit`, `PermissionRequest`,
+- **Config shape is nested.** An event maps to an array of matcher groups, each
+  `{ "matcher": "<tool name>", "hooks": [ <handler>, ... ] }`. The `matcher` is a
+  tool name (`Bash`), a `|`/`,` list (`Edit|Write`), `*`/`""` for all, or a
+  regex; it is NOT an expression. `tool == "Bash" && ...` is treated as a regex
+  against the tool name and never matches. Scope on inputs with a handler-level
+  `if` instead.
+- **Handler types.** A handler's `type` is one of `command`, `http`, `mcp_tool`,
+  `prompt`, or `agent`. There is no `message` type. To show text to the user, a
+  `command` hook emits `{"systemMessage": "..."}` on exit 0; to block a call it
+  exits 2 (stderr is fed back to Claude). `prompt` runs a single-turn model
+  decision; `agent` delegates to a subagent (experimental).
+- **New events.** `Setup`, `InstructionsLoaded`, `UserPromptSubmit`,
+  `UserPromptExpansion`, `PostToolBatch`, `MessageDisplay`, `PermissionRequest`,
   `PermissionDenied`, `PostToolUseFailure`, `PostCompact`, `SubagentStart`,
-  `TaskCreated`, `TaskCompleted`, `TeammateIdle`, `ConfigChange`, `CwdChanged`,
-  `DirectoryAdded`, `FileChanged`, `WorktreeCreate`, `WorktreeRemove`,
-  `StopFailure`, `Elicitation`, `ElicitationResult`. Use `UserPromptSubmit` for
-  policy gates that previously lived on `PreToolUse`. `DirectoryAdded` (CLI
-  v2.1.219) fires after `/add-dir` or an SDK `register_repo_root` call.
-- **`once: true`** fires a hook only on the first matching trigger per session.
-- **`if:` expressions** gate execution without wrapping the command in shell
-  logic.
+  `SubagentStop`, `TaskCreated`, `TaskCompleted`, `TeammateIdle`, `ConfigChange`,
+  `CwdChanged`, `DirectoryAdded`, `FileChanged`, `WorktreeCreate`,
+  `WorktreeRemove`, `StopFailure`, `Elicitation`, `ElicitationResult`. Use
+  `UserPromptSubmit` for policy gates that previously lived on `PreToolUse`.
+  `DirectoryAdded` (CLI v2.1.219) fires after `/add-dir` or an SDK
+  `register_repo_root` call.
+- **`once: true`** fires a hook only on the first matching trigger per session
+  (honored only in skill/agent frontmatter, ignored in settings files).
+- **`if:`** takes permission-rule syntax (e.g. `Bash(git push *)`, `Edit(*.ts)`)
+  and gates a handler on tool events without shell logic in the command.
+- **Valid command-handler fields:** `command`, `args`, `if`, `timeout` (seconds,
+  default 600), `async`, `asyncRewake`, `statusMessage`, `shell`, `once`.
 
 ## Skills
 
@@ -30,18 +43,30 @@ Training-data-era tutorials frequently contradict these.
   strongly recommended for auto-invocation but not schema-required.
 - **Skills and commands have merged.** Both surface as `/name`. Prefer skills
   for new work; commands are legacy.
-- **New optional frontmatter fields:** `argument-hint`, `effort`, `model`,
-  `allowed-tools`, `disable-model-invocation`, `user-invocable`, `context`,
-  `agent`, `paths`, `shell`.
+- **Optional frontmatter fields:** `when_to_use`, `argument-hint`, `arguments`,
+  `effort`, `model`, `allowed-tools`, `disallowed-tools`,
+  `disable-model-invocation`, `user-invocable`, `context`, `agent`, `background`,
+  `paths`, `shell`, `hooks`.
+- **`context: fork`** runs the skill in a subagent, in the background by default
+  as of v2.1.214; set `background: false` to wait for its result in the turn.
 - **Plugin namespacing.** Skills distributed via plugins are invoked as
   `/plugin-name:skill-name` to avoid collisions.
 
 ## Settings & Permissions
 
-- **Permission modes:** `default`, `acceptEdits`, `plan`, `auto`, `dontAsk`,
-  `bypassPermissions`. `auto` and `dontAsk` are the new 2025–2026 additions.
-- **Sandbox primitives.** `sandbox.*` config composes with `defaultMode: auto`
-  to replace the old conservative/balanced/autonomous profile taxonomy.
+- **Permission modes:** config values are `default`, `acceptEdits`, `plan`,
+  `auto`, `dontAsk`, `bypassPermissions`. The `default` mode is displayed as
+  **Manual** in the CLI, help, and IDE/desktop, and `manual` is accepted as an
+  alias for the value (v2.1.200+); the stored config value is still `default`.
+  `auto` (classifier-driven) and `dontAsk` are the newer additions.
+- **Sandbox primitives.** `sandbox.*` composes with `defaultMode: auto` to
+  replace the old conservative/balanced/autonomous profile taxonomy. Real network
+  keys are `allowedDomains`, `deniedDomains`, `strictAllowlist` (v2.1.219+, deny
+  non-allowlisted hosts without prompting), `httpProxyPort`, `socksProxyPort`;
+  filesystem keys are `filesystem.allowWrite/denyWrite/denyRead/allowRead` and
+  `filesystem.disabled` (v2.1.216+); plus `excludedCommands`,
+  `autoAllowBashIfSandboxed`, `credentials`, and `allowAppleEvents`. There is no
+  `network.denyExternal` or `network.allowLocalBinding` key.
 - **CLAUDE.md is truncated around 200 lines upstream.** The 60-100 line
   budget in this repo gives headroom below that ceiling.
 

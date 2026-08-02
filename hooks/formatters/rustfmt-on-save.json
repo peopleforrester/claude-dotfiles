@@ -1,16 +1,16 @@
 {
   "// ABOUT": "Rustfmt auto-formatting for Rust files",
-  "// USAGE": "Copy the PostToolUse section into your settings.json hooks",
+  "// USAGE": "Copy the PostToolUse section into your settings.json hooks. The matcher is the tool name (Edit|Write); the command guards on extension.",
   "// REQUIRES": "rustfmt installed (included with Rust toolchain)",
 
   "PostToolUse": [
     {
       "// DESCRIPTION": "Format Rust source files",
-      "matcher": "Write(*.rs)|Edit(*.rs)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && rustfmt \"$FILE\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.rs) rustfmt \"$FILE\" 2>/dev/null || true;; esac"
         }
       ]
     }
@@ -19,11 +19,11 @@
   "// ALTERNATIVE_CARGO": "Use cargo fmt for workspace-aware formatting",
   "PostToolUse_cargo": [
     {
-      "matcher": "Write(*.rs)|Edit(*.rs)",
+      "matcher": "Edit|Write",
       "hooks": [
         {
           "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && cargo fmt -- \"$FILE\" 2>/dev/null || true"
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.rs) cargo fmt -- \"$FILE\" 2>/dev/null || true;; esac"
         }
       ]
     }

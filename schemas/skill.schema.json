@@ -22,17 +22,31 @@
     },
     "effort": {
       "type": "string",
-      "enum": ["low", "medium", "high"],
-      "description": "Relative effort/thoroughness hint for the agent"
+      "enum": ["low", "medium", "high", "xhigh", "max"],
+      "description": "Effort level when this skill is active (available levels depend on the model)"
+    },
+    "when_to_use": {
+      "type": "string",
+      "description": "Extra trigger context appended to description in the skill listing (counts toward the 1,536-character cap)"
+    },
+    "arguments": {
+      "type": ["string", "array"],
+      "items": { "type": "string" },
+      "description": "Named positional arguments for $name substitution; space-separated string or YAML list"
     },
     "model": {
       "type": "string",
       "description": "Recommended model ID or alias (Aug 2026 GA: claude-opus-5, claude-sonnet-5, claude-fable-5, claude-haiku-4-5-20251001; or alias opus|sonnet|haiku|fable)"
     },
     "allowed-tools": {
-      "type": "array",
+      "type": ["array", "string"],
       "items": { "type": "string" },
-      "description": "Restrict tool access while this skill runs"
+      "description": "Tools pre-approved (no prompt) during the turn that invokes this skill; space/comma string or YAML list"
+    },
+    "disallowed-tools": {
+      "type": ["array", "string"],
+      "items": { "type": "string" },
+      "description": "Tools removed from Claude's pool while this skill is active; space/comma string or YAML list"
     },
     "disable-model-invocation": {
       "type": "boolean",
@@ -43,13 +57,21 @@
       "description": "If true, this skill is exposed as a user-invocable slash command"
     },
     "context": {
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "Additional files or paths loaded as context when the skill runs"
+      "type": "string",
+      "enum": ["fork"],
+      "description": "Set to 'fork' to run this skill in a forked subagent context"
     },
     "agent": {
       "type": "string",
-      "description": "Named subagent that executes this skill"
+      "description": "Which subagent type to use when context: fork is set"
+    },
+    "background": {
+      "type": "boolean",
+      "description": "With context: fork, set false to wait for the subagent's result in the turn instead of running it in the background (default true, v2.1.218+)"
+    },
+    "hooks": {
+      "type": "object",
+      "description": "Hooks scoped to this skill's lifecycle (same shape as hooks.json)"
     },
     "paths": {
       "type": "array",

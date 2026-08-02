@@ -34,17 +34,19 @@
     "autoAllowBashIfSandboxed": true,
     "excludedCommands": ["git"],
     "network": {
-      "allowLocalBinding": true
+      "allowedDomains": []
     }
   },
 
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write(*.py)|Edit(*.py)",
+        "// DESCRIPTION": "Format Python with ruff after edit (matcher is the tool name; the command guards on extension)",
+        "matcher": "Edit|Write",
         "hooks": [{
           "type": "command",
-          "command": "FILE=$(cat | jq -r '.tool_input.file_path') && uv run ruff format \"$FILE\" 2>/dev/null || true"
+          "if": "Edit(*.py)",
+          "command": "FILE=$(cat | jq -r '.tool_input.file_path'); case \"$FILE\" in *.py) uv run ruff format \"$FILE\" 2>/dev/null || true;; esac"
         }]
       }
     ]

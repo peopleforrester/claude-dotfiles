@@ -52,7 +52,7 @@ Created 14 production-ready skills:
 
 ### Phase 4: Settings & Hooks
 Built configuration profiles and automation:
-- 3 permission profiles (conservative, balanced, autonomous)
+- 4 permission profiles (sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive)
 - Formatters for 4 languages
 - Validators for sensitive files
 - Cross-platform notifications

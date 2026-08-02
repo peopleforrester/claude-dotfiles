@@ -72,9 +72,11 @@ type Role = typeof ROLES[number];
 Before tool execution, check if any instincts apply:
 ```json
 {
-  "matcher": "tool == \"Write\" || tool == \"Edit\"",
-  "type": "message",
-  "message": "Check instincts for applicable patterns before writing code."
+  "matcher": "Write|Edit",
+  "hooks": [{
+    "type": "command",
+    "command": "printf '%s' '{\"systemMessage\":\"Check instincts for applicable patterns before writing code.\"}'"
+  }]
 }
 ```
 
@@ -82,10 +84,12 @@ Before tool execution, check if any instincts apply:
 After tool execution, look for learnable patterns:
 ```json
 {
-  "matcher": "tool == \"Edit\" && result.success == true",
-  "type": "command",
-  "command": "FILE=$(jq -r '.tool_input.file_path') && echo \"Pattern observed: successful edit to $FILE\"",
-  "async": true
+  "matcher": "Edit",
+  "hooks": [{
+    "type": "command",
+    "command": "FILE=$(cat | jq -r '.tool_input.file_path') && echo \"Pattern observed: successful edit to $FILE\"",
+    "async": true
+  }]
 }
 ```
 
