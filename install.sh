@@ -41,7 +41,7 @@ set -euo pipefail
 # =============================================================================
 
 # VERSION: Semantic version of the install script, shown in --version output
-VERSION="0.7.0"
+VERSION="0.7.1"
 
 # SCRIPT_DIR: Absolute path to the directory containing this script.
 # This is computed dynamically so the script works regardless of where
@@ -101,7 +101,7 @@ fi
 # arguments or interactive prompts. Default is all false (nothing selected).
 # =============================================================================
 
-INSTALL_ALL=false       # --all: Install everything (settings, skills, hooks, MCP, rules, agents, commands)
+INSTALL_ALL=false       # --all: Install everything (settings, skills, hooks, MCP, rules, agents)
 INSTALL_MINIMAL=false   # --minimal: Install only settings.json
 INSTALL_SKILLS=false    # --skills: Install skills library
 INSTALL_HOOKS=false     # --hooks: Install hook configurations
@@ -109,7 +109,6 @@ INSTALL_MCP=false       # --mcp: Install MCP server configurations
 INSTALL_SETTINGS=false  # --settings: Install settings.json
 INSTALL_RULES=false     # --rules: Install rules (always-follow constraints)
 INSTALL_AGENTS=false    # --agents: Install agents (specialized personas)
-INSTALL_COMMANDS=false  # --commands: Install commands (slash commands)
 
 # PROFILE: Which permission profile to use. Options are:
 #   - sandbox-on (default): defaultMode auto inside an isolated bash sandbox
@@ -704,44 +703,6 @@ install_agents() {
 }
 
 # -----------------------------------------------------------------------------
-# install_commands()
-# -----------------------------------------------------------------------------
-# Installs command files to ~/.claude/commands/
-#
-# Commands define slash commands that users can invoke in Claude Code.
-# They are organized in subdirectories by category (workflow, quality, etc.).
-# -----------------------------------------------------------------------------
-install_commands() {
-    print_step "Installing commands..."
-
-    local commands_src="${SCRIPT_DIR}/commands"
-    local commands_dest="${CLAUDE_DIR}/commands"
-
-    if [ ! -d "$commands_src" ]; then
-        print_warning "Commands directory not found: ${commands_src}"
-        return 0
-    fi
-
-    ensure_dir "$commands_dest"
-
-    local cmd_count=0
-    # Copy entire subdirectory structure
-    find "$commands_src" -name "*.md" | while read -r cmd_file; do
-        # Preserve subdirectory structure (workflow/, quality/, etc.)
-        local rel_path="${cmd_file#$commands_src/}"
-        local dest_path="${commands_dest}/${rel_path}"
-        ensure_dir "$(dirname "$dest_path")"
-        copy_or_link "$cmd_file" "$dest_path"
-        cmd_count=$((cmd_count + 1))
-    done
-
-    # Count files for display
-    local total_cmds
-    total_cmds=$(find "$commands_src" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    print_success "Installed ${total_cmds} commands"
-}
-
-# -----------------------------------------------------------------------------
 # install_mcp()
 # -----------------------------------------------------------------------------
 # Installs MCP (Model Context Protocol) server configurations.
@@ -946,10 +907,6 @@ run_interactive() {
             read -rp "Install agents? [Y/n] " yn
             [[ ! "$yn" =~ ^[Nn]$ ]] && INSTALL_AGENTS=true
 
-            # Commands - default yes
-            read -rp "Install commands? [Y/n] " yn
-            [[ ! "$yn" =~ ^[Nn]$ ]] && INSTALL_COMMANDS=true
-
             # MCP - default no (requires more setup)
             read -rp "Install MCP configs? [y/N] " yn
             [[ "$yn" =~ ^[Yy]$ ]] && INSTALL_MCP=true
@@ -1052,7 +1009,6 @@ run_install() {
         install_hooks
         install_rules
         install_agents
-        install_commands
         install_mcp
     elif [ "$INSTALL_MINIMAL" = true ]; then
         # Minimal: just settings
@@ -1065,7 +1021,6 @@ run_install() {
         [ "$INSTALL_HOOKS" = true ] && install_hooks
         [ "$INSTALL_RULES" = true ] && install_rules
         [ "$INSTALL_AGENTS" = true ] && install_agents
-        [ "$INSTALL_COMMANDS" = true ] && install_commands
         [ "$INSTALL_MCP" = true ] && install_mcp
     fi
 
@@ -1109,13 +1064,12 @@ show_usage() {
 Usage: $(basename "$0") [OPTIONS]
 
 Options:
-  --all              Install everything (settings, skills, hooks, rules, agents, commands, MCP)
+  --all              Install everything (settings, skills, hooks, rules, agents, MCP)
   --minimal          Install settings only
   --skills           Install skills only
   --hooks            Install hooks only
   --rules            Install rules only (always-follow constraints)
   --agents           Install agents only (specialized personas)
-  --commands         Install commands only (slash commands)
   --mcp              Install MCP configurations only
   --settings         Install settings only
 
@@ -1191,11 +1145,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --agents)
             INSTALL_AGENTS=true
-            INTERACTIVE=false
-            shift
-            ;;
-        --commands)
-            INSTALL_COMMANDS=true
             INTERACTIVE=false
             shift
             ;;

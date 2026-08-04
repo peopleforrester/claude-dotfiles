@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-08-04
+
+### Removed
+- Dead `commands` installation from both `install.sh` and `install.ps1`. The
+  `commands/` directory was migrated to skills in 0.5.0, but both installers
+  still carried the install function, the `--commands`/`-Commands` flag, the
+  interactive prompt, and the `--all` step for it (a no-op that warned about a
+  missing directory). Slash commands now ship as skills and install with them.
+- `plan.md` and `todo.md` — internal 0.5.0 planning artifacts that did not
+  belong in the public distribution and still referenced superseded model IDs.
+
+### Fixed
+- Synced the `install.ps1` version banner (was stuck at `0.1.0`) to the release.
+
 ## [0.7.0] - 2026-08-02
 
 Full reconciliation of the hook, sandbox, permission, and skill surfaces against

@@ -157,9 +157,6 @@ param(
     # Install agents only (specialized personas)
     [switch]$Agents,
 
-    # Install commands only (slash commands)
-    [switch]$Commands,
-
     # Permission profile selection with validation
     [ValidateSet("sandbox-on", "sandbox-off", "autoMode-strict", "autoMode-permissive")]
     [string]$Profile = "sandbox-on",
@@ -196,7 +193,7 @@ param(
 # =============================================================================
 
 # Version number following Semantic Versioning (MAJOR.MINOR.PATCH)
-$Script:VERSION = "0.1.0"
+$Script:VERSION = "0.7.1"
 
 # Directory where this script is located
 # $PSScriptRoot is an automatic variable containing the script's directory
@@ -598,39 +595,6 @@ function Install-Agents {
 }
 
 # =============================================================================
-# INSTALL-COMMANDS
-# =============================================================================
-# Installs command files to ~/.claude/commands/
-# Commands define slash commands organized by category (workflow, quality, etc.).
-# =============================================================================
-function Install-Commands {
-    Write-Step "Installing commands..."
-
-    $commandsSrc = Join-Path $Script:SCRIPT_DIR "commands"
-    $commandsDest = Join-Path $Script:CLAUDE_DIR "commands"
-
-    if (-not (Test-Path $commandsSrc)) {
-        Write-Warning "Commands directory not found: $commandsSrc"
-        return
-    }
-
-    Confirm-Directory -Path $commandsDest
-
-    # Copy entire directory structure preserving subdirectories
-    $cmdFiles = Get-ChildItem -Path $commandsSrc -Filter "*.md" -Recurse
-    foreach ($cmdFile in $cmdFiles) {
-        # Preserve subdirectory structure
-        $relativePath = $cmdFile.FullName.Substring($commandsSrc.Length + 1)
-        $destPath = Join-Path $commandsDest $relativePath
-        $destDir = Split-Path -Parent $destPath
-        Confirm-Directory -Path $destDir
-        Copy-OrLink -Source $cmdFile.FullName -Destination $destPath
-    }
-
-    Write-Success "Installed $($cmdFiles.Count) commands"
-}
-
-# =============================================================================
 # INSTALL-MCP
 # =============================================================================
 # Installs Model Context Protocol (MCP) server configurations.
@@ -775,9 +739,6 @@ function Start-Interactive {
             $yn = Read-Host "Install agents? [Y/n]"
             if ($yn -notmatch "^[Nn]$") { $script:Agents = $true }
 
-            $yn = Read-Host "Install commands? [Y/n]"
-            if ($yn -notmatch "^[Nn]$") { $script:Commands = $true }
-
             $yn = Read-Host "Install MCP configs? [y/N]"
             if ($yn -match "^[Yy]$") { $script:MCP = $true }
         }
@@ -855,7 +816,6 @@ function Start-Install {
         Install-Hooks
         Install-Rules
         Install-Agents
-        Install-Commands
         Install-MCP
     }
     elseif ($Minimal) {
@@ -869,7 +829,6 @@ function Start-Install {
         if ($Hooks) { Install-Hooks }
         if ($Rules) { Install-Rules }
         if ($Agents) { Install-Agents }
-        if ($Commands) { Install-Commands }
         if ($MCP) { Install-MCP }
     }
 
@@ -904,13 +863,12 @@ function Show-Usage {
 Usage: .\install.ps1 [OPTIONS]
 
 Options:
-  -All              Install everything (settings, skills, hooks, rules, agents, commands, MCP)
+  -All              Install everything (settings, skills, hooks, rules, agents, MCP)
   -Minimal          Install settings only
   -Skills           Install skills only
   -Hooks            Install hooks only
   -Rules            Install rules only (always-follow constraints)
   -Agents           Install agents only (specialized personas)
-  -Commands         Install commands only (slash commands)
   -MCP              Install MCP configurations only
   -Settings         Install settings only
 
@@ -962,7 +920,7 @@ if ($Template) {
 
 # Determine if we should run in interactive mode
 # Interactive mode runs when no installation switches are specified
-$isInteractive = -not ($All -or $Minimal -or $Skills -or $Hooks -or $MCP -or $Settings -or $Rules -or $Agents -or $Commands)
+$isInteractive = -not ($All -or $Minimal -or $Skills -or $Hooks -or $MCP -or $Settings -or $Rules -or $Agents)
 
 if ($isInteractive) {
     Start-Interactive
