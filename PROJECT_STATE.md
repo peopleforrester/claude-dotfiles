@@ -72,5 +72,18 @@
 - Commit 486c3e0: Runtime version floor consistency (Node >=22, Python >=3.12)
 
 ## Branch State
-- staging: 486c3e0 synced
-- main: 526087e synced
+- staging: 705b0e6 synced
+- main: 705b0e6 synced
+
+## Outbound Requests
+
+Cross-repo asks filed on the repo that has to act on them, per the
+cross-repo-communication rule.
+
+| Filed | Repo | Issue | Ask |
+|---|---|---|---|
+| 2026-08-07 | `peopleforrester/mrf-engagement-orchestrator` | [#56](https://github.com/peopleforrester/mrf-engagement-orchestrator/issues/56) | Write and publish an article on this repo to michaelrishiforrester.com via Micropub |
+
+> Note: the "Current Initiative" section above is stale. It still describes the
+> April 2026 work, which shipped in 0.5.0. Releases through 0.7.2 are recorded
+> in [CHANGELOG.md](./CHANGELOG.md), which is the accurate history.
