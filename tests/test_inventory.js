@@ -32,6 +32,7 @@ const counts = {
   hooks: countFiles(path.join(ROOT, 'hooks'),
     (n, p) => n !== 'README.md' && !n.endsWith('.schema.json') && !p.includes('templates/')),
   mcp: countFiles(path.join(ROOT, 'mcp'), n => n.endsWith('.json') && !n.endsWith('.schema.json')),
+  profiles: countFiles(path.join(ROOT, 'settings', 'permissions'), n => n.endsWith('.json')),
 };
 
 const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf-8');
@@ -57,5 +58,6 @@ expect('rules count',      readClaim(/\| (\d+) rules \|/),     counts.rules);
 expect('claude-md count',  readClaim(/\| (\d+) templates \|/), counts.claudeMd);
 expect('hooks count',      readClaim(/\| (\d+) hooks \|/),     counts.hooks);
 expect('mcp count',        readClaim(/\| (\d+) configs \|/),   counts.mcp);
+expect('profiles count',   readClaim(/\| (\d+) profiles \|/),  counts.profiles);
 
 console.log('  all: PASS');

@@ -1,7 +1,7 @@
 {
   "name": "claude-dotfiles",
-  "version": "0.7.1",
-  "description": "Production-ready configurations, skills, and templates for Claude Code optimization",
+  "version": "0.7.2",
+  "description": "Configuration layer for Claude Code: skills, agents, rules, hooks, and sandboxed permission profiles, all schema-validated in CI",
   "private": true,
   "license": "MIT",
   "author": "peopleforrester",

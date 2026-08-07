@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-08-04
+
+### Fixed
+- **README claimed 3 permission profiles; there are 4.** The count went stale
+  when the profile taxonomy was replaced in 0.5.0. `tests/test_inventory.js`
+  guarded six of the seven inventory rows but not this one, which is why it
+  drifted unnoticed. Corrected the number and added the missing assertion, so
+  the build now fails if any inventory row drifts from the filesystem.
+- **`BUILT_WITH_CLAUDE.md` read as a description of the current repo.** Its
+  "single Claude Code session" framing and figures (100+ files, 15,000+ lines,
+  14 skills) were accurate for the first release on 2026-01-28 and stale for
+  everything after it. Dated the origin story and added a first-session vs today
+  column, since the original figures were true at the time and worth keeping.
+- Added an H1 to the README. The heading was ASCII art, so the document had no
+  real `<h1>` for search results, screen readers, or link previews.
+
+### Added
+- `assets/hero.png` — 16:9 hero image on the README.
+- Above-the-fold evidence block showing real `npm test` output, replacing setup
+  instructions as the first thing a visitor sees.
+
+### Changed
+- Sharpened the repo, package, and plugin descriptions from the generic
+  "production-ready configurations" to the specific inventory they describe.
+
 ## [0.7.1] - 2026-08-04
 
 ### Removed

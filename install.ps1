@@ -193,7 +193,7 @@ param(
 # =============================================================================
 
 # Version number following Semantic Versioning (MAJOR.MINOR.PATCH)
-$Script:VERSION = "0.7.1"
+$Script:VERSION = "0.7.2"
 
 # Directory where this script is located
 # $PSScriptRoot is an automatic variable containing the script's directory

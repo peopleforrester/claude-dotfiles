@@ -1,6 +1,11 @@
 # Built with Claude Code
 
-> This entire repository was built in a single Claude Code session.
+> The first release of this repository was built in a single Claude Code
+> session on 2026-01-28. It has been maintained across many sessions since.
+
+This page is the origin story, not a description of the current repo. The
+figures below are what shipped in that first session; see
+[CHANGELOG.md](./CHANGELOG.md) for everything after it.
 
 ## The Meta Story
 
@@ -21,15 +26,21 @@ In one extended session, Claude Code:
 
 ## By the Numbers
 
-| Metric | Value |
-|--------|-------|
-| Files Created | 100+ |
-| Lines of Code | 15,000+ |
-| CLAUDE.md Templates | 13 |
-| Skills | 14 |
-| Hooks | 13 |
-| MCP Configurations | 10 |
-| Time | Single session |
+| Metric | First session (2026-01-28) | Today |
+|--------|---------------------------|-------|
+| Files | 100 | 237 |
+| Lines | 15,552 | 34,728 |
+| CLAUDE.md Templates | 13 | 15 |
+| Skills | 14 | 70 |
+| Agents | — | 15 |
+| Rules | — | 21 |
+| Hooks | 13 | 14 |
+| MCP Configurations | 10 | 10 |
+| Permission Profiles | 3 | 4 |
+
+Every "Today" figure is asserted in CI by
+[`tests/test_inventory.js`](./tests/test_inventory.js), which fails the build if
+the README drifts from the filesystem.
 
 ## The Process
 

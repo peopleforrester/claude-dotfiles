@@ -1,16 +1,11 @@
 <div align="center">
 
-```
-     ╭──────────────────────────────────────────╮
-     │                                          │
-     │          claude-dotfiles                 │
-     │                                          │
-     │     🧠  Give Claude Code a Memory  🧠    │
-     │                                          │
-     ╰──────────────────────────────────────────╯
-```
+<img src="./assets/hero.png" alt="claude-dotfiles" width="100%">
 
-**Production-ready configurations for Claude Code**
+# claude-dotfiles
+
+**Claude Code starts every session knowing nothing about your project.
+This is the configuration layer that fixes that.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Claude Code 2.1+](https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet)](https://code.claude.com/docs/en)
@@ -23,6 +18,35 @@
 [Documentation](#-documentation)
 
 </div>
+
+---
+
+## ✅ Every config here is validated in CI
+
+70 skills, 15 agents, 21 rules, 14 hooks, and 4 permission profiles — each one
+schema-checked on every commit, including a test that fails the build if the
+counts in this README ever drift from the filesystem.
+
+```console
+$ npm test
+
+  Validate agents... PASS
+  Validate skills... PASS
+  Validate rules... PASS
+  Validate hooks... PASS
+  Parse JSON configs... PASS
+  Plugin manifest integrity... PASS
+  Unit: token-count parsing... PASS
+  Unit: protect-sensitive-files... PASS
+  Unit: validate-agents model enum... PASS
+  Unit: README inventory matches filesystem... PASS
+  Schema structure... PASS
+
+  Passed: 11    Failed: 0    Result: ALL PASS
+```
+
+Reproduce it yourself: [`npm test`](./tests/run-all.js) ·
+[`scripts/validate.py`](./scripts/validate.py) (158 files, 0 errors, 0 warnings)
 
 ---
 
@@ -108,7 +132,7 @@ make install-minimal # Just essentials
 | **[Agents](./agents/)** | Specialized personas (planner, architect, reviewers, spec-interviewer) | 15 agents |
 | **[Skills](./skills/)** | User-invocable slash commands AND pattern libraries (commands merged into skills in 0.5.0) | 70 skills |
 | **[Hooks](./hooks/)** | Automate actions (format on save, notifications) | 14 hooks |
-| **[Settings](./settings/)** | Control what Claude can do automatically | 3 profiles |
+| **[Settings](./settings/)** | Control what Claude can do automatically | 4 profiles |
 | **[MCP Configs](./mcp/)** | Connect Claude to GitHub, databases, Slack | 10 configs |
 
 ### Starter Templates
@@ -261,9 +285,9 @@ We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## 🌟 Built with Claude Code
 
-This entire repository was built in a single Claude Code session.
-
-100+ files, 15,000+ lines, created by Claude to help Claude work better.
+The first release was built in a single Claude Code session on 2026-01-28:
+100 files, 15,552 lines. It has been maintained across many sessions since and
+now stands at 237 files and 34,728 lines.
 
 **[Read the full story →](./BUILT_WITH_CLAUDE.md)**
 
