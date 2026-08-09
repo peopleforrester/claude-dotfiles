@@ -80,9 +80,10 @@
 Cross-repo asks filed on the repo that has to act on them, per the
 cross-repo-communication rule.
 
-| Filed | Repo | Issue | Ask |
-|---|---|---|---|
-| 2026-08-07 | `peopleforrester/mrf-engagement-orchestrator` | [#56](https://github.com/peopleforrester/mrf-engagement-orchestrator/issues/56) | Write and publish an article on this repo to michaelrishiforrester.com via Micropub |
+| Filed | Repo | Issue | Ask | Status |
+|---|---|---|---|---|
+| 2026-08-09 | `peopleforrester/mrf-engagement-orchestrator` | [#66](https://github.com/peopleforrester/mrf-engagement-orchestrator/issues/66) | Publish "The hooks were valid JSON. They never fired." Draft, hero, and calendar entry supplied | open |
+| 2026-08-07 | `peopleforrester/mrf-engagement-orchestrator` | [#56](https://github.com/peopleforrester/mrf-engagement-orchestrator/issues/56) | Write an article on this repo from source material | closed, superseded by #66 |
 
 > Note: the "Current Initiative" section above is stale. It still describes the
 > April 2026 work, which shipped in 0.5.0. Releases through 0.7.2 are recorded
