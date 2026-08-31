@@ -1,45 +1,45 @@
 #!/usr/bin/env node
-// ABOUTME: Asserts that README inventory counts match filesystem reality.
-// ABOUTME: Catches drift between docs and code (senior review H1).
+// ABOUTME: Asserts that README inventory counts match what the repository tracks.
+// ABOUTME: Counts git-tracked files, not the working tree, so a clone agrees.
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
 
-function countFiles(dir, predicate) {
-  if (!fs.existsSync(dir)) return 0;
-  let count = 0;
-  const PRUNE = new Set(['__pycache__', 'node_modules', '.git', 'dist', 'build', '.venv']);
-  function walk(d) {
-    for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
-      const full = path.join(d, entry.name);
-      if (entry.isDirectory()) {
-        if (PRUNE.has(entry.name)) continue;
-        walk(full);
-      } else if (predicate(entry.name, full)) count++;
-    }
-  }
-  walk(dir);
-  return count;
+// Count what git tracks, not what is on disk. Walking the filesystem counted
+// files the repository does not have: an unanchored `docs/` ignore rule hid
+// skills/docs/update-docs/SKILL.md, so the working tree carried 70 skills and a
+// clone carried 69. This test passed locally and CI failed on every run for
+// three weeks. A checkout is the thing users get, so it is the thing to measure.
+const tracked = execSync('git ls-files -z', { cwd: ROOT, maxBuffer: 32 * 1024 * 1024 })
+  .toString('utf-8')
+  .split('\0')
+  .filter(Boolean);
+
+function countTracked(prefix, predicate) {
+  return tracked.filter(p => p.startsWith(prefix + '/'))
+                .filter(p => predicate(path.basename(p), p))
+                .length;
 }
 
 const counts = {
-  agents: countFiles(path.join(ROOT, 'agents'), n => n.endsWith('.md') && n !== 'README.md'),
-  skills: countFiles(path.join(ROOT, 'skills'), n => n === 'SKILL.md'),
-  rules: countFiles(path.join(ROOT, 'rules'), n => n.endsWith('.md') && n !== 'README.md'),
-  claudeMd: countFiles(path.join(ROOT, 'claude-md'), n => n.endsWith('.md') && n !== 'README.md'),
-  hooks: countFiles(path.join(ROOT, 'hooks'),
+  agents: countTracked('agents', n => n.endsWith('.md') && n !== 'README.md'),
+  skills: countTracked('skills', n => n === 'SKILL.md'),
+  rules: countTracked('rules', n => n.endsWith('.md') && n !== 'README.md'),
+  claudeMd: countTracked('claude-md', n => n.endsWith('.md') && n !== 'README.md'),
+  hooks: countTracked('hooks',
     (n, p) => n !== 'README.md' && !n.endsWith('.schema.json') && !p.includes('templates/')),
-  mcp: countFiles(path.join(ROOT, 'mcp'), n => n.endsWith('.json') && !n.endsWith('.schema.json')),
-  profiles: countFiles(path.join(ROOT, 'settings', 'permissions'), n => n.endsWith('.json')),
+  mcp: countTracked('mcp', n => n.endsWith('.json') && !n.endsWith('.schema.json')),
+  profiles: countTracked('settings/permissions', n => n.endsWith('.json')),
 };
 
 const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf-8');
 
 function expect(label, claim, actual) {
   if (claim !== actual) {
-    console.log(`FAIL: ${label}: README claims ${claim}, filesystem has ${actual}`);
+    console.log(`FAIL: ${label}: README claims ${claim}, repository tracks ${actual}`);
     process.exit(1);
   }
   console.log(`  ${label}: PASS (${actual})`);
