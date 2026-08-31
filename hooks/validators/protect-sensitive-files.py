@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ABOUTME: Pre-tool hook to block edits to sensitive files
-# ABOUTME: Exits with non-zero status to block the operation
+# ABOUTME: Exits 2 to block the operation; other non-zero codes do not block
 
 """
 # =============================================================================
@@ -26,7 +26,7 @@ HOW IT WORKS:
 1. Claude Code calls this script BEFORE reading/writing/editing a file
 2. The script reads the tool invocation payload from stdin as JSON
 3. It extracts tool_input.file_path and checks it against protected patterns
-4. If protected OR the path is missing: exit 1 (fail-closed, blocks operation)
+4. If protected OR the path is missing: exit 2 (fail-closed, blocks operation)
 5. If safe: exit 0 (allows the operation)
 
 CONFIGURATION:
@@ -50,16 +50,21 @@ The hook reads stdin JSON — it does not accept command-line arguments or
 the $CLAUDE_FILE_PATH env var (both are unreliable; see GOTCHAS.md).
 
 MATCHER EXPLAINED:
-"Read(*)|Write(*)|Edit(*)"
-- Read(*): Matches any file read operation
-- Write(*): Matches any file write operation
-- Edit(*): Matches any file edit operation
-- | (pipe): OR operator - matches any of these
+"Read|Write|Edit"
+- The matcher is tested against the TOOL NAME, not the file path.
+- | (pipe): OR operator - matches any of these three tools.
+- A matcher containing other characters, such as "Read(*)", is compiled as a
+  regular expression and matched against the tool name, so it never fires.
+  Scope by path inside the hook or with a handler-level `if`.
 
 FAIL-CLOSED BEHAVIOR:
 If stdin is empty, malformed, or missing tool_input.file_path, the hook
-exits 1 (blocks the operation). This prevents silent bypass in scenarios
+exits 2 (blocks the operation). This prevents silent bypass in scenarios
 where Claude Code does not populate the expected fields.
+
+Exit code 2 is what blocks. Claude Code treats a non-zero exit other than 2,
+without JSON on stdout, as a non-blocking error and proceeds with the action,
+so a policy hook that exits 1 fails open.
 
 CUSTOMIZATION:
 Modify PROTECTED_PATTERNS and PROTECTED_DIRECTORIES to customize what's blocked.
@@ -338,18 +343,18 @@ def main():
         raw = sys.stdin.read()
     except Exception as e:
         print(f"BLOCKED: Could not read stdin: {e}", file=sys.stderr)
-        sys.exit(1)
+        sys.exit(2)
 
     if not raw.strip():
         print("BLOCKED: Empty stdin; expected tool invocation JSON",
               file=sys.stderr)
-        sys.exit(1)
+        sys.exit(2)
 
     try:
         payload = json.loads(raw)
     except json.JSONDecodeError as e:
         print(f"BLOCKED: Malformed JSON on stdin: {e}", file=sys.stderr)
-        sys.exit(1)
+        sys.exit(2)
 
     # =========================================================================
     # EXTRACT file_path WITH FAIL-CLOSED DEFAULTS
@@ -360,13 +365,13 @@ def main():
     tool_input = payload.get("tool_input") if isinstance(payload, dict) else None
     if not isinstance(tool_input, dict):
         print("BLOCKED: Missing tool_input in stdin payload", file=sys.stderr)
-        sys.exit(1)
+        sys.exit(2)
 
     filepath = tool_input.get("file_path")
     if not filepath or not isinstance(filepath, str):
         print("BLOCKED: Missing or empty tool_input.file_path",
               file=sys.stderr)
-        sys.exit(1)
+        sys.exit(2)
 
     # =========================================================================
     # CHECK PROTECTION STATUS
@@ -376,7 +381,7 @@ def main():
     if protected:
         print(f"BLOCKED: {reason}", file=sys.stderr)
         print(f"File: {filepath}", file=sys.stderr)
-        sys.exit(1)
+        sys.exit(2)
 
     # File is not protected, allow the operation to proceed
     sys.exit(0)
