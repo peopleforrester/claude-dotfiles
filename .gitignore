@@ -1,5 +1,5 @@
 # Internal documentation (spec files for Claude reference)
-docs/
+/docs/
 
 # OS generated files
 .DS_Store
