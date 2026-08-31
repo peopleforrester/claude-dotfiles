@@ -40,14 +40,16 @@ EOF
 list_sessions() {
     echo "Available sessions:"
     echo ""
-    ls -lt "${SESSIONS_DIR}"/session_*.md 2>/dev/null | while read -r line; do
-        local file
-        file=$(echo "$line" | awk '{print $NF}')
+    # Newest first by mtime. Parsing `ls` breaks on unusual filenames (SC2012),
+    # so sort on a numeric mtime that find prints and cut the path back off.
+    find "${SESSIONS_DIR}" -maxdepth 1 -name 'session_*.md' -printf '%T@ %p\n' 2>/dev/null \
+        | sort -rn | cut -d' ' -f2- | while read -r file; do
         local name
         name=$(basename "$file" .md)
         local date
         date=$(head -5 "$file" | grep "Date" | sed 's/.*: //')
         local branch
+        # shellcheck disable=SC2016  # backticks are literal markdown, not expansion
         branch=$(head -5 "$file" | grep "Branch" | sed 's/.*`\(.*\)`.*/\1/')
         printf "  %-40s  %s  %s\n" "$name" "${date:-unknown}" "${branch:-unknown}"
     done

@@ -414,6 +414,7 @@ list_backups() {
         # The regex groups capture year, month, day, hour, minute, second
         # and rearrange them with dashes, space, and colons
         local formatted_date
+        # shellcheck disable=SC2001  # regrouping needs capture groups; ${v//x/y} cannot
         formatted_date=$(echo "$date_part" | sed 's/\([0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)-\([0-9]\{2\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)/\1-\2-\3 \4:\5:\6/')
 
         # Display the backup information
@@ -498,7 +499,8 @@ restore_backup() {
     # ==========================================================================
     if [ -d "${CLAUDE_DIR}" ]; then
         print_info "Creating backup of current config..."
-        local temp_backup="${BACKUP_DIR}/claude-pre-restore-$(date +%Y%m%d-%H%M%S).tar.gz"
+        local temp_backup
+        temp_backup="${BACKUP_DIR}/claude-pre-restore-$(date +%Y%m%d-%H%M%S).tar.gz"
 
         # Create backup, but don't fail if there are issues
         # || true: Ignore errors (continue even if backup fails)

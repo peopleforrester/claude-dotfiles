@@ -66,7 +66,6 @@ VERSION="1.0.0"
 # This is what we're synchronizing between machines
 CLAUDE_DIR="${HOME}/.claude"
 
-# SCRIPT_DIR: Directory where this script is located
 # Used to find related files and configurations
 #
 # HOW THIS WORKS:
@@ -74,7 +73,6 @@ CLAUDE_DIR="${HOME}/.claude"
 # dirname: Extract the directory portion of the path
 # cd ... && pwd: Change to that directory and print absolute path
 # $(...): Command substitution - captures the output
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # =============================================================================
 # TERMINAL COLOR DEFINITIONS
