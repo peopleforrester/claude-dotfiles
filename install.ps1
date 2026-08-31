@@ -651,6 +651,18 @@ function Install-Template {
         return
     }
 
+    # Dry run must not touch the filesystem. Every other install function
+    # reaches disk through Copy-OrLink, which already guards on DryRun; this
+    # one calls Copy-Item directly, so without this it wrote CLAUDE.md and
+    # .claude\ into the current directory during -DryRun.
+    if ($DryRun) {
+        Write-Info "  Would install: $templateSrc\CLAUDE.md -> .\CLAUDE.md"
+        if (Test-Path (Join-Path $templateSrc ".claude")) {
+            Write-Info "  Would install: $templateSrc\.claude -> .\.claude"
+        }
+        return
+    }
+
     # Copy CLAUDE.md file
     $claudeMdSrc = Join-Path $templateSrc "CLAUDE.md"
     if (Test-Path $claudeMdSrc) {

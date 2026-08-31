@@ -793,6 +793,18 @@ install_template() {
         return 1
     fi
 
+    # Dry run must not touch the filesystem. Every other install function
+    # reaches disk through copy_or_link, which already guards on DRY_RUN;
+    # this one calls cp directly, so without this it wrote CLAUDE.md and
+    # .claude/ into the current directory during --dry-run.
+    if [ "$DRY_RUN" = true ]; then
+        echo "  Would install: ${template_src}/CLAUDE.md -> ./CLAUDE.md"
+        if [ -d "${template_src}/.claude" ]; then
+            echo "  Would install: ${template_src}/.claude -> ./.claude"
+        fi
+        return 0
+    fi
+
     # -------------------------------------------------------------------------
     # Install CLAUDE.md
     # -------------------------------------------------------------------------
