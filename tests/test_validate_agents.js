@@ -57,12 +57,16 @@ for (const m of ['opus', 'sonnet', 'haiku', 'fable']) {
 
 // Full model IDs accepted
 const fullIds = [
+  // Current lineup, verified 2026-09-17 against the published model overview.
+  'claude-fable-5-1',
   'claude-opus-5',
   'claude-sonnet-5',
+  'claude-haiku-4-5-20251001',
+  'claude-haiku-4-5',
+  // Legacy but still callable, so still valid in frontmatter.
   'claude-fable-5',
   'claude-opus-4-8',
   'claude-sonnet-4-6',
-  'claude-haiku-4-5-20251001',
 ];
 for (const id of fullIds) {
   const root = makeTempAgent(id);

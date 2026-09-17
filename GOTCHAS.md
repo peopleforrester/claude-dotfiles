@@ -59,16 +59,36 @@ Training-data-era tutorials frequently contradict these.
   **Manual** in the CLI, help, and IDE/desktop, and `manual` is accepted as an
   alias for the value (v2.1.200+); the stored config value is still `default`.
   `auto` (classifier-driven) and `dontAsk` are the newer additions.
+- **Two of those values are ignored in project settings.** Setting
+  `"defaultMode": "auto"` in `.claude/settings.json` or `.claude/settings.local.json`
+  does not take effect, and `"bypassPermissions"` in those two files starts the
+  session in Manual mode instead. Both only apply from user settings
+  (`~/.claude/settings.json`), `--settings`, or managed settings. Before
+  v2.1.257 `bypassPermissions` did take effect from any file, so a config that
+  worked earlier can go quiet after an upgrade. The permission profiles in this
+  repo install to `~/.claude/settings.json`, which is why their `auto` value
+  works; copying one into a project would silently lose it.
 - **Sandbox primitives.** `sandbox.*` composes with `defaultMode: auto` to
   replace the old conservative/balanced/autonomous profile taxonomy. Real network
   keys are `allowedDomains`, `deniedDomains`, `strictAllowlist` (v2.1.219+, deny
   non-allowlisted hosts without prompting), `httpProxyPort`, `socksProxyPort`;
   filesystem keys are `filesystem.allowWrite/denyWrite/denyRead/allowRead` and
   `filesystem.disabled` (v2.1.216+); plus `excludedCommands`,
-  `autoAllowBashIfSandboxed`, `credentials`, and `allowAppleEvents`. There is no
-  `network.denyExternal` or `network.allowLocalBinding` key.
+  `autoAllowBashIfSandboxed`, `credentials`, and `allowAppleEvents`.
+  `network.allowLocalBinding` is real and lets a sandboxed command bind to a
+  localhost port, but it is macOS-only. There is no `network.denyExternal` key.
+  (Checked against the settings reference on 2026-09-17; an earlier note here
+  said `allowLocalBinding` did not exist, which was wrong.)
 - **CLAUDE.md is truncated around 200 lines upstream.** The 60-100 line
   budget in this repo gives headroom below that ceiling.
+- **Settings keys added since the August pass** (verified 2026-09-17 against
+  the upstream changelog): `maxEffortLevel`, top-level or per model under
+  `modelSettings`, caps effort on every provider (v2.1.267);
+  `bashOutputMaxChars` and `taskOutputMaxChars` raise how much command and
+  background-task output reaches the model (v2.1.265). Agent frontmatter gained
+  `omitClaudeMd`, which runs a subagent without user, project, and local
+  CLAUDE.md files (v2.1.272). None are required, and nothing here validates
+  them, so they are listed rather than schema-checked.
 
 ## Subagents
 
@@ -88,20 +108,31 @@ Training-data-era tutorials frequently contradict these.
 
 ## Model IDs
 
-August 2026 GA models (use these in `settings.json` and skill `model:` fields):
+Current lineup, verified 2026-09-17 against Anthropic's published model
+overview. Use these in `settings.json` and skill `model:` fields:
 
-| Tier   | Model ID                           | Notes                              |
-|--------|------------------------------------|------------------------------------|
-| Fable  | `claude-fable-5`                   | Most capable; not the default; `/model fable` |
-| Opus   | `claude-opus-5`                    | Recommended for complex agentic coding; default Opus since CLI v2.1.219 |
-| Sonnet | `claude-sonnet-5`                  | Claude Code default; intro $2/$10 per MTok through Aug 31, 2026 |
-| Haiku  | `claude-haiku-4-5-20251001`        | Fastest; only current model with extended (non-adaptive) thinking |
+| Tier   | Model ID                           | Price /MTok | Notes                 |
+|--------|------------------------------------|-------------|-----------------------|
+| Fable  | `claude-fable-5-1`                  | $10 / $50   | Most capable; for demanding reasoning and long-horizon agentic work. Thinking is adaptive and always on |
+| Opus   | `claude-opus-5`                     | $5 / $25    | The recommended starting point for most workloads |
+| Sonnet | `claude-sonnet-5`                   | $2 / $10    | Best speed-to-intelligence balance |
+| Haiku  | `claude-haiku-4-5-20251001`         | $1 / $5     | Fastest; the only current model still on extended (non-adaptive) thinking. Alias `claude-haiku-4-5` |
 
-Opus 4.8, Opus 4.7, Opus 4.6, Sonnet 4.6, and Sonnet 4.5 are now **legacy**
-(still callable, migrate off). Single-segment version IDs like `claude-opus-5`
-are correct and current; the older `claude-<tier>-4-8` two-segment form is
-legacy. Short forms (`opus`, `sonnet`, `haiku`, `fable`) are accepted in agent
-frontmatter and resolve to the current model in that tier.
+**Fable 5 was superseded by Fable 5.1.** A config still naming `claude-fable-5`
+keeps working, but it is now a legacy model. The full legacy set is Fable 5,
+Opus 4.8, Opus 4.7, Opus 4.6, Opus 4.5, Sonnet 4.6, and Sonnet 4.5.
+
+Single-segment IDs like `claude-opus-5` are correct and current; the older
+two-segment `claude-<tier>-4-8` form is legacy. Short forms (`opus`, `sonnet`,
+`haiku`, `fable`) are accepted in agent frontmatter and resolve to the current
+model in that tier, which is why an alias is the safer thing to write down.
+
+Two details that catch configs out. Every current model ID is a pinned
+snapshot, including the dateless ones from the 4.6 generation on, so a dateless
+ID is not a floating pointer. And extended thinking, the manual
+`thinking.type: enabled` plus `budget_tokens` mode, is deprecated on Opus 4.6
+and Sonnet 4.6 and is **not accepted at all** on anything later; current models
+use adaptive thinking steered by `effort`, which defaults to `high`.
 
 **Alias resolution is provider-specific.** The `opus` / `sonnet` aliases do not
 resolve to the same version everywhere:
@@ -135,3 +166,8 @@ Use deny lists as defense-in-depth. For real isolation, enable the
 - Canonical docs moved from `docs.anthropic.com/en/docs/claude-code/*` to
   `code.claude.com/docs/en/*`. Old links still redirect but all new
   references in this repo use the new host.
+- The **model and API** docs are a separate host and have moved again:
+  `docs.claude.com/en/docs/*` now answers 302 to `platform.claude.com/docs/en/*`
+  (checked 2026-09-17). Claude Code's own docs stay on `code.claude.com`. Two
+  hosts, two moves, and citing the wrong one for a model fact sends a reader to
+  a redirect rather than the page.

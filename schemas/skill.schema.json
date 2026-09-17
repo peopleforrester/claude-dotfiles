@@ -36,7 +36,7 @@
     },
     "model": {
       "type": "string",
-      "description": "Recommended model ID or alias (Aug 2026 GA: claude-opus-5, claude-sonnet-5, claude-fable-5, claude-haiku-4-5-20251001; or alias opus|sonnet|haiku|fable)"
+      "description": "Recommended model ID or alias. Current lineup as of 2026-09-17: claude-fable-5-1, claude-opus-5, claude-sonnet-5, claude-haiku-4-5-20251001; or alias opus|sonnet|haiku|fable. Prefer an alias so the value does not go stale."
     },
     "allowed-tools": {
       "type": ["array", "string"],
@@ -80,7 +80,8 @@
     },
     "shell": {
       "type": "string",
-      "description": "Shell interpreter used if the skill runs shell code"
+      "enum": ["bash", "powershell"],
+      "description": "Shell interpreter used for commands the skill injects. Defaults to bash."
     },
     "version": {
       "type": "string",
