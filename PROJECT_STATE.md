@@ -1,79 +1,54 @@
-# PROJECT_STATE
+# Project State: claude-dotfiles
 
-## Current Initiative: Anthropic-Aligned April 2026 Improvements
+Phase: 3.1 Stage
+Approved: pending
 
-**Status:** EXECUTING — plan approved by Michael 2026-04-07
+## Lifecycle
 
-## Approved Plan
+- [x] 1.1 Research
+- [x] 1.2 Plan
+- [x] 1.3 Approve
+- [x] 2.1 Test
+- [x] 2.2 Implement
+- [x] 2.3 Verify
+- [x] 3.1 Stage
+- [ ] 3.2 Confirm CI  <- you are here
+- [ ] 3.3 Promote
 
-### Decisions made
-- MIGRATE all 31 commands to skills (Michael: repo is a distribution model
-  of best practices, stragglers undermine the point)
-- Keep full model IDs (reproducibility)
-- Keep schema strictness
-- Keep 60-100 line CLAUDE.md budget
-- Phase 4 Option B: full sandbox taxonomy pivot
+## Contracts
 
-### Phase 1 — Documentation truth
-- Bulk replace docs.anthropic.com/en/docs/claude-code/* -> code.claude.com/docs/en/*
-- Fix $CLAUDE_FILE_PATH gotcha in CLAUDE.md (replace with jq stdin pattern)
-- Fix SKILL.md frontmatter requirements wording in CLAUDE.md
-- Add upstream 200-line note to CLAUDE.md token budget
-- Migrate model_recommendation references in rules/model-selection.md to model
+No open contract. Work on this repo is currency maintenance against the
+published documentation, not a specified build, so each pass is scoped by what
+the sweep finds rather than by an approved plan. A change large enough to need
+one gets a PRD and an approval line here first.
 
-### Phase 2 — Schema completeness
-- hooks.schema.json: add 15+ new events (InstructionsLoaded, UserPromptSubmit,
-  PermissionRequest, PermissionDenied, PostToolUseFailure, SubagentStart,
-  TaskCreated, TaskCompleted, StopFailure, TeammateIdle, ConfigChange,
-  CwdChanged, FileChanged, WorktreeCreate, WorktreeRemove, PostCompact,
-  Elicitation, ElicitationResult)
-- hooks.schema.json: add handler types command|http|prompt|agent
-  (was command|message) plus fields if/async/statusMessage/once/shell
-- skill.schema.json: add optional fields argument-hint, effort, model,
-  allowed-tools, disable-model-invocation, user-invocable, context, agent,
-  paths, shell. Keep name required (per Michael).
-- Add docs/gotchas-claude-code-april-2026.md capturing research findings
+## Current Plan
 
-### Phase 3 — New feature examples
-- agents/worktree-isolated-example.md with isolation: worktree
-- .lsp.json plugin example
-- Hook templates for InstructionsLoaded and UserPromptSubmit
-- Hook handler example using prompt type
-- Document plugin namespacing (/plugin-name:skill-name)
-- Document plugin subagent restrictions (no hooks/mcpServers/permissionMode)
-- Document auto and dontAsk permission modes in settings docs
+**September 2026 currency pass.** Reconcile the repo against the live
+documentation and fix what has drifted since the August pass. Every claim
+touched is verified against the published source on the day it is written, and
+the verification date goes in the text rather than in a session transcript.
 
-### Phase 4 — Sandbox primitive pivot (Option B, full)
-- DELETE settings/permissions/{conservative,balanced,autonomous}.json
-- ADD settings/permissions/{sandbox-on,sandbox-off,autoMode-strict,
-  autoMode-permissive}.json with sandbox.* + defaultMode auto primitives
-- ADD settings/permissions/README.md explaining the primitives and composition
-- UPDATE state-persistence.md rule for auto memory (~/.claude/projects/<p>/
-  memory/MEMORY.md) coexistence with PROJECT_STATE.md
-- Consider version bump 0.4.0 -> 0.5.0 (user-facing taxonomy change)
+Standing rule for this repo, learned the expensive way: a validator that checks
+shape cannot check meaning, and a green local run is not evidence of a correct
+artifact. CI on the pushed commit is the gate, not `npm test` on this machine.
 
-### Phase 5 — Command to skill migration
-- Convert all 31 commands/*.md -> skills/*/SKILL.md as directories
-- Update plugin.json components (drop commands/, already has skills/)
-- Delete commands/ directory
-- Update validators/tests that reference commands
-- Update tests/run-all.js to drop command validation
-- Update README, CLAUDE.md, and any docs referencing commands/
+## Branch & Tests
 
-## Branch Workflow
-- Work on staging
-- Commit + run tests after each phase
-- Push staging, then merge to main, then push main (per CLAUDE.md rules)
-- Do NOT skip tests between phases
+- Branch: staging
+- Working tree: clean at each commit; explicit paths staged, never `git add -A`
+- Last local run: 13 passed, 0 failed
+- Last CI: pending on d6bdeb7
 
-## Previous Completed Work
-- Commit 23898ed: Fix senior review findings
-- Commit 3800aff: Harden CI workflows to April 2026
-- Commit 486c3e0: Runtime version floor consistency (Node >=22, Python >=3.12)
+## Phase History
 
-## Branch State
-- staging: 705b0e6 synced
-- main: 705b0e6 synced
+- 2026-04-07 1.2 -> 1.3 April 2026 alignment plan approved; shipped in 0.5.0
+- 2026-08-09 3.3 Reconciliation to the August lineup promoted to main
+- 2026-08-07 3.2 CI red on both branches, unnoticed for 21 days
+- 2026-09-17 2.3 Five senior-review findings fixed; CI green for the first
+  time since 2026-08-07
+- 2026-09-17 2.2 September currency pass: hook events, token estimator,
+  model lineup, skill validator schema wiring
 
 ## Outbound Requests
 
@@ -85,6 +60,10 @@ cross-repo-communication rule.
 | 2026-08-09 | `peopleforrester/mrf-engagement-orchestrator` | [#66](https://github.com/peopleforrester/mrf-engagement-orchestrator/issues/66) | Publish "The hooks were valid JSON. They never fired." Draft, hero, and calendar entry supplied | open |
 | 2026-08-07 | `peopleforrester/mrf-engagement-orchestrator` | [#56](https://github.com/peopleforrester/mrf-engagement-orchestrator/issues/56) | Write an article on this repo from source material | closed, superseded by #66 |
 
-> Note: the "Current Initiative" section above is stale. It still describes the
-> April 2026 work, which shipped in 0.5.0. Releases through 0.7.2 are recorded
-> in [CHANGELOG.md](./CHANGELOG.md), which is the accurate history.
+## Superseded Plans
+
+The April 2026 initiative that this file used to describe as EXECUTING shipped
+in 0.5.0. Its five phases (documentation truth, schema completeness, new
+feature examples, the sandbox primitive pivot, and the command-to-skill
+migration) are all complete. [CHANGELOG.md](./CHANGELOG.md) is the accurate
+release history; the plan text is preserved in git history rather than here.
