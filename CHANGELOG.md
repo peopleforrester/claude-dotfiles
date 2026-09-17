@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.3] - 2026-09-17
+
+Currency pass against the live documentation, six weeks after the August one.
+Verified against the agent CLI 2.1.274 and the model overview published
+2026-09-17. Every figure below was read off the source that day rather than
+recalled.
+
+### Fixed
+- **Two real hook events were reported as invalid.** `validate-hooks.js` takes
+  its event list from `schemas/hooks.schema.json`, and the schema was missing
+  `PreModelSwitch` and `PostModelSwitch`. A configuration using either got
+  "Unknown hook type" from a validator whose whole purpose is to say what the
+  harness accepts. `tests/test_hook_events.js` now pins all 33 events and fails
+  the build on the next drift.
+- **The token estimator was calibrated to a superseded tokenizer.** It averaged
+  `words * 1.3` and `chars / 4`; the published figures for the tokenizer
+  introduced with Opus 4.7 are 1M tokens to roughly 555k words and 2.5M
+  characters. Files were reported at about two thirds of their real size, so a
+  CLAUDE.md could read as inside a budget it was over. Templates move 1.51x
+  under the corrected constants and all six stay within budget.
+- **`token-count.py` raised a SyntaxWarning on every run**, including both CI
+  workflows, because a docstring containing regex escapes was not a raw string.
+  It would have become a hard error on a later Python.
+- **A false absence claim.** GOTCHAS.md stated there is no
+  `sandbox.network.allowLocalBinding` key. The settings reference documents one,
+  macOS-only, for binding a sandboxed command to a localhost port.
+  `network.denyExternal` really is absent and stays listed as such.
+- **The model notes named a superseded model.** Fable 5.1 replaced Fable 5 as
+  the most capable model; Fable 5 is now legacy alongside Opus 4.8 through 4.5
+  and Sonnet 4.6 and 4.5. Corrected in GOTCHAS.md and in the `model` hint in
+  `schemas/skill.schema.json`, with per-model pricing added.
+- **The README overstated its own validation.** It said every config was
+  schema-checked; only hooks were. `validate-skills.js` kept its own copy of
+  the field rules and never opened the schema shipped beside it, so a
+  misspelled frontmatter key passed silently. The validator now reads the
+  schema, and the README states which files are schema-driven and which have
+  dedicated checks.
+
+### Added
+- `tests/test_hook_events.js` and `tests/test_validate_skills.js`. The suite is
+  13 tests.
+- Unknown-frontmatter-field reporting in `validate-skills.js`. All 70 skills
+  pass unchanged.
+- `decisions.md`, the append-only log the state-persistence rule calls for,
+  opening with two rejected approaches and the measurement behind each.
+- GOTCHAS entries for the settings keys added since August
+  (`maxEffortLevel`, `bashOutputMaxChars`, `taskOutputMaxChars`, and the
+  `omitClaudeMd` agent field), and for the fact that `"defaultMode": "auto"`
+  and `"bypassPermissions"` are ignored in project and local settings files.
+
+### Changed
+- `PROJECT_STATE.md` migrated to the lifecycle schema. It had described the
+  April 2026 initiative as EXECUTING five months after it shipped in 0.5.0.
+- `CLAUDE.md` no longer says a skill's `name` is required by the format. It is
+  optional upstream and defaults to the directory name; requiring it is this
+  repo's own choice.
+
+
 ## [0.7.2] - 2026-08-07
 
 ### Fixed

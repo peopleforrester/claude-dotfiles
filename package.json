@@ -1,6 +1,6 @@
 {
   "name": "claude-dotfiles",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Configuration layer for Claude Code: skills, agents, rules, hooks, and sandboxed permission profiles, all schema-validated in CI",
   "private": true,
   "license": "MIT",
