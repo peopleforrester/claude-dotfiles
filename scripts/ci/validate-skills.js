@@ -6,6 +6,15 @@ const fs = require('fs');
 const path = require('path');
 
 const skillsDir = path.join(__dirname, '..', '..', 'skills');
+const schemaPath = path.join(__dirname, '..', '..', 'schemas', 'skill.schema.json');
+
+// Source of truth for the field set and the name limit: the schema this repo
+// ships. Keeping a second copy of either here is how the two drift, and a
+// README that calls these files schema-checked has to mean it.
+const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+const knownFields = new Set(Object.keys(schema.properties));
+const nameMaxLength = schema.properties.name.maxLength;
+const namePattern = new RegExp(schema.properties.name.pattern);
 let errors = 0;
 let fileCount = 0;
 
@@ -60,12 +69,22 @@ function validateSkill(filePath, relativePath) {
   const nameMatch = frontmatter.match(/name:\s*([^\n]+)/);
   if (nameMatch) {
     const name = nameMatch[1].trim();
-    if (!/^[a-z0-9-]+$/.test(name)) {
+    if (!namePattern.test(name)) {
       console.log(`WARNING: ${relativePath} - Name should be lowercase-with-hyphens: ${name}`);
     }
-    if (name.length > 64) {
-      console.log(`ERROR: ${relativePath} - Name exceeds 64 chars: ${name}`);
+    if (name.length > nameMaxLength) {
+      console.log(`ERROR: ${relativePath} - Name exceeds ${nameMaxLength} chars: ${name}`);
       errors++;
+    }
+  }
+
+  // Check every top-level frontmatter key against the schema. A misspelled
+  // field is otherwise silently ignored by the harness and by this validator,
+  // so `descripton:` reads as a skill with no description at all.
+  for (const line of frontmatter.split('\n')) {
+    const keyMatch = line.match(/^([A-Za-z][A-Za-z0-9_-]*):/);
+    if (keyMatch && !knownFields.has(keyMatch[1])) {
+      console.log(`WARNING: ${relativePath} - Unknown frontmatter field: ${keyMatch[1]}`);
     }
   }
 

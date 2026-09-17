@@ -23,9 +23,11 @@ This is the configuration layer that fixes that.**
 
 ## ✅ Every config here is validated in CI
 
-70 skills, 15 agents, 21 rules, 14 hooks, and 4 permission profiles — each one
-schema-checked on every commit, including a test that fails the build if the
-counts in this README ever drift from the filesystem.
+70 skills, 15 agents, 21 rules, 14 hooks, and 4 permission profiles, every one
+checked on each commit. Skills and hooks are validated against the JSON Schemas
+in [`schemas/`](schemas/), which the validators read rather than keeping their
+own copy of the rules; agents, rules, and profiles have dedicated checks. A test
+fails the build if the counts in this README ever drift from the filesystem.
 
 ```console
 $ npm test
@@ -39,10 +41,12 @@ $ npm test
   Unit: token-count parsing... PASS
   Unit: protect-sensitive-files... PASS
   Unit: validate-agents model enum... PASS
+  Unit: hook events match the published reference... PASS
+  Unit: validate-skills schema fields... PASS
   Unit: README inventory matches filesystem... PASS
   Schema structure... PASS
 
-  Passed: 11    Failed: 0    Result: ALL PASS
+  Passed: 13    Failed: 0    Result: ALL PASS
 ```
 
 Reproduce it yourself: [`npm test`](./tests/run-all.js) ·

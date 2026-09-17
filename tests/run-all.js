@@ -77,7 +77,8 @@ run('Plugin manifest integrity', `node -e "
 run('Unit: token-count parsing', 'python3 tests/test_token_count.py');
 run('Unit: protect-sensitive-files', 'python3 tests/test_protect_sensitive_files.py');
 run('Unit: validate-agents model enum', 'node tests/test_validate_agents.js');
-run('Unit: hook events match Claude Code docs', 'node tests/test_hook_events.js');
+run('Unit: hook events match the published reference', 'node tests/test_hook_events.js');
+run('Unit: validate-skills schema fields', 'node tests/test_validate_skills.js');
 run('Unit: README inventory matches filesystem', 'node tests/test_inventory.js');
 
 // Schema validation
