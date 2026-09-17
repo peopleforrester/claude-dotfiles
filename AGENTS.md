@@ -29,7 +29,10 @@ scripts/            # Utility scripts
 ## Code Standards
 
 - CLAUDE.md templates: 60-100 lines optimal, max 150 (upstream Claude Code truncates around 200 lines)
-- SKILL.md files: YAML frontmatter — `name` required, `description` recommended
+- SKILL.md files: `name` is optional upstream and defaults to the directory
+  name. This repo requires it anyway, so a skill is identified by what it
+  says rather than by where it sits. `description` is recommended; the
+  validator checks both against `schemas/skill.schema.json`
 - JSON configs: Use `"// KEY":` comment pattern
 - Bash scripts: POSIX-compliant, work on macOS + Linux
 - Python scripts: 3.12+, minimal external dependencies
