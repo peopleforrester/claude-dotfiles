@@ -158,8 +158,8 @@ def count_tokens_estimate(text: str) -> int:
         1. Count words (split on whitespace)
         2. Count characters
         3. Average two different estimation methods:
-           - Words * 1.3 (most words are 1+ tokens)
-           - Characters / 4 (rough chars-per-token ratio)
+           - Words * 1.80 (1M tokens is roughly 555k words)
+           - Characters / 2.5 (1M tokens is roughly 2.5M characters)
 
     Args:
         text: The text to estimate tokens for
@@ -168,9 +168,10 @@ def count_tokens_estimate(text: str) -> int:
         Estimated token count (marked with "(est)" in output)
 
     Accuracy notes:
+        - Calibrated against the tokenizer introduced with Claude Opus 4.7,
+          per Anthropic's model overview as of 2026-09-17
         - Tends to underestimate for code (special characters)
         - Tends to overestimate for simple prose
-        - Within ~20% for typical CLAUDE.md content
     """
     # Count words by splitting on whitespace
     words = len(text.split())
@@ -178,11 +179,12 @@ def count_tokens_estimate(text: str) -> int:
     # Count total characters
     chars = len(text)
 
-    # Average two estimation methods:
-    # - words * 1.3: Most English words are 1-2 tokens
-    # - chars / 4: Roughly 4 characters per token on average
+    # Average two estimation methods, both taken from the published figures
+    # for the current tokenizer (1M tokens ~= 555k words ~= 2.5M characters):
+    # - words * 1.80: tokens per word
+    # - chars / 2.5: characters per token
     # Dividing by 2 gives us the average of both estimates
-    return int((words * 1.3 + chars / 4) / 2)
+    return int((words * 1.80 + chars / 2.5) / 2)
 
 
 def count_tokens(text: str) -> Tuple[int, bool]:
@@ -269,7 +271,7 @@ def get_template_type(file_path: Path) -> str:
 # =============================================================================
 
 def extract_existing_token_comment(content: str) -> Optional[int]:
-    """
+    r"""
     Extract token count from an existing header comment in the file.
 
     CLAUDE.md templates often include a header comment like:
