@@ -25,7 +25,8 @@ This is the configuration layer that fixes that.**
 
 70 skills, 15 agents, 21 rules, 14 hooks, and 4 permission profiles, every one
 checked on each commit. Skills and hooks are validated against the JSON Schemas
-in [`schemas/`](schemas/), which the validators read rather than keeping their
+in [`skill.schema.json`](schemas/skill.schema.json) and
+[`hooks.schema.json`](schemas/hooks.schema.json), which the validators read rather than keeping their
 own copy of the rules; agents, rules, and profiles have dedicated checks. A test
 fails the build if the counts in this README ever drift from the filesystem.
 
