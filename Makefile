@@ -17,8 +17,15 @@ tokens:
 	@python3 scripts/token-count.py .
 
 # Run all tests
-test: validate tokens test-install test-json test-shell lint-shell
+test: validate tokens test-install test-json test-shell lint-shell test-python
 	@echo "✅ All tests passed!"
+
+# Unit tests for the Python scripts and hooks
+test-python:
+	@echo "🔍 Running Python unit tests..."
+	@python3 tests/test_validate.py
+	@python3 tests/test_token_count.py
+	@python3 tests/test_protect_sensitive_files.py
 
 # Test JSON syntax with Python
 test-json:
@@ -36,15 +43,15 @@ test-shell:
 	done
 	@echo "✓ All shell scripts valid"
 
-# Lint shell scripts with shellcheck (skip silently if not installed)
+# Lint shell scripts with shellcheck at its default severity, as CI does
 lint-shell:
 	@echo "🔍 Linting shell scripts with shellcheck..."
-	@if command -v shellcheck >/dev/null 2>&1; then \
-		find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" -print0 \
-			| xargs -0 shellcheck --severity=warning && echo "✓ shellcheck passed"; \
-	else \
-		echo "⚠ shellcheck not installed; install via 'brew install shellcheck' or 'apt install shellcheck'"; \
+	@if ! command -v shellcheck >/dev/null 2>&1; then \
+		echo "✗ shellcheck not installed; install via 'brew install shellcheck' or 'apt install shellcheck'"; \
+		exit 1; \
 	fi
+	@find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" -print0 \
+		| xargs -0 shellcheck && echo "✓ shellcheck passed"
 
 # Test install script in dry-run mode
 test-install:
@@ -124,6 +131,7 @@ help:
 	@echo "  tokens        Count tokens in templates"
 	@echo "  test-json     Test JSON file syntax"
 	@echo "  test-shell    Test shell script syntax"
+	@echo "  test-python   Run Python unit tests"
 	@echo ""
 	@echo "Installation:"
 	@echo "  install       Interactive installation"

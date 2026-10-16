@@ -74,6 +74,7 @@ run('Plugin manifest integrity', `node -e "
 "`);
 
 // Unit tests for helper scripts
+run('Unit: validate.py validators and CLI', 'python3 tests/test_validate.py');
 run('Unit: token-count parsing', 'python3 tests/test_token_count.py');
 run('Unit: protect-sensitive-files', 'python3 tests/test_protect_sensitive_files.py');
 run('Unit: validate-agents model enum', 'node tests/test_validate_agents.js');

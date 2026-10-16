@@ -74,6 +74,8 @@ cp -r ~/.claude-dotfiles/templates/standard/* .
 claude  # Ask Claude to describe the setup
 ```
 
+Test command: `make test`
+
 ## References
 
 - Skills Spec: https://github.com/anthropics/skills
