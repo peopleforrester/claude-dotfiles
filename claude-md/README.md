@@ -109,7 +109,7 @@ One-sentence description.
 
 Be exact. Include the comment explaining what it does.
 
-```markdown
+````markdown
 ## Commands
 
 ```bash
@@ -117,13 +117,13 @@ pnpm dev        # Start dev server (port 3000)
 pnpm test       # Run Vitest
 pnpm db:migrate # Apply Prisma migrations
 ```
-```
+````
 
 #### Key Directories
 
 Use a tree structure with brief annotations.
 
-```markdown
+````markdown
 ## Key Directories
 
 ```
@@ -133,11 +133,12 @@ src/
 ├── repositories/ # Database access
 └── types/        # TypeScript definitions
 ```
-```
+````
 
 #### Code Standards
 
 Only include rules that are:
+
 - Project-specific (not generic best practices)
 - Not enforceable by linters
 - Things Claude can't infer from the code
@@ -153,6 +154,7 @@ Only include rules that are:
 #### Gotchas
 
 This section has the highest ROI. Include things that:
+
 - Break silently
 - Require server restarts
 - Have non-obvious configuration
@@ -234,6 +236,7 @@ Use `tiktoken` with `cl100k_base` encoding to count.
 ### CLAUDE.md Inheritance
 
 Claude Code reads CLAUDE.md from:
+
 1. Current directory
 2. Parent directories (up to git root)
 3. Home directory (`~/.claude/CLAUDE.md`)

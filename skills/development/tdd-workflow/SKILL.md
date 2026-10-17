@@ -29,7 +29,7 @@ A systematic approach to writing code guided by tests.
 
 ## The TDD Cycle
 
-```
+```text
 ┌─────────────────────────────────────────┐
 │                                         │
 │   1. RED: Write a failing test          │
@@ -91,6 +91,7 @@ This test fails, so update implementation.
 ### Step 5: Iterate
 
 Continue the cycle:
+
 - Add test for edge case → implement
 - Add test for error handling → implement
 - Add test for complex scenario → implement
@@ -98,6 +99,7 @@ Continue the cycle:
 ### Step 6: Refactor
 
 Once all tests pass, refactor:
+
 - Extract helper functions
 - Improve naming
 - Reduce duplication

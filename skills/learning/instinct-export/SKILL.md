@@ -8,20 +8,25 @@ user-invocable: true
 Export learned instincts for sharing with teammates or transferring to another machine.
 
 ## Arguments
+
 - `$ARGUMENTS` — Optional: domain filter, output format, or output path
 
 ## Process
 
 ### 1. Select Instincts
+
 By default, export all instincts with confidence >= 0.5.
 
 Filters:
+
 - `/instinct-export code-style` — Export only code-style domain
 - `/instinct-export >0.7` — Export only strong instincts
 - `/instinct-export all` — Export everything including tentative
 
 ### 2. Privacy Sanitization
+
 Before export, strip sensitive information:
+
 - Remove session IDs
 - Remove absolute file paths (convert to relative patterns)
 - Remove timestamps older than the instinct creation date
@@ -30,6 +35,7 @@ Before export, strip sensitive information:
 ### 3. Output Formats
 
 **Markdown (default):**
+
 ```markdown
 ---
 id: prefer-const-assertions
@@ -42,6 +48,7 @@ TypeScript `as const` assertions provide literal types and readonly guarantees.
 ```
 
 **JSON:**
+
 ```json
 {
   "instincts": [
@@ -59,6 +66,7 @@ TypeScript `as const` assertions provide literal types and readonly guarantees.
 ```
 
 ### 4. Output Location
+
 Default: `./instincts-export/` in the current directory.
 With path argument: `/instinct-export ~/shared/my-instincts/`
 

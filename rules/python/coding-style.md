@@ -6,6 +6,7 @@ Extends `common/coding-style.md` with Python-specific constraints.
 ## Always
 
 ### Type Safety
+
 - Add type annotations to all function signatures
 - Use `Protocol` for structural typing (duck typing with type safety)
 - Use `TypedDict` for dictionary shapes
@@ -13,6 +14,7 @@ Extends `common/coding-style.md` with Python-specific constraints.
 - Use `Enum` or `StrEnum` for fixed sets of values
 
 ### Patterns
+
 ```python
 # PREFER: Protocols over ABCs for interfaces
 class Serializable(Protocol):
@@ -40,12 +42,14 @@ config_path = Path.home() / ".config" / "myapp" / "config.toml"
 ```
 
 ### Project Setup
+
 - Use `pyproject.toml` for all project configuration
 - Use `uv` for package management
 - Use `ruff` for linting and formatting (replaces flake8, isort, black)
 - Use `mypy` with strict mode for type checking
 
 ### File Organization
+
 - One class per file for complex classes
 - Group related functions in modules
 - Use `__init__.py` to define public API

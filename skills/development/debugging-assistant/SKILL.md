@@ -31,6 +31,7 @@ Systematic approach to finding and fixing bugs.
 > "Debugging is like being a detective in a crime movie where you're also the murderer."
 
 Key principles:
+
 - Don't guess - investigate systematically
 - Reproduce before fixing
 - Understand before changing
@@ -38,7 +39,7 @@ Key principles:
 
 ## The Debugging Process
 
-```
+```text
 1. REPRODUCE - Can you make it happen consistently?
    ↓
 2. ISOLATE - Where exactly does it fail?
@@ -113,13 +114,14 @@ Don't fix what you don't understand.
 
 ### Read the Error Message
 
-```
+```text
 TypeError: Cannot read property 'name' of undefined
     at processUser (src/users.ts:42:15)
     at handleRequest (src/api.ts:18:10)
 ```
 
 This tells you:
+
 - Error type: `TypeError`
 - What failed: accessing `.name` on `undefined`
 - Where: `src/users.ts` line 42

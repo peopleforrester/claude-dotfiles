@@ -22,6 +22,7 @@ Modern Next.js 15+ App Router patterns and best practices.
 ## Server vs Client Components
 
 ### Default to Server Components
+
 ```tsx
 // app/users/page.tsx (Server Component by default)
 export default async function UsersPage() {
@@ -31,6 +32,7 @@ export default async function UsersPage() {
 ```
 
 ### Client Components for Interactivity
+
 ```tsx
 'use client';
 
@@ -47,6 +49,7 @@ export function SearchBar() {
 ```
 
 ### Composition Pattern
+
 ```tsx
 // Server Component (parent) passes data to Client Component (child)
 export default async function Page() {
@@ -58,6 +61,7 @@ export default async function Page() {
 ## Data Fetching
 
 ### Server Component Fetching
+
 ```tsx
 // Direct async/await in Server Components
 async function UserProfile({ userId }: { userId: string }) {
@@ -68,6 +72,7 @@ async function UserProfile({ userId }: { userId: string }) {
 ```
 
 ### Parallel Data Fetching
+
 ```tsx
 export default async function Dashboard() {
   // Fetch in parallel, not waterfall
@@ -88,6 +93,7 @@ export default async function Dashboard() {
 ```
 
 ### Server Actions
+
 ```tsx
 // app/actions.ts
 'use server';
@@ -110,6 +116,7 @@ export async function createUser(formData: FormData) {
 ## Caching and Revalidation
 
 ### Route Segment Config
+
 ```tsx
 // Static page (default)
 export const dynamic = 'auto';
@@ -122,6 +129,7 @@ export const revalidate = 60;
 ```
 
 ### On-Demand Revalidation
+
 ```tsx
 import { revalidatePath, revalidateTag } from 'next/cache';
 
@@ -158,7 +166,7 @@ export const config = {
 
 ## File Structure
 
-```
+```text
 app/
 ├── layout.tsx              # Root layout (shared UI)
 ├── page.tsx                # Home page

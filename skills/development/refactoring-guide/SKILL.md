@@ -36,7 +36,7 @@ Improve code structure safely without changing behavior.
 
 ## Refactoring Process
 
-```
+```text
 1. Ensure tests exist and pass
    ↓
 2. Identify the code smell
@@ -229,16 +229,19 @@ class Customer {
 ## Safety Checklist
 
 Before refactoring:
+
 - [ ] Tests exist and pass
 - [ ] Understand current behavior
 - [ ] Identify specific smell to address
 
 During refactoring:
+
 - [ ] One change at a time
 - [ ] Run tests after each change
 - [ ] Commit when green
 
 After refactoring:
+
 - [ ] All tests still pass
 - [ ] Code is more readable
 - [ ] No behavior changed

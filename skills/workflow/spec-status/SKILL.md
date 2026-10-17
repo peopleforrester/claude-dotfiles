@@ -9,6 +9,7 @@ Display the current status of one or all specifications, including task
 progress, completion percentage, and recommended next actions.
 
 ## Arguments
+
 - `$ARGUMENTS` — Optional: spec slug to show details for a specific spec
 
 ## Process
@@ -84,6 +85,7 @@ Read `.spec/{slug}.spec.md` and `.spec/{slug}.tasks.md`:
 ## Progress Calculation
 
 Progress is calculated from the tasks file:
+
 - Count `[x]` (completed) vs `[ ]` (pending) checkboxes
 - Percentage = completed / total * 100
 - Round to nearest integer
@@ -91,12 +93,15 @@ Progress is calculated from the tasks file:
 ## Output Formats
 
 ### Summary View (no args)
+
 Compact table of all specs with key metrics.
 
 ### Detail View (with slug)
+
 Full task breakdown with progress bars and recommendations.
 
 ### JSON Output (for scripting)
+
 If the user requests JSON format:
 
 ```json

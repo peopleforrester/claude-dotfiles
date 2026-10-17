@@ -16,7 +16,7 @@ Production-ready configurations, skills, and templates for Claude Code optimizat
 
 ## Key Directories
 
-```
+```text
 templates/          # Starter configs (minimal, standard, power-user)
 claude-md/          # CLAUDE.md templates by language/framework/domain
 skills/             # Curated SKILL.md implementations
@@ -40,11 +40,13 @@ scripts/            # Utility scripts
 ## Implementation Patterns
 
 ### CLAUDE.md Templates
+
 - Header comment with token count: `<!-- Tokens: ~X | Lines: Y -->`
 - Required sections: Stack, Commands, Key Directories
 - Include Gotchas section for non-obvious behaviors
 
 ### SKILL.md Files
+
 ```yaml
 ---
 name: lowercase-with-hyphens   # Required, 64 chars max
@@ -54,6 +56,7 @@ description: |                  # Required, 1024 chars max
 ```
 
 ### settings.json
+
 - Use `"// SECTION":` for documentation comments
 - Always include security deny list
 - Four profiles: sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive
@@ -79,6 +82,6 @@ E2E command: `make e2e`
 
 ## References
 
-- Skills Spec: https://github.com/anthropics/skills
-- Claude Code Docs: https://code.claude.com/docs/en
-- MCP Spec: https://modelcontextprotocol.io
+- Skills Spec: <https://github.com/anthropics/skills>
+- Claude Code Docs: <https://code.claude.com/docs/en>
+- MCP Spec: <https://modelcontextprotocol.io>

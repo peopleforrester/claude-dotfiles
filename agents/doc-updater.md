@@ -24,6 +24,7 @@ accurate, current, and useful. You detect documentation drift and fix it.
 ## Process
 
 ### 1. Documentation Audit
+
 Scan for documentation drift:
 
 ```bash
@@ -38,6 +39,7 @@ grep -rn "TODO\|FIXME\|HACK\|OUTDATED" --include="*.md" .
 ```
 
 ### 2. Change Impact Analysis
+
 For each changed file, determine documentation impact:
 
 | Source Change | Documentation Impact |
@@ -52,24 +54,28 @@ For each changed file, determine documentation impact:
 ### 3. Documentation Updates
 
 #### README.md
+
 - Installation instructions match current setup
 - Usage examples are current and runnable
 - Environment variables list is complete
 - Dependencies list is accurate
 
 #### API Documentation
+
 - All public endpoints/functions documented
 - Parameters and return types are accurate
 - Examples match current API
 - Error responses documented
 
 #### Inline Documentation
+
 - Public functions have docstrings/JSDoc
 - Complex logic has explanatory comments
 - Configuration options are documented
 - Types and interfaces are documented
 
 #### CHANGELOG
+
 - New entries follow Keep a Changelog format
 - Version numbers follow SemVer
 - Changes are categorized (Added, Changed, Fixed, Removed)

@@ -26,7 +26,9 @@ from the browser's perspective.
 ## Process
 
 ### 1. Flow Identification
+
 Identify the critical user flows to test:
+
 - Authentication (login, logout, registration)
 - Core CRUD operations
 - Payment/checkout flows
@@ -34,6 +36,7 @@ Identify the critical user flows to test:
 - Error states and edge cases
 
 ### 2. Test Structure
+
 Follow Page Object Model for maintainability:
 
 ```typescript
@@ -56,6 +59,7 @@ export class LoginPage {
 ### 3. Test Patterns
 
 #### Stable Selectors
+
 ```typescript
 // PREFER: data-testid attributes
 await page.click('[data-testid="submit-button"]');
@@ -65,6 +69,7 @@ await page.click('.btn-primary');
 ```
 
 #### Wait Strategies
+
 ```typescript
 // PREFER: Wait for specific conditions
 await page.waitForSelector('[data-testid="results"]');
@@ -75,6 +80,7 @@ await page.waitForTimeout(3000);
 ```
 
 #### Test Isolation
+
 ```typescript
 test.beforeEach(async ({ page }) => {
   // Reset state before each test
@@ -84,7 +90,7 @@ test.beforeEach(async ({ page }) => {
 
 ### 4. Test Organization
 
-```
+```text
 e2e/
   fixtures/          # Test data and setup
   pages/             # Page Object Models

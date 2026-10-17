@@ -7,6 +7,7 @@ defense-in-depth practices based on the OWASP Top 10 (2021) and CWE/SANS Top 25.
 ## Always
 
 ### Input Validation
+
 - Validate all user input on the server side, never trust client-side validation alone
 - Use allowlist validation over blocklist (define what IS allowed, not what is blocked)
 - Sanitize data before database operations using parameterized queries or ORM methods
@@ -14,12 +15,14 @@ defense-in-depth practices based on the OWASP Top 10 (2021) and CWE/SANS Top 25.
 - Validate file uploads by content type inspection, not just file extension
 
 ### Secrets Management
+
 - Store secrets in environment variables, secret managers, or encrypted vaults
 - Rotate secrets on a regular schedule and after any potential exposure
 - Use different credentials for development, staging, and production
 - Mask secrets in error messages, logs, and stack traces
 
 ### Authentication
+
 - Hash passwords with bcrypt (cost >= 12), argon2id, or scrypt
 - Generate session tokens with cryptographically secure random number generators
 - Implement session expiration, idle timeout, and rotation on privilege escalation
@@ -27,12 +30,14 @@ defense-in-depth practices based on the OWASP Top 10 (2021) and CWE/SANS Top 25.
 - Support multi-factor authentication for sensitive operations
 
 ### Authorization
+
 - Check authorization on every protected endpoint (never rely on UI-only restrictions)
 - Apply principle of least privilege to all service accounts and API keys
 - Use indirect object references to prevent IDOR attacks
 - Log all authorization failures for security monitoring
 
 ### Data Protection
+
 - Enforce HTTPS/TLS 1.2+ for all data in transit
 - Encrypt sensitive data at rest (AES-256 or equivalent)
 - Set security headers: CSP, HSTS, X-Content-Type-Options, X-Frame-Options
@@ -78,6 +83,7 @@ defense-in-depth practices based on the OWASP Top 10 (2021) and CWE/SANS Top 25.
 ## Security Response Protocol
 
 If a security issue is found during development:
+
 1. Stop current work and assess severity
 2. Document the vulnerability with CWE reference
 3. Implement remediation with secure code patterns

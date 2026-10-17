@@ -22,6 +22,7 @@ Modern Rust patterns and best practices.
 ## Error Handling
 
 ### Custom Error Types with thiserror
+
 ```rust
 use thiserror::Error;
 
@@ -42,6 +43,7 @@ pub enum AppError {
 ```
 
 ### Propagation with ?
+
 ```rust
 fn read_config(path: &str) -> Result<Config, AppError> {
     let content = std::fs::read_to_string(path)?;  // Auto-converts io::Error
@@ -52,6 +54,7 @@ fn read_config(path: &str) -> Result<Config, AppError> {
 ```
 
 ### Option Combinators
+
 ```rust
 fn find_user(id: &str) -> Option<User> {
     users.iter()
@@ -67,6 +70,7 @@ let name = user.name.as_deref().unwrap_or("Anonymous");
 ## Ownership and Borrowing
 
 ### Prefer Borrowing
+
 ```rust
 // Good: Borrows data, doesn't take ownership
 fn process(data: &[u8]) -> Result<Output, Error> { /* ... */ }
@@ -79,6 +83,7 @@ fn spawn_worker(data: Vec<u8>) { /* ... */ }
 ```
 
 ### Builder Pattern
+
 ```rust
 pub struct ServerBuilder {
     addr: String,
@@ -116,6 +121,7 @@ impl ServerBuilder {
 ## Traits
 
 ### Define Behavior, Not Data
+
 ```rust
 pub trait Repository {
     type Error;
@@ -127,6 +133,7 @@ pub trait Repository {
 ```
 
 ### Blanket Implementations
+
 ```rust
 // Implement for all types that satisfy bounds
 impl<T: Display + Debug> Loggable for T {
@@ -139,6 +146,7 @@ impl<T: Display + Debug> Loggable for T {
 ## Async Rust
 
 ### Tokio Patterns
+
 ```rust
 use tokio::task::JoinSet;
 
@@ -160,6 +168,7 @@ async fn fetch_all(urls: Vec<String>) -> Vec<Result<Response, Error>> {
 ```
 
 ### Graceful Shutdown
+
 ```rust
 use tokio::signal;
 

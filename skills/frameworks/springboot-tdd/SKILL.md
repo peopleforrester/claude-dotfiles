@@ -22,7 +22,7 @@ Test-driven development workflow for Spring Boot 3.x with JUnit 5.
 
 ## Test Pyramid
 
-```
+```text
          /  E2E  \          <- Few, slow, high confidence
         / Integration \     <- Moderate, Testcontainers
        /  Slice Tests   \   <- Fast, focused (@WebMvcTest, @DataJpaTest)

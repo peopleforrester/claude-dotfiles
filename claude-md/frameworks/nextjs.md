@@ -29,7 +29,7 @@ pnpm db:studio        # Open Prisma Studio
 
 ## Key Directories
 
-```
+```text
 app/
 ├── layout.tsx        # Root layout
 ├── page.tsx          # Home page
@@ -106,7 +106,7 @@ export async function createPost(formData: FormData) {
 
 ## Environment Variables
 
-```
+```bash
 DATABASE_URL=postgresql://...
 NEXTAUTH_SECRET=...
 NEXTAUTH_URL=http://localhost:3000

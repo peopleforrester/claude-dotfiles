@@ -31,7 +31,7 @@ uv run mypy src/                            # Type check
 
 ## Key Directories
 
-```
+```text
 src/
 ├── main.py               # FastAPI app, mount routers
 ├── config.py             # Settings (pydantic-settings)

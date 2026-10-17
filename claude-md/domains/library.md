@@ -27,7 +27,7 @@ A reusable library published to npm / PyPI / crates.io with docs and semver.
 
 ## Key Directories
 
-```
+```text
 src/
 ├── index.ts          # Public API exports
 ├── core/             # Core implementation

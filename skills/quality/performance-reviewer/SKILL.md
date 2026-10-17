@@ -123,6 +123,7 @@ npx bundlephobia lodash
 ```
 
 **Optimizations:**
+
 - Tree-shake unused code
 - Code-split by route
 - Lazy load below-fold content

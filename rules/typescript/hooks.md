@@ -10,7 +10,9 @@ edited file inside the command (or with a handler-level `if`).
 ## PostToolUse Hooks
 
 ### Auto-Format
+
 Run Prettier after editing JS/TS files:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -23,7 +25,9 @@ Run Prettier after editing JS/TS files:
 ```
 
 ### Type Checking
+
 Run the TypeScript compiler after edits:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -36,7 +40,9 @@ Run the TypeScript compiler after edits:
 ```
 
 ### Console.log Warning
+
 Flag console.log statements in modified files:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -51,7 +57,9 @@ Flag console.log statements in modified files:
 ## Stop Hooks
 
 ### Console.log Audit
+
 Check all modified files for console.log before session ends:
+
 ```json
 {
   "hooks": [{

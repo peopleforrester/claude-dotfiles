@@ -62,6 +62,7 @@ python manage.py check --deploy
 ```
 
 Common issues caught by `--deploy`:
+
 - Missing `SECURE_HSTS_SECONDS`
 - `DEBUG = True` in production
 - Missing `ALLOWED_HOSTS`

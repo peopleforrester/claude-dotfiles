@@ -9,7 +9,7 @@ Invoke the **doc-updater** agent to sync documentation with code changes.
 
 ## Usage
 
-```
+```text
 /update-docs                    # Full documentation audit
 /update-docs README.md          # Update specific file
 /update-docs --api              # Focus on API documentation
@@ -27,6 +27,7 @@ Invoke the **doc-updater** agent to sync documentation with code changes.
 ## Documentation Drift Detection
 
 The agent compares:
+
 - Recently changed source files vs documentation
 - Public API signatures vs documented signatures
 - Environment variables in code vs documented variables

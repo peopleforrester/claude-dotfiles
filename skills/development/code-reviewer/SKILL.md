@@ -40,7 +40,7 @@ Before reviewing code:
 
 Review code systematically in this order:
 
-```
+```text
 Layer 1: Correctness     - Does it work as intended?
 Layer 2: Security        - Are there vulnerabilities?
 Layer 3: Performance     - Are there bottlenecks?

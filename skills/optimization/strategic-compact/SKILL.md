@@ -39,7 +39,7 @@ The remaining context budget is for conversation, code, and tool results.
 
 ### Size Guidelines
 
-```
+```text
 60-100 lines  → Optimal (loads fast, leaves room for code)
 100-150 lines → Acceptable (for complex projects)
 150+ lines    → Too large (move details to skills or docs)
@@ -47,7 +47,7 @@ The remaining context budget is for conversation, code, and tool results.
 
 ### What Belongs in CLAUDE.md
 
-```
+```text
 ✓ Stack and language versions
 ✓ Build/test/deploy commands
 ✓ Key directory structure
@@ -57,7 +57,7 @@ The remaining context budget is for conversation, code, and tool results.
 
 ### What Does NOT Belong in CLAUDE.md
 
-```
+```text
 ✗ Language tutorials or syntax guides    → Use skills
 ✗ General best practices                 → Use rules
 ✗ Long code examples                     → Use skills
@@ -122,7 +122,7 @@ MCP tools consume context tokens. Fewer active tools = more room for code.
 
 ### Reduce Round Trips
 
-```
+```text
 Bad:  "Read file A" → result → "Read file B" → result → "Now edit both"
 Good: "Read file A and file B" → results → "Edit both"
 ```
@@ -131,7 +131,7 @@ Good: "Read file A and file B" → results → "Edit both"
 
 Launch parallel operations when results don't depend on each other:
 
-```
+```text
 ✓ Read 3 files simultaneously
 ✓ Run lint + type-check + test in parallel
 ✓ Search for pattern across multiple directories at once
@@ -139,7 +139,7 @@ Launch parallel operations when results don't depend on each other:
 
 ### Avoid Context Pollution
 
-```
+```text
 ✗ Pasting entire file contents into chat when a path reference suffices
 ✗ Asking Claude to "explain this code" without specifying what's unclear
 ✗ Requesting verbose output when a summary would work
@@ -149,7 +149,7 @@ Launch parallel operations when results don't depend on each other:
 
 ### Monorepo Navigation
 
-```
+```text
 1. Use Glob to find files by pattern (not ls -R)
 2. Use Grep to search content (not reading files sequentially)
 3. Delegate exploration to subagents (preserves main context)

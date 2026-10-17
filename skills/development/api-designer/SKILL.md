@@ -31,7 +31,7 @@ Design consistent, intuitive, and well-documented APIs.
 
 ### URL Structure
 
-```
+```text
 GET    /resources           # List resources
 GET    /resources/:id       # Get single resource
 POST   /resources           # Create resource
@@ -50,7 +50,7 @@ DELETE /resources/:id       # Delete resource
 
 ### Nested Resources
 
-```
+```text
 GET /users/:userId/orders           # User's orders
 GET /users/:userId/orders/:orderId  # Specific order
 POST /users/:userId/orders          # Create order for user
@@ -164,14 +164,14 @@ Keep nesting shallow (max 2 levels).
 
 ### URL Path (Recommended)
 
-```
+```text
 /v1/users
 /v2/users
 ```
 
 ### Header-based
 
-```
+```text
 Accept: application/vnd.api+json; version=1
 ```
 
@@ -179,13 +179,13 @@ Accept: application/vnd.api+json; version=1
 
 ### Bearer Token
 
-```
+```text
 Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 ```
 
 ### API Key
 
-```
+```text
 X-API-Key: sk_live_abc123...
 ```
 

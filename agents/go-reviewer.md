@@ -26,6 +26,7 @@ safety.
 ## Review Checklist
 
 ### Error Handling
+
 ```go
 // PREFER: Wrap errors with context
 if err != nil {
@@ -53,6 +54,7 @@ defer func() {
 ```
 
 ### Concurrency
+
 ```go
 // PREFER: errgroup for managed goroutines
 g, ctx := errgroup.WithContext(ctx)
@@ -76,6 +78,7 @@ func fetchData(ctx context.Context, url string) ([]byte, error) {
 ```
 
 ### Interface Design
+
 ```go
 // PREFER: Small, focused interfaces
 type Reader interface {
@@ -91,6 +94,7 @@ func NewService(repo UserRepository) *Service {
 ```
 
 ### Testing
+
 ```go
 // PREFER: Table-driven tests
 func TestParse(t *testing.T) {
@@ -120,6 +124,7 @@ func TestParse(t *testing.T) {
 ```
 
 ### Common Issues
+
 | Issue | Problem | Solution |
 |-------|---------|----------|
 | Goroutine leak | Goroutine never terminates | Use context cancellation |

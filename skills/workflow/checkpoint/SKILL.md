@@ -9,12 +9,15 @@ Save a snapshot of the current work state so it can be resumed later.
 Captures verification status, pending tasks, and context.
 
 ## Arguments
+
 - `$ARGUMENTS` — Optional label for this checkpoint
 
 ## Process
 
 ### 1. Capture State
+
 Record:
+
 - Current branch and commit hash
 - Uncommitted changes (`git diff --stat`)
 - Pending tasks from the task list
@@ -48,10 +51,12 @@ Record:
 ```
 
 ### 3. Save
+
 Write the checkpoint to a predictable location that can be
 found by `/continue` or session resumption.
 
 ## Usage
+
 - Before ending a long session
 - Before switching to a different task
 - After completing a significant milestone

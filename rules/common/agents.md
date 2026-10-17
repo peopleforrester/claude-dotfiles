@@ -6,6 +6,7 @@ When and how to use Claude Code subagents effectively for complex tasks.
 ## When to Delegate
 
 ### Use Subagents For
+
 - Independent research tasks that don't depend on each other
 - Parallel exploration of different parts of a codebase
 - Deep analysis requiring separate, focused context
@@ -13,6 +14,7 @@ When and how to use Claude Code subagents effectively for complex tasks.
 - Tasks requiring a different model (Haiku for speed, Opus for depth)
 
 ### Keep in Main Agent
+
 - Sequential tasks where each step depends on the previous
 - Tasks requiring the full conversation history
 - Quick operations that would complete in under 30 seconds
@@ -22,7 +24,8 @@ When and how to use Claude Code subagents effectively for complex tasks.
 ## Delegation Patterns
 
 ### Research Fan-Out
-```
+
+```text
 Main Agent: "Understand the codebase"
   ├── Subagent A (Haiku): "Map the authentication module"
   ├── Subagent B (Haiku): "Map the database schema"
@@ -31,7 +34,8 @@ Main Agent: Synthesize findings → proceed with implementation
 ```
 
 ### Specialist Review
-```
+
+```text
 Main Agent: "Implement and verify feature"
   ├── [Implement feature in main context]
   ├── Subagent (Opus): "Security review of changes"
@@ -40,7 +44,8 @@ Main Agent: Address findings → finalize
 ```
 
 ### Background Processing
-```
+
+```text
 Main Agent: Working on feature A
   └── Subagent (background, Haiku): "Run full test suite"
 Main Agent: Continue working, check results when ready
@@ -49,6 +54,7 @@ Main Agent: Continue working, check results when ready
 ## Subagent Task Specification
 
 ### Always Include
+
 ```markdown
 ## Task
 [Specific, bounded task description]
@@ -67,6 +73,7 @@ Main Agent: Continue working, check results when ready
 ```
 
 ### Always
+
 - Give subagents specific, bounded tasks with clear deliverables
 - Provide necessary context upfront (don't assume they know the conversation)
 - Define explicit success criteria
@@ -74,6 +81,7 @@ Main Agent: Continue working, check results when ready
 - Aggregate and validate results before proceeding
 
 ### Never
+
 - Delegate tasks that require user input or confirmation
 - Create circular dependencies between subagents
 - Spawn more than 3-5 parallel subagents (diminishing returns)
@@ -83,6 +91,7 @@ Main Agent: Continue working, check results when ready
 ## Subagent Communication Format
 
 ### Task Assignment (Main → Subagent)
+
 ```markdown
 ## Task: [Clear title]
 Analyze the authentication middleware for security vulnerabilities.
@@ -96,6 +105,7 @@ List of findings with severity, file:line, and remediation.
 ```
 
 ### Result Report (Subagent → Main)
+
 ```markdown
 ## Summary
 [1-2 sentence outcome]

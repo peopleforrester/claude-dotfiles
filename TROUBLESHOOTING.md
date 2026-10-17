@@ -34,6 +34,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    - Project: `.claude/settings.json`
 
 2. Verify JSON syntax:
+
    ```bash
    python -c "import json; json.load(open('~/.claude/settings.json'))"
    ```
@@ -47,6 +48,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    - Project: `.claude/skills/skill-name/SKILL.md`
 
 2. Verify SKILL.md frontmatter:
+
    ```yaml
    ---
    name: skill-name
@@ -80,6 +82,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ### "Command not found" for MCP server
 
 Ensure Node.js 22+ is installed:
+
 ```bash
 node --version
 npx --version
@@ -94,6 +97,7 @@ npx --version
 ### Notion MCP "page not found"
 
 Integration must be explicitly shared with pages:
+
 1. Open page in Notion
 2. Click "..." → "Add connections"
 3. Select your integration
@@ -110,6 +114,7 @@ python3 scripts/validate.py
 ### token-count.py inaccurate counts
 
 Install tiktoken for accurate counts:
+
 ```bash
 pip install tiktoken
 ```
@@ -119,6 +124,7 @@ pip install tiktoken
 ### "JSON parse error" in settings
 
 Check for:
+
 - Trailing commas (not allowed in JSON)
 - Missing quotes around strings
 - Unescaped characters in strings
@@ -126,6 +132,7 @@ Check for:
 ### "Pattern doesn't match" for hooks
 
 Patterns use glob-style matching:
+
 - `*.ts` matches TypeScript files
 - `**/*.ts` matches files in subdirectories
 - `Write(*.ts)|Edit(*.ts)` for OR conditions
@@ -133,6 +140,7 @@ Patterns use glob-style matching:
 ### Formatter hook fails silently
 
 Add error handling:
+
 ```json
 {
   "command": "FILE=$(cat | jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\" 2>/dev/null || true"
@@ -142,16 +150,18 @@ Add error handling:
 ## Getting Help
 
 - Check [README.md](./README.md) for documentation links
-- Open an issue: https://github.com/peopleforrester/claude-dotfiles/issues
-- Review Claude Code docs: https://code.claude.com/docs/en
+- Open an issue: <https://github.com/peopleforrester/claude-dotfiles/issues>
+- Review Claude Code docs: <https://code.claude.com/docs/en>
 
 ## Debug Mode
 
 Enable verbose output for scripts:
+
 ```bash
 bash -x ./install.sh
 ```
 
 Check Claude Code logs:
+
 - macOS: `~/Library/Logs/Claude/`
 - Windows: `%APPDATA%\Claude\logs\`

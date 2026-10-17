@@ -25,21 +25,25 @@ attributes and document them as Architecture Decision Records (ADRs).
 ## Process
 
 ### 1. Context Gathering
+
 Understand the system landscape:
+
 - Current architecture and technology stack
 - Key quality attributes (scalability, maintainability, security, performance)
 - Constraints (budget, team skills, timeline, compliance)
 - Integration requirements with external systems
 
 ### 2. Quality Attribute Prioritization
+
 | Attribute | Priority | Rationale |
 |-----------|----------|-----------|
 | [Attribute] | High/Medium/Low | [Why this priority] |
 
 ### 3. Pattern Selection
+
 Match architectural patterns to requirements:
 
-```markdown
+````markdown
 ## Recommended Pattern: [Name]
 
 ### Rationale
@@ -57,7 +61,7 @@ Component A ──> Component B
 - (+) Benefit 2
 - (-) Drawback 1
 - (-) Drawback 2
-```
+````
 
 ### 4. Architecture Decision Record
 
@@ -107,6 +111,7 @@ What is the architectural decision?
 ## Output Format
 
 Always provide:
+
 1. Architecture overview (ASCII diagram)
 2. Component responsibilities and interfaces
 3. Key patterns with rationale

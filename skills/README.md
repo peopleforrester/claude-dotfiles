@@ -55,7 +55,7 @@ Skills are markdown files with YAML frontmatter that provide:
 Skills in `~/.claude/skills/` are automatically available. Claude will use them
 based on context clues in your requests:
 
-```
+```text
 You: "Let's use TDD to build this feature"
 Claude: [Uses tdd-workflow skill]
 
@@ -67,7 +67,7 @@ Claude: [Uses security-auditor skill]
 
 You can explicitly request a skill:
 
-```
+```text
 You: "Use the code-reviewer skill to review this PR"
 ```
 
@@ -98,7 +98,7 @@ cp -r skills/development/tdd-workflow .claude/skills/
 
 ### Directory Structure
 
-```
+```text
 skill-name/
 ├── SKILL.md           # Required: Main skill definition
 ├── REFERENCE.md       # Optional: Extended documentation

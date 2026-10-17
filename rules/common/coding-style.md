@@ -6,12 +6,14 @@ Constraints for writing maintainable, readable, and consistent code.
 ## Immutability
 
 ### Always
+
 - Prefer `const` over `let`; never use `var` in JavaScript/TypeScript
 - Return new objects/arrays rather than mutating existing ones
 - Use spread operators (`...`) for shallow copies and updates
 - Treat function parameters as read-only
 
 ### Pattern
+
 ```typescript
 // Correct: Create new object
 const updated = { ...user, name: newName };
@@ -23,13 +25,15 @@ user.name = newName;
 ## File Organization
 
 ### Always
+
 - One concept per file (single responsibility principle)
 - Maximum 300 lines per file; split if larger
 - Co-locate tests with source files (`feature.ts` + `feature.test.ts`)
 - Group related files in feature directories
 
 ### Directory Pattern
-```
+
+```text
 feature/
 ├── feature.ts           # Core logic
 ├── feature.test.ts      # Tests
@@ -38,6 +42,7 @@ feature/
 ```
 
 ### Size Limits
+
 | Unit | Target | Maximum |
 |------|--------|---------|
 | Function | < 30 lines | 50 lines |
@@ -48,12 +53,14 @@ feature/
 ## Error Handling
 
 ### Always
+
 - Use typed errors with error codes for programmatic handling
 - Include context (correlation ID, operation name) in error logs
 - Return errors for expected failures; throw for unexpected/unrecoverable
 - Handle all promise rejections and async errors
 
 ### Pattern
+
 ```typescript
 type Result<T, E = AppError> =
   | { ok: true; value: T }
@@ -68,6 +75,7 @@ function divide(a: number, b: number): Result<number> {
 ## Naming Conventions
 
 ### Always
+
 - Functions: verb + noun (`calculateTotal`, `fetchUser`, `validateInput`)
 - Booleans: `is`/`has`/`can`/`should` prefix (`isValid`, `hasPermission`)
 - Constants: SCREAMING_SNAKE_CASE (`MAX_RETRIES`, `DEFAULT_TIMEOUT`)
@@ -75,6 +83,7 @@ function divide(a: number, b: number): Result<number> {
 - Files: kebab-case (`user-account.ts`, `order-service.py`)
 
 ### Never
+
 - Single-letter variable names except loop indices (`i`, `j`, `k`)
 - Abbreviations unless universally understood (`cfg` -> `configuration`)
 - Hungarian notation (`strName`, `nCount`, `bIsValid`)
@@ -83,6 +92,7 @@ function divide(a: number, b: number): Result<number> {
 ## Code Quality Checklist
 
 Before marking any work complete:
+
 - [ ] Functions are small, focused, and well-named
 - [ ] No code duplication (DRY, but avoid premature abstraction)
 - [ ] Proper error handling at every level

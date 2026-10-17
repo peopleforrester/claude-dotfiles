@@ -6,6 +6,7 @@ Extends `common/testing.md` with Go-specific testing constraints.
 ## Always
 
 ### Framework
+
 - Use the standard `testing` package for unit tests
 - Use `testify/assert` or `testify/require` for cleaner assertions
 - Use `httptest` for HTTP handler testing
@@ -13,6 +14,7 @@ Extends `common/testing.md` with Go-specific testing constraints.
 - Use `-race` flag to detect data races
 
 ### Patterns
+
 ```go
 // PREFER: Table-driven tests (standard Go pattern)
 func TestValidateEmail(t *testing.T) {
@@ -53,6 +55,7 @@ func TestDatabase(t *testing.T) {
 ```
 
 ### Benchmarks
+
 ```go
 // Include benchmarks for performance-critical code
 func BenchmarkParse(b *testing.B) {
@@ -63,6 +66,7 @@ func BenchmarkParse(b *testing.B) {
 ```
 
 ### Coverage
+
 - Minimum 80% line coverage
 - Run with `go test -cover -race ./...`
 - Use `go tool cover -html=coverage.out` for visual analysis

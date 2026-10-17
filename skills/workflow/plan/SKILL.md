@@ -9,13 +9,13 @@ Create a detailed implementation plan before coding.
 
 ## Usage
 
-```
+```text
 /plan [feature or task description]
 ```
 
 ## Examples
 
-```
+```text
 /plan user authentication with OAuth
 /plan refactor the payment module
 /plan add caching to API endpoints
@@ -28,6 +28,7 @@ When invoked, follow this planning process:
 ### 1. Requirements Gathering
 
 Ask clarifying questions:
+
 - What is the desired outcome?
 - What are the constraints (time, tech stack, compatibility)?
 - Are there existing patterns to follow?
@@ -36,6 +37,7 @@ Ask clarifying questions:
 ### 2. Research Phase
 
 Before proposing solutions:
+
 - Review relevant existing code
 - Check for similar implementations in the codebase
 - Identify dependencies and potential conflicts
@@ -97,6 +99,7 @@ After user selects approach, create detailed plan:
 ### 5. Confirmation
 
 Before proceeding:
+
 - Summarize the plan
 - Confirm with user
 - Get approval to begin implementation
@@ -104,6 +107,7 @@ Before proceeding:
 ## Output Format
 
 The plan should be:
+
 - Actionable (specific tasks, not vague goals)
 - Ordered (dependencies respected)
 - Testable (clear acceptance criteria)

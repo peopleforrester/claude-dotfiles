@@ -16,8 +16,8 @@
     "validate:skills": "node scripts/ci/validate-skills.js",
     "validate:rules": "node scripts/ci/validate-rules.js",
     "validate:hooks": "node scripts/ci/validate-hooks.js",
-    "lint": "markdownlint '**/*.md' --ignore node_modules",
-    "lint:fix": "markdownlint '**/*.md' --ignore node_modules --fix"
+    "lint": "markdownlint '**/*.md' --ignore-path .gitignore",
+    "lint:fix": "markdownlint '**/*.md' --ignore-path .gitignore --fix"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^21.2.0",

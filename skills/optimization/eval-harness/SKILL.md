@@ -43,6 +43,7 @@ evidence-based scoring.
 ## Evaluation Process
 
 ### 1. Evidence Collection
+
 For each dimension, gather concrete evidence:
 
 ```markdown
@@ -54,6 +55,7 @@ For each dimension, gather concrete evidence:
 ```
 
 ### 2. Scoring
+
 Apply scores with justification:
 
 ```markdown
@@ -68,7 +70,8 @@ Apply scores with justification:
 ```
 
 ### 3. Weighted Score Calculation
-```
+
+```text
 Total = (4×0.30) + (3×0.20) + (4×0.15) + (5×0.15) + (3×0.10) + (4×0.10)
       = 1.20 + 0.60 + 0.60 + 0.75 + 0.30 + 0.40
       = 3.85 / 5.0
@@ -105,6 +108,7 @@ rubric:
 ## Integration
 
 Use with:
+
 - `/eval` command for on-demand evaluation
 - `/verify` command as part of pre-PR checks
 - CI pipeline as automated quality gate

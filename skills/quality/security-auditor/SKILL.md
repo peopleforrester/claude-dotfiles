@@ -32,6 +32,7 @@ Identify and remediate security vulnerabilities in code.
 ### 1. Broken Access Control
 
 **Check for:**
+
 - Missing authorization checks
 - Insecure direct object references
 - Path traversal vulnerabilities
@@ -57,6 +58,7 @@ app.get('/api/users/:id', authenticate, async (req, res) => {
 ### 2. Cryptographic Failures
 
 **Check for:**
+
 - Sensitive data transmitted in clear text
 - Weak cryptographic algorithms
 - Hardcoded secrets
@@ -73,6 +75,7 @@ const hash = await bcrypt.hash(password, 12);
 ### 3. Injection
 
 **Check for:**
+
 - SQL injection
 - NoSQL injection
 - Command injection
@@ -90,6 +93,7 @@ const result = await db.query(query, [userId]);
 ### 4. Insecure Design
 
 **Check for:**
+
 - Missing rate limiting
 - No account lockout
 - Lack of input validation
@@ -111,6 +115,7 @@ app.post('/login', loginLimiter, loginHandler);
 ### 5. Security Misconfiguration
 
 **Check for:**
+
 - Default credentials
 - Unnecessary features enabled
 - Missing security headers
@@ -130,6 +135,7 @@ app.use(helmet.contentSecurityPolicy({
 ### 6. Vulnerable Components
 
 **Check for:**
+
 - Outdated dependencies
 - Known vulnerable packages
 - Unmaintained libraries
@@ -146,6 +152,7 @@ npm audit fix
 ### 7. Authentication Failures
 
 **Check for:**
+
 - Weak passwords allowed
 - Missing MFA support
 - Session fixation
@@ -164,6 +171,7 @@ const passwordSchema = z.string()
 ### 8. Data Integrity Failures
 
 **Check for:**
+
 - Missing integrity checks
 - Unsigned updates
 - Insecure deserialization
@@ -184,6 +192,7 @@ const data = schema.parse(JSON.parse(untrustedInput));
 ### 9. Logging & Monitoring Failures
 
 **Check for:**
+
 - Missing audit logs
 - No alerting on suspicious activity
 - Sensitive data in logs
@@ -199,6 +208,7 @@ logger.info('User login', { username, password: '[REDACTED]' });
 ### 10. Server-Side Request Forgery (SSRF)
 
 **Check for:**
+
 - User-controlled URLs
 - Internal service access
 - Cloud metadata endpoints

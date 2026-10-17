@@ -6,7 +6,8 @@ Constraints for consistent version control practices across all projects.
 ## Conventional Commits
 
 ### Format
-```
+
+```text
 <type>(<scope>): <description>
 
 [optional body]
@@ -15,6 +16,7 @@ Constraints for consistent version control practices across all projects.
 ```
 
 ### Types
+
 | Type | When to Use | Example |
 |------|-------------|---------|
 | `feat` | New feature for users | `feat(auth): add OAuth2 login` |
@@ -28,6 +30,7 @@ Constraints for consistent version control practices across all projects.
 | `ci` | CI configuration changes | `ci: add type-check to pipeline` |
 
 ### Rules
+
 - Description is imperative, present tense ("add" not "added")
 - Description does not end with a period
 - First line under 72 characters
@@ -37,6 +40,7 @@ Constraints for consistent version control practices across all projects.
 ## Branch Workflow
 
 ### Always
+
 - Branch from `main` (or `develop` if project uses gitflow)
 - Use descriptive branch names: `feat/user-auth`, `fix/cart-total`, `docs/api-reference`
 - Keep branches short-lived (merge within days, not weeks)
@@ -44,6 +48,7 @@ Constraints for consistent version control practices across all projects.
 - Delete branches after merge
 
 ### Never
+
 - Commit directly to `main` or `staging` without a PR (except hotfixes with approval)
 - Force push to shared branches (`main`, `staging`, `develop`)
 - Merge without passing CI checks
@@ -52,6 +57,7 @@ Constraints for consistent version control practices across all projects.
 ## Pull Request Requirements
 
 ### Before Opening a PR
+
 - [ ] All tests pass locally (`npm test`, `pytest`, `go test`)
 - [ ] Lint passes with no errors
 - [ ] Type checking passes (if applicable)
@@ -60,6 +66,7 @@ Constraints for consistent version control practices across all projects.
 - [ ] Self-review completed (read your own diff)
 
 ### PR Description
+
 ```markdown
 ## Summary
 [1-3 sentences describing what and why]
@@ -78,6 +85,7 @@ Constraints for consistent version control practices across all projects.
 ```
 
 ### PR Size Guidelines
+
 | Size | Lines Changed | Review Approach |
 |------|--------------|-----------------|
 | Small | < 100 | Quick review |
@@ -94,6 +102,7 @@ Constraints for consistent version control practices across all projects.
 ## Hotfix Protocol
 
 For production-critical fixes:
+
 1. Branch from `main`: `hotfix/description`
 2. Fix and test
 3. Open PR with `[HOTFIX]` prefix

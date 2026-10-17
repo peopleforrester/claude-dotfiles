@@ -27,7 +27,7 @@ A REST or GraphQL API service with authentication, validation, and documentation
 
 ## Key Directories
 
-```
+```text
 src/
 ├── routes/           # Route handlers / Controllers
 ├── services/         # Business logic layer
@@ -103,7 +103,7 @@ tests/
 
 ## Environment Variables
 
-```
+```bash
 PORT=3000
 DATABASE_URL=postgres://...
 JWT_SECRET=...

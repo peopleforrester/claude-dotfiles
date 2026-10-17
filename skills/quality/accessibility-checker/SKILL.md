@@ -66,6 +66,7 @@ Ensure web content is accessible to all users.
 ```
 
 **Tools:**
+
 - WebAIM Contrast Checker
 - Chrome DevTools → Rendering → CSS contrast
 

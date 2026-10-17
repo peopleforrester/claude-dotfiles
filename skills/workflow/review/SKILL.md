@@ -9,7 +9,7 @@ Perform a thorough code review of changes.
 
 ## Usage
 
-```
+```text
 /review [file, PR, or commit]
 /review                      # Review staged changes
 /review src/auth/login.ts    # Review specific file
@@ -21,6 +21,7 @@ Perform a thorough code review of changes.
 ### 1. Understand Context
 
 Before reviewing:
+
 - What problem does this code solve?
 - What was the previous implementation?
 - Are there related changes elsewhere?
@@ -28,12 +29,14 @@ Before reviewing:
 ### 2. Review Checklist
 
 #### Correctness
+
 - [ ] Does the code do what it's supposed to do?
 - [ ] Are edge cases handled?
 - [ ] Is error handling appropriate?
 - [ ] Are there any logic errors?
 
 #### Security
+
 - [ ] No hardcoded secrets or credentials
 - [ ] Input validation present
 - [ ] No SQL injection vulnerabilities
@@ -41,12 +44,14 @@ Before reviewing:
 - [ ] Authentication/authorization correct
 
 #### Performance
+
 - [ ] No N+1 query problems
 - [ ] No unnecessary loops or iterations
 - [ ] Appropriate data structures used
 - [ ] No memory leaks
 
 #### Maintainability
+
 - [ ] Code is readable and clear
 - [ ] Functions are focused and small
 - [ ] Naming is descriptive
@@ -54,12 +59,14 @@ Before reviewing:
 - [ ] Comments explain "why", not "what"
 
 #### Testing
+
 - [ ] Tests cover the changes
 - [ ] Tests are meaningful (not just for coverage)
 - [ ] Edge cases tested
 - [ ] Tests are maintainable
 
 #### Style
+
 - [ ] Follows project conventions
 - [ ] Consistent formatting
 - [ ] No leftover debug code
@@ -69,7 +76,7 @@ Before reviewing:
 
 Format feedback clearly:
 
-```markdown
+````markdown
 ## Summary
 [Overall assessment: approve, request changes, or discuss]
 
@@ -87,7 +94,7 @@ Format feedback clearly:
 
 ## Questions
 - [Clarifications needed]
-```
+````
 
 ### 4. Severity Levels
 
@@ -103,7 +110,7 @@ Use consistent severity markers:
 
 ## Example Output
 
-```markdown
+````markdown
 ## Code Review: Add OAuth Login
 
 ### Summary
@@ -139,7 +146,7 @@ before merge.
 
 ---
 **Verdict**: Request changes (2 security issues)
-```
+````
 
 ## Tips
 

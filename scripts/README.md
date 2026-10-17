@@ -36,7 +36,7 @@ python scripts/validate.py skills/tdd-workflow/SKILL.md
 
 ### Example Output
 
-```
+```text
 claude-dotfiles validator
 
 → Validating directory: /path/to/repo
@@ -88,7 +88,7 @@ python scripts/token-count.py templates/standard/CLAUDE.md
 
 ### Example Output
 
-```
+```text
 claude-dotfiles token counter
 
 Found 12 file(s)
@@ -188,7 +188,7 @@ Creates timestamped backups of `~/.claude`.
 
 ### Example Output
 
-```
+```text
 Claude Config Backup v1.0.0
 
 → Backing up /home/user/.claude (2.3M)...

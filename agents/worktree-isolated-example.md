@@ -23,6 +23,7 @@ changes without affecting the primary checkout.
 ## How It Works
 
 When spawned with `isolation: "worktree"`, Claude Code:
+
 1. Creates a temporary git worktree branched from the current HEAD
 2. Runs the agent entirely within that worktree
 3. If the agent makes no changes, the worktree is cleaned up automatically
@@ -56,6 +57,7 @@ Agent({
 ## Output Format
 
 Return a structured summary:
+
 - What was changed (file list)
 - Test results
 - Recommendation: merge, discard, or review

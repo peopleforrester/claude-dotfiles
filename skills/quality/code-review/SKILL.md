@@ -9,7 +9,7 @@ Invoke the **code-reviewer** agent to perform a thorough code review.
 
 ## Usage
 
-```
+```text
 /code-review                    # Review staged/recent changes
 /code-review src/auth/          # Review specific directory
 /code-review --pr               # Review current PR diff
@@ -38,6 +38,7 @@ Invoke the **code-reviewer** agent to perform a thorough code review.
 ## Output
 
 Produces a structured review with:
+
 - Summary assessment
 - Issues organized by severity
 - Specific code suggestions with diffs

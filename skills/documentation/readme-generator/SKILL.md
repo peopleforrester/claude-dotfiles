@@ -237,6 +237,7 @@ Creates a new API client instance.
 ### Library/Package
 
 Focus on:
+
 - Installation
 - API documentation
 - Usage examples
@@ -245,6 +246,7 @@ Focus on:
 ### CLI Tool
 
 Focus on:
+
 - Installation methods (npm, brew, binary)
 - Command reference
 - Configuration options
@@ -253,6 +255,7 @@ Focus on:
 ### Application
 
 Focus on:
+
 - Getting started / deployment
 - Environment setup
 - Architecture overview
@@ -261,6 +264,7 @@ Focus on:
 ### API Service
 
 Focus on:
+
 - Authentication
 - Endpoint overview
 - Request/response examples

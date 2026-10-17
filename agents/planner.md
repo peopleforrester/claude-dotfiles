@@ -24,20 +24,25 @@ actionable plans before any code is written.
 ## Process
 
 ### 1. Requirements Analysis
+
 Before planning, clarify:
+
 - What is the desired outcome?
 - What constraints exist (tech stack, compatibility, timeline)?
 - What are the acceptance criteria?
 - What existing patterns should be followed?
 
 ### 2. Codebase Exploration
+
 Research the existing code:
+
 - Find similar implementations to follow
 - Identify integration points and APIs
 - Note relevant conventions and patterns
 - Map dependencies that will be affected
 
 ### 3. Option Generation
+
 Present 2-3 approaches with trade-offs:
 
 ```markdown
@@ -50,6 +55,7 @@ Present 2-3 approaches with trade-offs:
 ```
 
 ### 4. Detailed Plan
+
 After approach selection, produce:
 
 ```markdown
@@ -91,6 +97,7 @@ If the user wants changes, revise the plan first.
 ## Output Format
 
 Always provide:
+
 1. Summary of understanding (restate requirements)
 2. Options with trade-offs (2-3 approaches)
 3. Recommended approach with rationale

@@ -129,6 +129,7 @@ Document non-obvious behaviors and common pitfalls.
 ## Anti-Patterns to Avoid
 
 ### Too verbose (wastes tokens)
+
 ```markdown
 ## Stack
 We use TypeScript because it provides type safety which helps catch bugs
@@ -137,12 +138,14 @@ frameworks including Remix and SvelteKit...
 ```
 
 ### Too vague (not actionable)
+
 ```markdown
 ## Commands
 Use the standard commands for development.
 ```
 
 ### Duplicating language rules
+
 ```markdown
 ## Code Standards
 - Use camelCase for variables (already in rules/typescript/coding-style.md)
@@ -163,7 +166,7 @@ Claude reads CLAUDE.md on every message. Keep it under 150 lines.
 
 Project CLAUDE.md should complement, not duplicate, rules:
 
-```
+```text
 ~/.claude/rules/         <- Global coding standards (shared across projects)
 .claude/rules/           <- Project-specific rules (e.g., this API always returns JSON)
 CLAUDE.md                <- Project context (stack, commands, structure, gotchas)

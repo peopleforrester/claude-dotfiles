@@ -162,7 +162,7 @@ Map commit types to changelog categories:
 
 ### Example Commits to Entries
 
-```
+```text
 feat: add user profile page
 fix: resolve login timeout issue (#123)
 feat!: change authentication to OAuth 2.0
@@ -185,7 +185,7 @@ Becomes:
 
 Following [Semantic Versioning](https://semver.org/):
 
-```
+```text
 MAJOR.MINOR.PATCH
 
 1.0.0 → 1.0.1  (patch: bug fixes)

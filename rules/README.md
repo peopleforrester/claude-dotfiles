@@ -12,7 +12,7 @@ Claude Code loads and applies them automatically without explicit invocation.
 
 ## Structure
 
-```
+```text
 rules/
   common/              # Language-agnostic (ALWAYS install)
     security.md        # OWASP Top 10, secrets, input validation

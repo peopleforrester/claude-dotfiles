@@ -27,7 +27,9 @@ attacker to find weaknesses before they reach production.
 ## Process
 
 ### 1. Threat Modeling
+
 Identify the attack surface:
+
 - All endpoints accepting user input
 - Authentication and session management code
 - Database queries and data access patterns
@@ -36,6 +38,7 @@ Identify the attack surface:
 - Serialization/deserialization points
 
 ### 2. Automated Scanning
+
 ```bash
 # Check for hardcoded secrets
 grep -rn "api[_-]key\|password\|secret\|token" --include="*.ts" --include="*.py" --include="*.js" . | grep -v node_modules | grep -v test
@@ -48,6 +51,7 @@ grep -rn "console.log\|console.debug" --include="*.ts" --include="*.tsx" src/ 2>
 ```
 
 ### 3. Manual Code Review
+
 For each OWASP category, verify protections:
 
 | Category | Check | Pass/Fail |
@@ -66,6 +70,7 @@ For each OWASP category, verify protections:
 ### 4. Vulnerability Patterns
 
 #### Injection (Code Examples)
+
 ```typescript
 // VULNERABLE: String concatenation in query
 const query = `SELECT * FROM users WHERE id = ${userId}`;
@@ -75,6 +80,7 @@ const { data } = await supabase.from('users').select('*').eq('id', userId);
 ```
 
 #### XSS
+
 ```typescript
 // VULNERABLE: Unescaped HTML
 element.innerHTML = userInput;
@@ -84,6 +90,7 @@ element.textContent = userInput;
 ```
 
 #### SSRF
+
 ```typescript
 // VULNERABLE: Unvalidated URL
 const response = await fetch(userProvidedUrl);
@@ -137,6 +144,7 @@ if (!allowed.includes(url.hostname)) throw new Error('Blocked');
 ## Critical Rule
 
 If you find credentials, tokens, or secrets in the code:
+
 1. Flag as CRITICAL immediately
 2. Recommend rotation of the exposed credential
 3. Suggest moving to environment variables or secret manager

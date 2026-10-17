@@ -4,6 +4,7 @@
 Extends `common/patterns.md` with TypeScript-specific patterns.
 
 ## API Response Pattern
+
 ```typescript
 type ApiResponse<T> =
   | { success: true; data: T }
@@ -21,6 +22,7 @@ async function fetchUser(id: string): Promise<ApiResponse<User>> {
 ```
 
 ## Custom Hooks Pattern (React)
+
 ```typescript
 function useDebounce<T>(value: T, delay: number): T {
   const [debounced, setDebounced] = useState(value);
@@ -35,6 +37,7 @@ function useDebounce<T>(value: T, delay: number): T {
 ```
 
 ## Repository Pattern
+
 ```typescript
 interface Repository<T> {
   findById(id: string): Promise<T | null>;
@@ -46,6 +49,7 @@ interface Repository<T> {
 ```
 
 ## Zod Validation Pattern
+
 ```typescript
 const CreateUserSchema = z.object({
   name: z.string().min(1).max(100),
@@ -57,6 +61,7 @@ type CreateUserInput = z.infer<typeof CreateUserSchema>;
 ```
 
 ## Error Boundary Pattern (React)
+
 ```typescript
 class ErrorBoundary extends Component<Props, State> {
   state = { hasError: false, error: null };
@@ -73,6 +78,7 @@ class ErrorBoundary extends Component<Props, State> {
 ```
 
 ## References
+
 - See `skills/patterns/typescript-patterns/SKILL.md` for comprehensive patterns
 - See `skills/frameworks/react-patterns/SKILL.md` for React-specific patterns
 - See `skills/frameworks/nextjs-patterns/SKILL.md` for Next.js patterns

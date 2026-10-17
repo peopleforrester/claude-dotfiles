@@ -25,7 +25,7 @@ npm run start      # Start production server
 
 ## Key Directories
 
-```
+```text
 src/
 ├── components/    # UI components (if frontend)
 ├── lib/           # Shared utilities and helpers
@@ -90,6 +90,7 @@ Required environment variables (see `.env.example`):
 ## Additional Context
 
 For detailed documentation, see:
+
 - Architecture overview: `docs/architecture.md`
 - API documentation: `docs/api.md`
 - Contributing guide: `CONTRIBUTING.md`

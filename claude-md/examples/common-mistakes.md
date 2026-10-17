@@ -71,7 +71,7 @@ Only include rules that are **project-specific** and **can't be inferred**.
 
 ### Better Approach
 
-```markdown
+````markdown
 ## Commands
 
 ```bash
@@ -79,7 +79,7 @@ pnpm dev        # Start dev server (port 3000)
 pnpm test       # Run Vitest
 pnpm build      # Production build to dist/
 ```
-```
+````
 
 Exact commands with comments explaining what they do.
 
@@ -103,6 +103,7 @@ A React application.
 ### Why It's Bad
 
 Every project has quirks. Without a Gotchas section:
+
 - Claude will hit the same issues repeatedly
 - You'll waste time explaining the same problems
 - Non-obvious behaviors cause confusion
@@ -170,7 +171,7 @@ Components are organized by feature. Services handle business logic.
 
 ### Better Approach
 
-```markdown
+````markdown
 ## Key Directories
 
 ```
@@ -183,7 +184,7 @@ src/
 ├── components/       # Shared UI components
 └── lib/              # Utilities, helpers
 ```
-```
+````
 
 Visual tree structure with brief annotations.
 
@@ -223,14 +224,14 @@ Only include rules that are:
 
 ### Bad Example
 
-```markdown
+````markdown
 ## Commands
 
 ```bash
 npm run start    # Actually we switched to pnpm...
 yarn test        # This hasn't worked since the Vitest migration
 ```
-```
+````
 
 ### Why It's Bad
 
@@ -241,6 +242,7 @@ yarn test        # This hasn't worked since the Vitest migration
 ### Better Approach
 
 Keep CLAUDE.md updated when you:
+
 - Change package managers
 - Migrate testing frameworks
 - Restructure directories

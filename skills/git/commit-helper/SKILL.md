@@ -28,7 +28,7 @@ Write clear, meaningful commit messages following conventions.
 
 ## Conventional Commits Format
 
-```
+```text
 <type>(<scope>): <subject>
 
 <body>
@@ -56,7 +56,7 @@ Write clear, meaningful commit messages following conventions.
 
 The area of the codebase:
 
-```
+```text
 feat(auth): add OAuth login
 fix(api): resolve timeout issue
 docs(readme): update installation steps
@@ -84,19 +84,19 @@ docs(readme): update installation steps
 
 ### Simple Feature
 
-```
+```text
 feat: add user profile page
 ```
 
 ### Feature with Scope
 
-```
+```text
 feat(auth): add password reset functionality
 ```
 
 ### Bug Fix with Issue Reference
 
-```
+```text
 fix(cart): resolve incorrect total calculation
 
 The cart total was not including the shipping cost
@@ -107,7 +107,7 @@ Fixes #234
 
 ### Breaking Change
 
-```
+```text
 feat(api)!: change authentication to OAuth 2.0
 
 BREAKING CHANGE: The /auth/login endpoint now requires
@@ -118,7 +118,7 @@ Migration guide: https://docs.example.com/oauth-migration
 
 ### Refactoring
 
-```
+```text
 refactor(utils): extract date formatting to separate module
 
 Moved date formatting functions from utils.ts to
@@ -157,6 +157,7 @@ git diff --staged
 ### 3. Identify the Scope
 
 What area of the code?
+
 - `auth`, `api`, `ui`, `db`, `config`, etc.
 - Skip if change is global
 
@@ -169,6 +170,7 @@ What area of the code?
 ### 5. Add Body if Needed
 
 Include body when:
+
 - Change is complex
 - Context helps future readers
 - Non-obvious decisions were made
@@ -177,7 +179,7 @@ Include body when:
 
 ### Subject Line
 
-```
+```text
 # Bad
 fix: fixed the bug
 feat: new feature added
@@ -191,7 +193,7 @@ refactor(api): extract validation to middleware
 
 ### Body
 
-```
+```text
 # Bad (how, not why)
 Changed the function to use a loop instead of recursion
 and added a cache variable.
@@ -234,7 +236,7 @@ git commit --amend --no-edit
 
 Create `.gitmessage` template:
 
-```
+```text
 # <type>(<scope>): <subject>
 #
 # <body>

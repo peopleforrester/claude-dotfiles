@@ -8,14 +8,16 @@ user-invocable: true
 Display all learned instincts with their confidence scores, grouped by domain.
 
 ## Arguments
+
 - `$ARGUMENTS` — Optional filter: domain name or confidence threshold (e.g., "code-style" or ">0.5")
 
 ## Process
 
 ### 1. Load Instincts
+
 Read all instinct files from `~/.claude/instincts/`:
 
-```
+```text
 ~/.claude/instincts/
   prefer-const-assertions.md      (0.7, code-style)
   use-errgroup-for-goroutines.md   (0.5, concurrency)

@@ -128,13 +128,13 @@ Relates to #
 
 ### Format
 
-```
+```text
 [type]: short description
 ```
 
 ### Examples
 
-```
+```text
 # Good
 feat: add user authentication with OAuth
 fix: resolve memory leak in image processing
@@ -158,6 +158,7 @@ asdf
 ## Writing the Summary
 
 Good summaries answer:
+
 1. What does this change?
 2. Why is it needed?
 3. How does it work (briefly)?
@@ -284,6 +285,7 @@ If PR is too large, split by:
 ## Draft PRs
 
 Use draft PRs for:
+
 - Work in progress
 - Early feedback requests
 - CI validation before review

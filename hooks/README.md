@@ -105,7 +105,7 @@ Copy scripts to `~/.claude/hooks/` and reference them:
 
 The `matcher` field uses patterns to filter which tools trigger the hook:
 
-```
+```text
 Read(*.ts)           # Read operations on .ts files
 Write(*.py)          # Write operations on .py files
 Edit(*.js)           # Edit operations on .js files

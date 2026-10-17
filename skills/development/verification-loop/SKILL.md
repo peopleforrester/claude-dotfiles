@@ -23,7 +23,7 @@ Systematic pre-PR quality gate that catches issues before code review.
 
 Run each step in order. Stop on first failure, fix, then restart from step 1.
 
-```
+```text
 ┌─────────────────────────────────────────┐
 │  1. Build        → Compiles cleanly?    │
 │  2. Type Check   → Types are sound?     │
@@ -40,6 +40,7 @@ Run each step in order. Stop on first failure, fix, then restart from step 1.
 ## Step Commands by Stack
 
 ### JavaScript / TypeScript
+
 ```bash
 # 1. Build
 npm run build        # or: tsc --noEmit
@@ -69,6 +70,7 @@ grep -rn "console\.log\|debugger\|TODO.*FIXME" src/ --include="*.ts" --include="
 ```
 
 ### Python
+
 ```bash
 # 1. Build (syntax check)
 python -m py_compile main.py
@@ -98,6 +100,7 @@ grep -rn "breakpoint()\|pdb\|print(" src/ --include="*.py"
 ```
 
 ### Go
+
 ```bash
 # 1. Build
 go build ./...
@@ -126,6 +129,7 @@ grep -rn "fmt\.Print\|log\.Print" . --include="*.go" | grep -v "_test.go"
 ```
 
 ### Rust
+
 ```bash
 # 1. Build
 cargo build

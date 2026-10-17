@@ -9,7 +9,7 @@ Clean up project files, remove cruft, and organize codebase.
 
 ## Usage
 
-```
+```text
 /cleanup                     # Full cleanup scan
 /cleanup --dead-code         # Find unused code
 /cleanup --deps              # Find unused dependencies
@@ -120,6 +120,7 @@ grep -rn "\.skip\|@pytest.mark.skip\|xfail" tests/
 ```
 
 **Decision criteria**:
+
 - If needed: move to proper TODO with issue number
 - If obsolete: delete completely
 - If for reference: add to documentation

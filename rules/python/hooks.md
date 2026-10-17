@@ -10,7 +10,9 @@ edited file inside the command (or with a handler-level `if`).
 ## PostToolUse Hooks
 
 ### Auto-Format
+
 Run ruff for linting and formatting after editing Python files:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -23,7 +25,9 @@ Run ruff for linting and formatting after editing Python files:
 ```
 
 ### Type Checking
+
 Run mypy or pyright after edits:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -36,7 +40,9 @@ Run mypy or pyright after edits:
 ```
 
 ### Print Statement Warning
+
 Flag print() statements (use logging module instead):
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -49,5 +55,6 @@ Flag print() statements (use logging module instead):
 ```
 
 ## References
+
 - See `skills/patterns/python-patterns/SKILL.md` for comprehensive patterns
 - See `skills/development/python-testing/SKILL.md` for testing patterns

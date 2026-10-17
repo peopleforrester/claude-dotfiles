@@ -9,11 +9,13 @@ Analyze learned instincts and cluster related ones into higher-level
 constructs: skills, commands, or agents.
 
 ## Arguments
+
 - `$ARGUMENTS` — Optional: domain to evolve, or "analyze" for dry-run
 
 ## Process
 
 ### 1. Cluster Analysis
+
 Group instincts by domain and identify clusters:
 
 ```markdown
@@ -54,9 +56,11 @@ Group instincts by domain and identify clusters:
 | Agent enhancement | 4+ | 0.5 | Domain-specific expertise |
 
 ### 3. Generation
+
 For approved clusters, generate the appropriate construct:
 
 **Skill generation:**
+
 ```markdown
 ---
 name: typescript-style-evolved
@@ -69,8 +73,10 @@ description: |
 ```
 
 ### 4. Output Location
+
 Generated constructs are saved to:
-```
+
+```text
 ~/.claude/evolved/
   skills/typescript-style-evolved/SKILL.md
   rules/input-validation-evolved.md
@@ -94,4 +100,5 @@ Generated constructs are saved to:
 ```
 
 ## Dry Run
+
 Use `/evolve analyze` to see cluster analysis without generating files.

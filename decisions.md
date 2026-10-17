@@ -90,3 +90,34 @@ or `owner`, an invalid `source`, and the plugin name `claude-dotfiles` is
 reserved because it starts with `claude-`). Renaming the plugin is Michael's
 call, so the manifests go into the gate once that is settled. Filed as a
 follow-up from issue #13.
+
+## 2026-10-17T00:00:00Z · Markdown lint joins `make test`
+
+`npm run lint` failed on 1,799 findings and no gate ran it. Chosen: tune the
+config and sweep, both.
+
+- **MD060 table-column-style off.** 649 of the findings, new in markdownlint
+  0.49. It wants every pipe aligned, so editing one cell rewrites the table.
+- **`div` and `strong` allowed as inline HTML.** The README's centred header
+  and the `<summary>` labels need them; Markdown emphasis does not render
+  inside `<summary>`.
+- **`npm run lint:fix` for the rest that it can fix:** blank lines around
+  headings, lists, fences and tables, and bare URLs.
+- **Unlabeled fences labelled by hand-written rule:** `bash` when every line is
+  an environment assignment, `text` otherwise (trees, diagrams, commit
+  messages, slash-command usage, sample output). Guessing finer languages
+  would add noise for no rendering gain.
+
+Before the sweep, fifteen examples that put a fence inside a three-backtick
+fence were moved to four-backtick outer fences. Otherwise the inner fence
+closes the example, and `lint:fix` treats the rest as page Markdown; on the
+first try it renumbered a list inside the review skill's sample output.
+
+The `lint-md` target needs `npm ci` and fails with that instruction when
+`node_modules/.bin/markdownlint` is missing; markdownlint-cli is already a
+pinned dev dependency, so nothing new is installed. The lint scripts switched
+from `--ignore node_modules` to `--ignore-path .gitignore` so a local `/docs/`
+does not fail the gate.
+
+**Not done here:** CI. `validate.yml` has no `npm ci` and no markdown lint
+step, and workflow changes wait for Michael.

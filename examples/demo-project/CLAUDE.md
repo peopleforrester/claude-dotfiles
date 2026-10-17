@@ -23,7 +23,7 @@ pnpm lint         # Run ESLint
 
 ## Key Directories
 
-```
+```text
 src/
 ├── routes/       # Express route handlers
 ├── services/     # Business logic
@@ -48,7 +48,7 @@ tests/
 
 ## API Endpoints
 
-```
+```text
 GET    /todos      - List all todos
 POST   /todos      - Create todo { title: string }
 PATCH  /todos/:id  - Update todo { completed?: boolean }

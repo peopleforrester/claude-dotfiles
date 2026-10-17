@@ -9,7 +9,7 @@ This is the configuration layer that fixes that.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Claude Code 2.1+](https://img.shields.io/badge/Claude%20Code-2.1%2B-blueviolet)](https://code.claude.com/docs/en)
-[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#compatibility)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#-quick-start)
 [![Built with Claude](https://img.shields.io/badge/Built%20with-Claude%20Code-orange)](BUILT_WITH_CLAUDE.md)
 
 [Quick Start](#-quick-start) •
@@ -59,7 +59,7 @@ Reproduce it yourself: [`npm test`](./tests/run-all.js) ·
 
 **Without configuration**, Claude Code starts every session with zero context about your project:
 
-```
+```text
 You: "Run the tests"
 Claude: "What test framework do you use? What's the command?"
 
@@ -72,7 +72,7 @@ Claude: "What are your coding standards?"
 
 **With claude-dotfiles**, Claude remembers everything:
 
-```
+```text
 You: "Run the tests"
 Claude: *runs `pytest -v`*
 
@@ -108,16 +108,19 @@ cp templates/standard/CLAUDE.md ~/your-project/CLAUDE.md
 <summary><strong>Other installation methods</strong></summary>
 
 **One-command install (when public):**
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/peopleforrester/claude-dotfiles/main/install.sh | bash
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 irm https://raw.githubusercontent.com/peopleforrester/claude-dotfiles/main/install.ps1 | iex
 ```
 
 **Using Make:**
+
 ```bash
 make install        # Interactive
 make install-all    # Everything
@@ -159,6 +162,7 @@ make install-minimal # Just essentials
 ### Language & Framework Templates
 
 Browse [`claude-md/`](./claude-md/) for templates covering:
+
 - **Languages:** Python, TypeScript, Rust, Go
 - **Frameworks:** React, Next.js, FastAPI, Rails, Django
 - **Domains:** APIs, CLI tools, libraries, monorepos
@@ -179,6 +183,7 @@ Rules are always-loaded constraints organized in a modular structure:
 | **[agents.md](./rules/common/agents.md)** | When to delegate to subagents |
 
 **Language-specific rules** (in `rules/typescript/`, `rules/python/`, `rules/golang/`):
+
 - `coding-style.md` — Language-specific conventions and idioms
 - `testing.md` — Framework-specific test patterns
 - `security.md` — Language-specific security practices
@@ -282,6 +287,7 @@ make help       # See all commands
 We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 **Most Wanted:**
+
 - Templates for Laravel, Vue, Svelte, Go frameworks
 - Industry-specific configs
 - Translations
@@ -306,7 +312,7 @@ MIT © [Michael Rishi Forrester](https://github.com/peopleforrester)
 
 <div align="center">
 
-**[⬆ Back to top](#)**
+**[⬆ Back to top](#claude-dotfiles)**
 
 Made with 🧠 by Claude Code
 

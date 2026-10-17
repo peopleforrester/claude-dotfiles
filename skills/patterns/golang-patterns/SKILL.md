@@ -22,6 +22,7 @@ Modern Go 1.22+ patterns and best practices.
 ## Error Handling
 
 ### Wrap Errors with Context
+
 ```go
 import "fmt"
 
@@ -35,6 +36,7 @@ func readConfig(path string) (*Config, error) {
 ```
 
 ### Custom Error Types
+
 ```go
 type ValidationError struct {
     Field   string
@@ -53,6 +55,7 @@ if errors.As(err, &valErr) {
 ```
 
 ### Sentinel Errors
+
 ```go
 var (
     ErrNotFound     = errors.New("not found")
@@ -68,6 +71,7 @@ if errors.Is(err, ErrNotFound) {
 ## Concurrency
 
 ### Structured Concurrency with errgroup
+
 ```go
 import "golang.org/x/sync/errgroup"
 
@@ -94,6 +98,7 @@ func fetchAll(ctx context.Context, urls []string) ([]Response, error) {
 ```
 
 ### Context for Cancellation
+
 ```go
 func longOperation(ctx context.Context) error {
     for {
@@ -108,6 +113,7 @@ func longOperation(ctx context.Context) error {
 ```
 
 ### Channel Patterns
+
 ```go
 // Fan-out, fan-in
 func merge(channels ...<-chan int) <-chan int {
@@ -133,6 +139,7 @@ func merge(channels ...<-chan int) <-chan int {
 ## Interfaces
 
 ### Small Interfaces
+
 ```go
 // Good: Focused interfaces
 type Reader interface {
@@ -151,6 +158,7 @@ type ReadWriter interface {
 ```
 
 ### Accept Interfaces, Return Structs
+
 ```go
 // Good: Function accepts interface
 func Process(r io.Reader) error { /* ... */ }
@@ -162,6 +170,7 @@ func NewServer(addr string) *Server { /* ... */ }
 ## Generics (1.18+)
 
 ### Type Constraints
+
 ```go
 type Number interface {
     ~int | ~int64 | ~float64
@@ -179,6 +188,7 @@ func Sum[T Number](values []T) T {
 ## HTTP Patterns
 
 ### Middleware Chain
+
 ```go
 type Middleware func(http.Handler) http.Handler
 

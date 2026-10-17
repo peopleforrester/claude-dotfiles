@@ -6,18 +6,21 @@ Extends `common/security.md` with Python-specific constraints.
 ## Always
 
 ### Input Validation
+
 - Use Pydantic models for all API input validation
 - Use `bleach` or `markupsafe` for HTML sanitization
 - Validate file uploads with `python-magic` (content type, not extension)
 - Use `secrets` module for token generation (not `random`)
 
 ### Dependencies
+
 - Run `pip-audit` or `safety check` before releases
 - Pin all dependencies in `pyproject.toml` with version constraints
 - Use `uv lock` to generate reproducible lock files
 - Review new packages on PyPI (check download stats, repo activity)
 
 ### Framework-Specific
+
 ```python
 # Django: Use ORM, never raw SQL with user input
 User.objects.filter(email=user_input)  # Safe

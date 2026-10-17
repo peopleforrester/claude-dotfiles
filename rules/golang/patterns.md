@@ -4,6 +4,7 @@
 Extends `common/patterns.md` with Go-specific patterns.
 
 ## Functional Options Pattern
+
 ```go
 type ServerOption func(*Server)
 
@@ -27,6 +28,7 @@ func NewServer(opts ...ServerOption) *Server {
 ```
 
 ## Small Interface Pattern
+
 ```go
 // Define interfaces where they are used, not where they are implemented
 type UserFinder interface {
@@ -45,6 +47,7 @@ type UserStore interface {
 ```
 
 ## Constructor Injection
+
 ```go
 type Service struct {
     repo   UserRepository
@@ -58,6 +61,7 @@ func NewService(repo UserRepository, cache Cache, logger *slog.Logger) *Service 
 ```
 
 ## Error Wrapping Pattern
+
 ```go
 func (s *Service) GetUser(ctx context.Context, id string) (*User, error) {
     user, err := s.repo.FindByID(ctx, id)
@@ -72,6 +76,7 @@ func (s *Service) GetUser(ctx context.Context, id string) (*User, error) {
 ```
 
 ## Middleware Pattern
+
 ```go
 func LoggingMiddleware(logger *slog.Logger) func(http.Handler) http.Handler {
     return func(next http.Handler) http.Handler {
@@ -89,5 +94,6 @@ func LoggingMiddleware(logger *slog.Logger) func(http.Handler) http.Handler {
 ```
 
 ## References
+
 - See `skills/patterns/golang-patterns/SKILL.md` for comprehensive patterns
 - See `skills/development/golang-testing/SKILL.md` for testing patterns

@@ -9,7 +9,7 @@ Generate a well-structured pull request.
 
 ## Usage
 
-```
+```text
 /pr                    # Create PR for current branch
 /pr [base-branch]      # Create PR targeting specific base
 /pr main               # Create PR to main
@@ -36,6 +36,7 @@ git diff main..HEAD
 ### 2. Analyze Changes
 
 Examine the changes to understand:
+
 - What features/fixes are included
 - What files were modified
 - Any breaking changes
@@ -87,7 +88,7 @@ EOF
 
 Follow conventional commit format:
 
-```
+```text
 <type>: <description>
 
 Types:
@@ -102,7 +103,8 @@ Types:
 ```
 
 Examples:
-```
+
+```text
 feat: Add user authentication with OAuth
 fix: Resolve cart calculation rounding error
 docs: Update API documentation for v2
@@ -189,6 +191,7 @@ gh pr create --draft \
 ```
 
 Convert to ready when complete:
+
 ```bash
 gh pr ready
 ```

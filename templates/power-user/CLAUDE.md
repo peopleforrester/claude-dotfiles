@@ -33,7 +33,7 @@ pnpm db:studio     # Open Prisma Studio
 
 ## Key Directories
 
-```
+```text
 src/
 ├── app/              # Next.js App Router pages and layouts
 ├── components/
@@ -83,7 +83,7 @@ prisma/
 
 Required (see `.env.example`):
 
-```
+```bash
 DATABASE_URL=postgresql://...
 REDIS_URL=redis://...
 NEXTAUTH_SECRET=...

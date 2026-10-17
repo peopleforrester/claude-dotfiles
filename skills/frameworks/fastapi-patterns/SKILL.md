@@ -22,7 +22,7 @@ Modern FastAPI 0.110+ patterns and best practices with Pydantic v2.
 
 ## Project Structure
 
-```
+```text
 app/
 ├── main.py                 # App factory, middleware, startup
 ├── config.py               # Settings via pydantic-settings
@@ -45,6 +45,7 @@ app/
 ## Dependency Injection
 
 ### Database Session
+
 ```python
 from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
@@ -63,6 +64,7 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 ```
 
 ### Service Dependencies
+
 ```python
 from fastapi import Depends
 
@@ -81,6 +83,7 @@ async def get_user(
 ```
 
 ### Authentication Dependency
+
 ```python
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -102,6 +105,7 @@ async def get_current_user(
 ## Pydantic v2 Schemas
 
 ### Request/Response Separation
+
 ```python
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from uuid import UUID
@@ -125,6 +129,7 @@ class UserResponse(BaseModel):
 ```
 
 ### Validated Query Parameters
+
 ```python
 from pydantic import BaseModel, Field
 
@@ -147,6 +152,7 @@ async def list_users(
 ## Async Patterns
 
 ### Concurrent External Calls
+
 ```python
 import asyncio
 
@@ -161,6 +167,7 @@ async def dashboard(user: User = Depends(get_current_user)):
 ```
 
 ### Background Tasks
+
 ```python
 from fastapi import BackgroundTasks
 

@@ -53,6 +53,9 @@ cd claude-dotfiles
 # Set up development environment
 make dev-setup
 
+# Install markdownlint, which make test runs
+npm ci
+
 # Run tests
 make test
 
@@ -73,6 +76,7 @@ make help
 | Framework-specific | 1,800 | 3,000 |
 
 Check your token count:
+
 ```bash
 python scripts/token-count.py your-template.md
 ```

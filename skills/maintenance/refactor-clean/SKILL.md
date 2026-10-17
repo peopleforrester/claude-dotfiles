@@ -9,7 +9,7 @@ Invoke the **refactor-cleaner** agent to clean up the codebase.
 
 ## Usage
 
-```
+```text
 /refactor-clean                 # Full codebase scan
 /refactor-clean src/            # Scan specific directory
 /refactor-clean --deps          # Focus on unused dependencies

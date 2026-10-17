@@ -22,7 +22,7 @@ Modern Django 5.x patterns and best practices.
 
 ## Project Structure
 
-```
+```text
 project/
 ├── config/                 # Project settings (renamed from project/)
 │   ├── settings/
@@ -49,6 +49,7 @@ project/
 ## ORM Optimization
 
 ### Select Related (FK joins)
+
 ```python
 # Bad: N+1 queries
 users = User.objects.all()
@@ -60,6 +61,7 @@ users = User.objects.select_related("profile").all()
 ```
 
 ### Prefetch Related (M2M and reverse FK)
+
 ```python
 # Bad: N+1 queries for many-to-many
 articles = Article.objects.all()
@@ -71,6 +73,7 @@ articles = Article.objects.prefetch_related("tags").all()
 ```
 
 ### Only/Defer for Partial Loading
+
 ```python
 # Load only needed fields
 users = User.objects.only("id", "name", "email")
@@ -80,6 +83,7 @@ articles = Article.objects.defer("body", "raw_html")
 ```
 
 ### Efficient Bulk Operations
+
 ```python
 # Bulk create (single INSERT)
 User.objects.bulk_create([
@@ -96,6 +100,7 @@ Product.objects.filter(id=product_id).update(stock=F("stock") - 1)
 ```
 
 ### Custom QuerySet Managers
+
 ```python
 class ArticleQuerySet(models.QuerySet):
     def published(self):
@@ -113,6 +118,7 @@ class Article(models.Model):
 ## Views
 
 ### Class-Based Views (Generic)
+
 ```python
 from django.views.generic import ListView, DetailView, CreateView
 
@@ -124,6 +130,7 @@ class ArticleListView(ListView):
 ```
 
 ### Django REST Framework ViewSets
+
 ```python
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
@@ -146,6 +153,7 @@ class UserViewSet(viewsets.ModelViewSet):
 ```
 
 ### DRF Serializers
+
 ```python
 from rest_framework import serializers
 
@@ -269,6 +277,7 @@ class TestUserAPI(TestCase):
 ```
 
 ### Factory Pattern (factory_boy)
+
 ```python
 import factory
 

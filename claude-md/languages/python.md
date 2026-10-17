@@ -27,7 +27,7 @@ uv run python -m src.main         # Run application
 
 ## Key Directories
 
-```
+```text
 src/
 ├── __init__.py       # Package marker
 ├── main.py           # Application entry point
@@ -74,7 +74,7 @@ Key packages in `pyproject.toml`:
 
 Required (see `.env.example`):
 
-```
+```bash
 LOG_LEVEL=INFO
 DATABASE_URL=postgresql://...
 ```

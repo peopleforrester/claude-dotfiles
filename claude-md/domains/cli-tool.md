@@ -24,7 +24,7 @@ A command-line application with argument parsing, configuration, and user feedba
 
 ## Key Directories
 
-```
+```text
 src/
 ├── main.ts           # Entry point, CLI setup
 ├── commands/         # Command implementations
@@ -101,6 +101,7 @@ spinner.succeed('Dependencies installed');
 ## Configuration Loading
 
 Priority (highest to lowest):
+
 1. Command-line flags
 2. Environment variables
 3. Local config (`.myapprc`, `myapp.config.js`)
@@ -109,7 +110,7 @@ Priority (highest to lowest):
 
 ## Environment Variables
 
-```
+```bash
 MYAPP_CONFIG_PATH=/custom/path
 MYAPP_LOG_LEVEL=debug
 NO_COLOR=1

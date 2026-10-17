@@ -13,6 +13,7 @@ A minimal Todo API example showing:
 - How Claude uses the configuration
 
 **Try it:**
+
 ```bash
 cd examples/demo-project
 claude

@@ -9,7 +9,7 @@ Safely update project dependencies.
 
 ## Usage
 
-```
+```text
 /update-deps                 # Check and update all dependencies
 /update-deps --minor         # Only minor/patch updates
 /update-deps --security      # Security updates only

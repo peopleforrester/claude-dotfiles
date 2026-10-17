@@ -31,7 +31,7 @@ pnpm format           # Prettier format
 
 ## Key Directories
 
-```
+```text
 src/
 ├── main.tsx              # Entry point
 ├── App.tsx               # Root component with providers

@@ -29,7 +29,7 @@ uv run ruff format .                    # Format
 
 ## Key Directories
 
-```
+```text
 project/
 ├── settings/
 │   ├── base.py       # Shared settings
@@ -112,7 +112,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
 ## Environment Variables
 
-```
+```bash
 DJANGO_SETTINGS_MODULE=project.settings.development
 DATABASE_URL=postgres://...
 SECRET_KEY=...

@@ -6,6 +6,7 @@ Extends `common/coding-style.md` with TypeScript-specific constraints.
 ## Always
 
 ### Type Safety
+
 - Enable `strict: true` in tsconfig.json (all strict checks)
 - Use explicit return types on exported functions
 - Prefer `unknown` over `any` — narrow with type guards
@@ -13,6 +14,7 @@ Extends `common/coding-style.md` with TypeScript-specific constraints.
 - Use discriminated unions for state variants
 
 ### Patterns
+
 ```typescript
 // PREFER: Discriminated unions over boolean flags
 type Result<T> =
@@ -32,11 +34,13 @@ type User = z.infer<typeof UserSchema>;
 ```
 
 ### Imports
+
 - Use `type` imports for type-only imports (`import type { User } from './types'`)
 - Group: Node built-ins, external packages, internal modules, relative imports
 - Use path aliases (`@/`) over deep relative paths (`../../../`)
 
 ### File Organization
+
 - One component/class/module per file (200-400 lines target)
 - Co-locate tests with source (`Component.tsx` / `Component.test.tsx`)
 - Export types from a central `types.ts` or barrel `index.ts`

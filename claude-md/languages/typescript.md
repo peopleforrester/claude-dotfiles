@@ -29,7 +29,7 @@ pnpm typecheck        # tsc --noEmit
 
 ## Key Directories
 
-```
+```text
 src/
 ├── index.ts          # Application entry point
 ├── config/           # Configuration and environment
@@ -76,7 +76,7 @@ Key packages in `package.json`:
 
 Required (see `.env.example`):
 
-```
+```bash
 NODE_ENV=development
 LOG_LEVEL=debug
 API_URL=http://localhost:3000

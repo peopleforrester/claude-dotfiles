@@ -29,7 +29,7 @@ go generate ./...         # Run go:generate directives
 
 ## Key Directories
 
-```
+```text
 cmd/
 └── app/
     └── main.go           # Application entry point
@@ -82,7 +82,7 @@ Key modules in `go.mod`:
 
 Load with `os.Getenv` or viper:
 
-```
+```bash
 APP_ENV=development
 DATABASE_URL=postgres://...
 PORT=8080

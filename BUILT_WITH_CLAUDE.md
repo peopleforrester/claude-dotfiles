@@ -45,24 +45,31 @@ the README drifts from the filesystem.
 ## The Process
 
 ### Phase 1: Foundation
+
 Created the repository structure, LICENSE, README, install scripts for both bash and PowerShell.
 
 ### Phase 2: CLAUDE.md Templates
+
 Generated templates for:
+
 - 4 languages (Python, TypeScript, Rust, Go)
 - 5 frameworks (React, Next.js, FastAPI, Rails, Django)
 - 4 domains (API, CLI, Library, Monorepo)
 - Best practices guide and anti-patterns documentation
 
 ### Phase 3: Skills Library
+
 Created 14 production-ready skills:
+
 - Development: TDD, code review, API design, refactoring, debugging
 - Documentation: README generation, changelogs, API docs
 - Git: Commits, PRs, branching strategies
 - Quality: Security audit, performance review, accessibility
 
 ### Phase 4: Settings & Hooks
+
 Built configuration profiles and automation:
+
 - 4 permission profiles (sandbox-on, sandbox-off, autoMode-strict, autoMode-permissive)
 - Formatters for 4 languages
 - Validators for sensitive files
@@ -70,15 +77,20 @@ Built configuration profiles and automation:
 - Tool integrations
 
 ### Phase 5: MCP Configurations
+
 Created server configs and bundles:
+
 - Individual servers: filesystem, GitHub, Slack, Notion, PostgreSQL, SQLite, Brave Search
 - Bundles: Developer Essentials, Knowledge Worker, Data Engineer
 
 ### Phase 6: Slash Commands
+
 Developed 8 workflow commands for planning, reviewing, deploying, and maintenance.
 
 ### Phase 7: Scripts & CI
+
 Built validation tools and CI/CD:
+
 - Python validation script
 - Token counting tool
 - Sync and backup utilities
@@ -88,7 +100,8 @@ Built validation tools and CI/CD:
 
 ### What Worked Well
 
-1. **Structured specification** - Having a detailed spec enabled Claude to work autonomously through complex multi-file tasks
+1. **Structured specification** - Having a detailed spec enabled Claude to work autonomously through complex
+   multi-file tasks
 
 2. **Iterative validation** - Running validation scripts after each phase caught issues early
 
@@ -119,6 +132,7 @@ Built validation tools and CI/CD:
 ## Try It Yourself
 
 This repository demonstrates what's possible when you give Claude Code:
+
 - Clear requirements
 - Freedom to execute
 - Tools to validate its work

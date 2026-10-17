@@ -37,7 +37,7 @@ criteria upfront.
 
 Specs are stored in `.spec/` at the project root:
 
-```
+```text
 .spec/
 ├── user-auth.spec.md       # The specification document
 ├── user-auth.tasks.md      # Task breakdown with checkboxes

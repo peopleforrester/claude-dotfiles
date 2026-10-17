@@ -10,7 +10,9 @@ edited file inside the command (or with a handler-level `if`).
 ## PostToolUse Hooks
 
 ### Auto-Format
+
 Run gofmt and goimports after editing Go files:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -23,7 +25,9 @@ Run gofmt and goimports after editing Go files:
 ```
 
 ### Vet Check
+
 Run go vet after edits:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -37,7 +41,9 @@ Run go vet after edits:
 ```
 
 ### Static Analysis
+
 Run staticcheck after edits:
+
 ```json
 {
   "matcher": "Edit|Write",
@@ -51,5 +57,6 @@ Run staticcheck after edits:
 ```
 
 ## References
+
 - See `skills/patterns/golang-patterns/SKILL.md` for comprehensive patterns
 - See `skills/development/golang-testing/SKILL.md` for testing patterns

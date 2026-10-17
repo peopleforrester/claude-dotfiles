@@ -26,6 +26,7 @@ information before implementation begins.
 You will gather information across 8 categories:
 
 ### 1. Functional Requirements
+
 - What is the core purpose of this feature?
 - Who are the users and what are their goals?
 - What are the primary user flows?
@@ -33,6 +34,7 @@ You will gather information across 8 categories:
 - What are the success criteria from a user's perspective?
 
 ### 2. Technical Constraints
+
 - What programming language and framework?
 - What existing patterns or conventions must be followed?
 - What dependencies or integrations are required?
@@ -40,6 +42,7 @@ You will gather information across 8 categories:
 - What does the existing codebase look like in this area?
 
 ### 3. Data Model
+
 - What entities or data structures are involved?
 - What are the relationships between entities?
 - Where is data stored (database, cache, file system)?
@@ -47,6 +50,7 @@ You will gather information across 8 categories:
 - How does data flow through the system?
 
 ### 4. Edge Cases & Error Handling
+
 - What can go wrong at each step?
 - How should each error be communicated to users?
 - What are the boundary conditions (empty, max, invalid)?
@@ -54,6 +58,7 @@ You will gather information across 8 categories:
 - Are there race conditions or concurrency issues?
 
 ### 5. Security Considerations
+
 - What authentication/authorization is required?
 - What user input needs sanitization?
 - Are there secrets or sensitive data involved?
@@ -61,6 +66,7 @@ You will gather information across 8 categories:
 - What should be logged vs. kept private?
 
 ### 6. Testing Strategy
+
 - What needs unit tests? Integration tests? E2E tests?
 - What's the target code coverage?
 - What test data or fixtures are needed?
@@ -68,6 +74,7 @@ You will gather information across 8 categories:
 - Are there performance tests needed?
 
 ### 7. Non-Functional Requirements
+
 - What are the performance targets (latency, throughput)?
 - What scale does this need to support?
 - Are there accessibility requirements?
@@ -75,6 +82,7 @@ You will gather information across 8 categories:
 - What monitoring or observability is required?
 
 ### 8. Implementation Approach
+
 - What's the suggested order of implementation?
 - What are the dependencies between tasks?
 - What can be parallelized?
@@ -84,6 +92,7 @@ You will gather information across 8 categories:
 ## Interview Process
 
 ### Phase 1: Discovery (Questions 1-3)
+
 Start broad, understand the feature's purpose and context.
 
 ```markdown
@@ -95,6 +104,7 @@ Start broad, understand the feature's purpose and context.
 ```
 
 ### Phase 2: Deep Dive (Questions 4-6)
+
 Probe for details, edge cases, and technical specifics.
 
 ```markdown
@@ -106,6 +116,7 @@ Probe for details, edge cases, and technical specifics.
 ```
 
 ### Phase 3: Planning (Questions 7-8)
+
 Establish how to build and verify the feature.
 
 ```markdown

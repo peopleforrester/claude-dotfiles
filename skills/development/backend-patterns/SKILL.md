@@ -17,7 +17,8 @@ metadata:
 ## API Design
 
 ### RESTful Conventions
-```
+
+```text
 GET    /api/users          # List (with pagination)
 GET    /api/users/:id      # Read single
 POST   /api/users          # Create
@@ -27,6 +28,7 @@ DELETE /api/users/:id      # Delete
 ```
 
 ### Response Format
+
 ```json
 {
   "data": { ... },
@@ -39,6 +41,7 @@ DELETE /api/users/:id      # Delete
 ```
 
 ### Error Response
+
 ```json
 {
   "error": {
@@ -52,6 +55,7 @@ DELETE /api/users/:id      # Delete
 ```
 
 ### HTTP Status Codes
+
 | Code | Use |
 |------|-----|
 | 200 | Successful read/update |
@@ -68,12 +72,15 @@ DELETE /api/users/:id      # Delete
 ## Database Patterns
 
 ### Repository Pattern
+
 Separate data access from business logic:
-```
+
+```text
 Service (business logic) → Repository (data access) → Database
 ```
 
 ### Query Optimization
+
 - Add indexes for WHERE, JOIN, and ORDER BY columns
 - Use EXPLAIN to verify query plans
 - Avoid SELECT * — select only needed columns
@@ -81,6 +88,7 @@ Service (business logic) → Repository (data access) → Database
 - Batch operations instead of N+1 queries
 
 ### Migration Safety
+
 - Always make migrations reversible
 - Use `CREATE INDEX CONCURRENTLY` (PostgreSQL)
 - Add columns as nullable first, then backfill, then add constraint
@@ -89,7 +97,8 @@ Service (business logic) → Repository (data access) → Database
 ## Caching Patterns
 
 ### Cache-Aside (Lazy Loading)
-```
+
+```text
 1. Check cache for key
 2. If miss: query database, store in cache, return
 3. If hit: return cached value
@@ -97,17 +106,20 @@ Service (business logic) → Repository (data access) → Database
 ```
 
 ### Cache Invalidation
+
 - Time-based: TTL appropriate to data freshness needs
 - Event-based: Invalidate on write/update
 - Version-based: Include version in cache key
 
 ### What to Cache
+
 - Database query results (especially aggregations)
 - External API responses
 - Computed values (rendered templates, transformed data)
 - Session data
 
 ### What NOT to Cache
+
 - Frequently changing data (< 1 second TTL)
 - Sensitive data without encryption
 - Large blobs that exceed memory budget
@@ -115,14 +127,16 @@ Service (business logic) → Repository (data access) → Database
 ## Service Architecture
 
 ### Middleware Pattern
-```
+
+```text
 Request → Auth → Rate Limit → Validate → Handler → Response
                                               ↓
                                           Logging
 ```
 
 ### Health Check Endpoint
-```
+
+```text
 GET /health
 {
   "status": "healthy",
@@ -135,12 +149,14 @@ GET /health
 ```
 
 ### Rate Limiting
+
 - Per-user rate limits for authenticated endpoints
 - Per-IP rate limits for public endpoints
 - Return `429` with `Retry-After` header
 - Use sliding window algorithm for accuracy
 
 ### Graceful Shutdown
+
 1. Stop accepting new connections
 2. Finish processing in-flight requests (with timeout)
 3. Close database connections

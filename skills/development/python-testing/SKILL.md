@@ -17,6 +17,7 @@ metadata:
 ## Framework: pytest
 
 ### Project Setup
+
 ```toml
 # pyproject.toml
 [tool.pytest.ini_options]
@@ -41,6 +42,7 @@ show_missing = true
 ## Fixtures
 
 ### Basic Fixtures
+
 ```python
 @pytest.fixture
 def sample_user() -> User:
@@ -55,6 +57,7 @@ def db_session():
 ```
 
 ### Factory Fixtures
+
 ```python
 @pytest.fixture
 def make_user():
@@ -67,6 +70,7 @@ def make_user():
 ```
 
 ### Shared Fixtures (conftest.py)
+
 ```python
 # tests/conftest.py
 @pytest.fixture(scope="session")
@@ -155,7 +159,7 @@ def test_file_not_found_error() -> None:
 
 ## Test Organization
 
-```
+```text
 tests/
   conftest.py              # Shared fixtures
   unit/

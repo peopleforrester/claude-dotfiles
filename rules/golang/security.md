@@ -6,18 +6,21 @@ Extends `common/security.md` with Go-specific constraints.
 ## Always
 
 ### Input Validation
+
 - Use `validator` package for struct tag validation
 - Use `html/template` (not `text/template`) for HTML output
 - Validate and sanitize file paths with `filepath.Clean()`
 - Use `net/url.Parse()` to validate URLs before use
 
 ### Dependencies
+
 - Run `govulncheck ./...` before releases
 - Use `go mod verify` to check module integrity
 - Pin Go version in `go.mod` with toolchain directive
 - Review new dependencies (check Go Report Card, contributors)
 
 ### Framework-Specific
+
 ```go
 // HTTP: Set security headers
 func securityHeaders(next http.Handler) http.Handler {

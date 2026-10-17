@@ -19,18 +19,21 @@ every bug fix must include a regression test.
 Every project must include all three levels:
 
 ### Unit Tests
+
 - Test individual functions, classes, and components in isolation
 - Mock external dependencies (APIs, databases, filesystem)
 - Fast execution (< 1 second per test)
 - Run on every commit
 
 ### Integration Tests
+
 - Test interactions between components (API + database, service + cache)
 - Use test databases or containers
 - Verify data flows correctly across boundaries
 - Run before merge
 
 ### End-to-End Tests
+
 - Test critical user journeys through the full stack
 - Use browser automation (Playwright, Cypress) for web apps
 - Cover the 3-5 most important user workflows
@@ -39,7 +42,8 @@ Every project must include all three levels:
 ## TDD Workflow (Red-Green-Refactor)
 
 ### Mandatory Cycle
-```
+
+```text
 1. RED:      Write a test that fails (proves the feature is missing)
 2. GREEN:    Write the minimum code to make the test pass
 3. REFACTOR: Improve the code while keeping tests green
@@ -47,6 +51,7 @@ Every project must include all three levels:
 ```
 
 ### Enforcement
+
 - No implementation code before a failing test exists
 - Tests must fail for the correct reason (not syntax errors)
 - Write only enough code to pass the current test
@@ -56,6 +61,7 @@ Every project must include all three levels:
 ## Test Quality Standards
 
 ### Always
+
 - One assertion concept per test (test one behavior)
 - Tests are independent (no shared mutable state between tests)
 - Tests run in any order with the same result
@@ -63,6 +69,7 @@ Every project must include all three levels:
 - Use Arrange-Act-Assert (AAA) or Given-When-Then pattern
 
 ### Pattern
+
 ```typescript
 describe('calculateDiscount', () => {
   it('should apply percentage discount to order total', () => {
@@ -80,6 +87,7 @@ describe('calculateDiscount', () => {
 ```
 
 ### Never
+
 - Tests that depend on execution order
 - Tests that modify global or shared state
 - Tests that require network access or real external services

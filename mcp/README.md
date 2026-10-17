@@ -101,14 +101,14 @@ Pre-configured server combinations:
 
 ### GitHub
 
-1. Go to https://github.com/settings/tokens
+1. Go to <https://github.com/settings/tokens>
 2. Generate new token (classic)
 3. Select scopes: `repo`, `read:org`, `read:user`
 4. Copy token to config
 
 ### Slack
 
-1. Go to https://api.slack.com/apps
+1. Go to <https://api.slack.com/apps>
 2. Create new app from scratch
 3. Add Bot Token Scopes: `channels:history`, `channels:read`, `chat:write`, `users:read`
 4. Install to workspace
@@ -117,14 +117,14 @@ Pre-configured server combinations:
 
 ### Notion
 
-1. Go to https://www.notion.so/my-integrations
+1. Go to <https://www.notion.so/my-integrations>
 2. Create new integration
 3. Copy Internal Integration Token
 4. **Important**: Share each page/database with your integration
 
 ### Brave Search
 
-1. Go to https://brave.com/search/api/
+1. Go to <https://brave.com/search/api/>
 2. Create account and subscribe (free tier available)
 3. Generate and copy API key
 
@@ -171,6 +171,7 @@ Instead of hardcoding credentials, use environment variables:
 ```
 
 Set in your shell profile:
+
 ```bash
 export GITHUB_TOKEN="ghp_xxxx"
 ```
@@ -187,6 +188,7 @@ export GITHUB_TOKEN="ghp_xxxx"
 ### "Command not found" Error
 
 Ensure Node.js is installed:
+
 ```bash
 node --version  # Should be 18+
 npx --version
@@ -195,10 +197,12 @@ npx --version
 ### Permission Denied
 
 For filesystem server:
+
 - Check directory paths exist
 - Verify read/write permissions
 
 For database servers:
+
 - Verify credentials are correct
 - Check network connectivity
 - Confirm user has required permissions
@@ -206,6 +210,7 @@ For database servers:
 ### Server Crashes
 
 Check Claude Desktop logs:
+
 - macOS: `~/Library/Logs/Claude/`
 - Windows: `%APPDATA%\Claude\logs\`
 
@@ -235,9 +240,9 @@ You can have multiple instances of the same server type:
 
 ## Finding More Servers
 
-- **Official servers**: https://github.com/modelcontextprotocol/servers
-- **Community servers**: https://github.com/punkpeye/awesome-mcp-servers
-- **MCP specification**: https://modelcontextprotocol.io
+- **Official servers**: <https://github.com/modelcontextprotocol/servers>
+- **Community servers**: <https://github.com/punkpeye/awesome-mcp-servers>
+- **MCP specification**: <https://modelcontextprotocol.io>
 
 ## Updating Servers
 

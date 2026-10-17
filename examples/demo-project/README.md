@@ -36,7 +36,7 @@ Because of the CLAUDE.md file, Claude immediately understands:
 
 ### Without CLAUDE.md
 
-```
+```text
 You: "Add a new endpoint"
 Claude: "What framework are you using? Where should I put the route?
          What's your response format? Should I add tests?"
@@ -44,7 +44,7 @@ Claude: "What framework are you using? Where should I put the route?
 
 ### With CLAUDE.md
 
-```
+```text
 You: "Add a new endpoint to get a single todo by ID"
 Claude: *creates src/routes/todos.ts with GET /todos/:id*
         *returns { data: todo } format*
@@ -53,7 +53,7 @@ Claude: *creates src/routes/todos.ts with GET /todos/:id*
 
 ## Files
 
-```
+```text
 demo-project/
 ├── CLAUDE.md              # Project context for Claude
 ├── README.md              # This file

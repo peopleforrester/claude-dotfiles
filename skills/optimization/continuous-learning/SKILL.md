@@ -47,7 +47,7 @@ Update it when you discover project-specific patterns.
 
 Before writing code, scan the codebase for patterns:
 
-```
+```text
 Step 1: Check imports     → How does this project import modules?
 Step 2: Check error style → Custom errors? Result types? Try/catch?
 Step 3: Check naming      → camelCase? snake_case? What prefixes?
@@ -92,7 +92,7 @@ When the same error appears multiple times, document the fix:
 
 ### Resolution Strategy
 
-```
+```text
 1. Search CLAUDE.md for known error     → Apply documented fix
 2. Search git log for similar errors    → Check how it was fixed before
 3. Search codebase for error message    → Find error origin
@@ -113,11 +113,12 @@ If the user says "we don't do it that way" or corrects your approach:
 
 ### When Tests Reveal Patterns
 
-```
+```text
 Test failure → Read full output → Identify pattern → Document in CLAUDE.md
 ```
 
 Examples of test-revealed patterns:
+
 - "Tests expect ISO 8601 dates, not Unix timestamps"
 - "API tests need auth header: `Authorization: Bearer test-token`"
 - "Snapshot tests must be updated with `--update` flag"
@@ -126,7 +127,7 @@ Examples of test-revealed patterns:
 
 ### Start of Session Checklist
 
-```
+```text
 1. Read CLAUDE.md                    → Understand project context
 2. Read recent git log               → Understand current work
 3. Check for open issues/PRs         → Understand priorities

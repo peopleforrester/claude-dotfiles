@@ -7,10 +7,12 @@
     "tables": false
   },
   "MD033": {
-    "allowed_elements": ["br", "details", "summary", "img"]
+    "allowed_elements": ["br", "details", "summary", "img", "div", "strong"]
   },
   "MD041": false,
   "MD024": {
     "siblings_only": true
-  }
+  },
+  "// MD060": "table-column-style, new in markdownlint 0.49: off, because aligning every pipe churns diffs whenever a cell changes",
+  "MD060": false
 }

@@ -6,6 +6,7 @@ Extends `common/coding-style.md` with Go-specific constraints.
 ## Always
 
 ### Error Handling
+
 - Check every error return value — never discard with `_`
 - Wrap errors with context using `fmt.Errorf("doing X: %w", err)`
 - Use sentinel errors for expected conditions (`var ErrNotFound = errors.New(...)`)
@@ -13,6 +14,7 @@ Extends `common/coding-style.md` with Go-specific constraints.
 - Handle deferred close errors (`defer func() { if err := f.Close(); ... }()`)
 
 ### Patterns
+
 ```go
 // PREFER: Accept interfaces, return structs
 func NewService(repo UserRepository) *Service {
@@ -56,12 +58,14 @@ func FetchData(ctx context.Context, url string) ([]byte, error) {
 ```
 
 ### Concurrency
+
 - Use `errgroup` for managed goroutine coordination
 - Use `context.Context` for cancellation propagation
 - Use `sync.Mutex` or channels — pick one pattern per data structure
 - Use `sync.Once` for lazy initialization
 
 ### Project Layout
+
 - Follow the standard Go project layout
 - Keep packages small and focused
 - Use internal/ for private packages

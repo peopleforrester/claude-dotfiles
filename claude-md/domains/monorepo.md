@@ -33,7 +33,7 @@ turbo run test --affected # Test changed packages only
 
 ## Key Directories
 
-```
+```text
 /
 ├── apps/                 # Deployable applications
 │   ├── web/              # Frontend application
@@ -131,6 +131,7 @@ For internal packages, point directly to source during development.
 ## Release Strategy
 
 Options:
+
 1. **Fixed versioning**: All packages same version
 2. **Independent versioning**: Each package versioned separately
 3. **Hybrid**: Apps independent, shared packages fixed

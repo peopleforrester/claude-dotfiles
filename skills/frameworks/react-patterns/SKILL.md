@@ -22,6 +22,7 @@ Modern React 19+ patterns and best practices.
 ## Component Patterns
 
 ### Composition Over Prop Drilling
+
 ```tsx
 // Compose with children instead of passing many props
 <Card>
@@ -38,6 +39,7 @@ Modern React 19+ patterns and best practices.
 ```
 
 ### Render Props for Flexibility
+
 ```tsx
 interface ListProps<T> {
   items: T[];
@@ -59,6 +61,7 @@ function List<T>({ items, renderItem, keyExtractor }: ListProps<T>) {
 ## Hook Patterns
 
 ### Custom Data Fetching Hook
+
 ```tsx
 function useQuery<T>(key: string, fetcher: () => Promise<T>) {
   const [state, setState] = useState<{
@@ -83,6 +86,7 @@ function useQuery<T>(key: string, fetcher: () => Promise<T>) {
 ```
 
 ### useCallback for Stable References
+
 ```tsx
 const handleSubmit = useCallback(
   async (data: FormData) => {
@@ -94,6 +98,7 @@ const handleSubmit = useCallback(
 ```
 
 ### useMemo for Expensive Computations
+
 ```tsx
 const sortedItems = useMemo(
   () => [...items].sort((a, b) => a.name.localeCompare(b.name)),
@@ -104,6 +109,7 @@ const sortedItems = useMemo(
 ## State Management
 
 ### Local State First
+
 ```tsx
 // Start simple
 const [isOpen, setIsOpen] = useState(false);
@@ -116,6 +122,7 @@ const ThemeContext = createContext<Theme>('light');
 ```
 
 ### Server State (React Query / SWR)
+
 ```tsx
 const { data, isLoading } = useQuery({
   queryKey: ['users', userId],
@@ -127,6 +134,7 @@ const { data, isLoading } = useQuery({
 ## Performance
 
 ### Code Splitting
+
 ```tsx
 const Dashboard = lazy(() => import('./Dashboard'));
 
@@ -140,6 +148,7 @@ function App() {
 ```
 
 ### Virtualization for Long Lists
+
 ```tsx
 import { useVirtualizer } from '@tanstack/react-virtual';
 
@@ -164,6 +173,7 @@ function VirtualList({ items }: { items: Item[] }) {
 ```
 
 ### Error Boundaries
+
 ```tsx
 class ErrorBoundary extends Component<Props, { hasError: boolean }> {
   state = { hasError: false };

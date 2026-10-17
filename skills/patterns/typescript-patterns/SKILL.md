@@ -36,6 +36,7 @@ Modern TypeScript 5.x patterns and best practices.
 ## Type Safety Patterns
 
 ### Discriminated Unions
+
 ```typescript
 type Result<T, E = Error> =
   | { ok: true; value: T }
@@ -53,6 +54,7 @@ if (result.ok) {
 ```
 
 ### Branded Types (Prevent ID Mixing)
+
 ```typescript
 type UserId = string & { readonly __brand: 'UserId' };
 type OrderId = string & { readonly __brand: 'OrderId' };
@@ -66,6 +68,7 @@ getUser(orderId);  // Type error - can't mix IDs
 ```
 
 ### Exhaustive Matching
+
 ```typescript
 type Shape = { kind: 'circle'; radius: number }
             | { kind: 'square'; side: number }
@@ -85,6 +88,7 @@ function area(shape: Shape): number {
 ```
 
 ### Const Assertions
+
 ```typescript
 const ROUTES = {
   home: '/',
@@ -99,6 +103,7 @@ type Route = typeof ROUTES[keyof typeof ROUTES];
 ## Utility Type Patterns
 
 ### Safe Partial Updates
+
 ```typescript
 function updateUser(id: string, updates: Partial<Omit<User, 'id' | 'createdAt'>>) {
   // Can only update mutable fields
@@ -106,6 +111,7 @@ function updateUser(id: string, updates: Partial<Omit<User, 'id' | 'createdAt'>>
 ```
 
 ### Builder Pattern with Types
+
 ```typescript
 type Builder<T, Built = {}> = {
   set<K extends keyof T>(key: K, value: T[K]): Builder<Omit<T, K>, Built & Pick<T, K>>;
@@ -136,6 +142,7 @@ function createUser(input: unknown): User {
 ## Async Patterns
 
 ### Type-Safe Fetch
+
 ```typescript
 async function fetchJson<T>(url: string, schema: z.ZodSchema<T>): Promise<Result<T>> {
   try {

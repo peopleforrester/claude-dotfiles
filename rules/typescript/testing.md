@@ -6,12 +6,14 @@ Extends `common/testing.md` with TypeScript-specific testing constraints.
 ## Always
 
 ### Framework
+
 - Use Vitest or Jest for unit/integration tests
 - Use Playwright for E2E tests
 - Use `@testing-library/react` for React component tests
 - Use `msw` (Mock Service Worker) for API mocking
 
 ### Patterns
+
 ```typescript
 // PREFER: Testing behavior, not implementation
 test('displays error message when login fails', async () => {
@@ -31,11 +33,13 @@ const mockRepo: jest.Mocked<UserRepository> = {
 ```
 
 ### Coverage
+
 - Minimum 80% line coverage
 - 100% coverage on business logic and utilities
 - Exclude generated files, types, and config from coverage
 
 ### Organization
+
 - Co-locate test files with source (`*.test.ts` or `*.spec.ts`)
 - Use `describe` blocks for grouping related tests
 - Use `beforeEach` for common setup, avoid `beforeAll` for mutable state

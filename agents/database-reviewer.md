@@ -27,7 +27,9 @@ correctness, performance, and security.
 ## Process
 
 ### 1. Schema Review
+
 Evaluate database structure:
+
 - Normalization level (aim for 3NF unless denormalization is justified)
 - Primary key strategy (UUID vs serial vs ULID)
 - Foreign key relationships and cascade behavior
@@ -35,6 +37,7 @@ Evaluate database structure:
 - Index coverage for common queries
 
 ### 2. Query Analysis
+
 For each query, evaluate:
 
 ```sql
@@ -53,11 +56,13 @@ SELECT * FROM users WHERE email = 'test@example.com';
 ### 3. Migration Safety
 
 #### Safe Operations (no lock contention)
+
 - `CREATE INDEX CONCURRENTLY`
 - `ADD COLUMN` (nullable, no default)
 - `CREATE TABLE`
 
 #### Dangerous Operations (require planning)
+
 - `ADD COLUMN ... DEFAULT` (table rewrite in PG < 11)
 - `ALTER COLUMN TYPE` (table rewrite)
 - `DROP COLUMN` (marks invisible, no rewrite)

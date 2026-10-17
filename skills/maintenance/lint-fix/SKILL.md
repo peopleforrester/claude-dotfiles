@@ -9,7 +9,7 @@ Fix linting errors systematically across the codebase.
 
 ## Usage
 
-```
+```text
 /lint-fix                    # Fix all linting errors
 /lint-fix src/               # Fix errors in specific directory
 /lint-fix --check            # Check without fixing (dry run)
@@ -82,7 +82,7 @@ golangci-lint run --fix
 
 For errors that can't be auto-fixed:
 
-```markdown
+````markdown
 ## Manual Fixes Required
 
 ### Error 1: [Rule name]
@@ -99,7 +99,7 @@ const Button: React.FC<ButtonProps> = (props) => ...
 
 ### Error 2: [Rule name]
 ...
-```
+````
 
 ### 5. Verify Fixes
 

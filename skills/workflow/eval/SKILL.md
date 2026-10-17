@@ -9,6 +9,7 @@ Evaluate the current implementation against defined criteria, standards,
 or a rubric. Produces a structured assessment with scores.
 
 ## Arguments
+
 - `$ARGUMENTS` — Criteria to evaluate against, or "default" for standard quality gate
 
 ## Default Criteria
@@ -25,13 +26,16 @@ or a rubric. Produces a structured assessment with scores.
 ## Process
 
 ### 1. Gather Evidence
+
 For each category, collect evidence:
+
 - Run tests and capture results
 - Run linters and type checkers
 - Review code changes
 - Check documentation accuracy
 
 ### 2. Score Each Category
+
 Rate each category: 1 (Poor) to 5 (Excellent)
 
 ### 3. Generate Report
@@ -59,5 +63,6 @@ Rate each category: 1 (Poor) to 5 (Excellent)
 ```
 
 ## Custom Criteria
+
 When `$ARGUMENTS` specifies custom criteria, use those instead of defaults.
 Format each criterion as: `name: description (weight%)`.

@@ -28,7 +28,7 @@ uv run mypy src/                         # Type check
 
 ## Key Directories
 
-```
+```text
 src/
 ├── main.py           # FastAPI app, router mounting
 ├── config.py         # Settings with pydantic-settings
@@ -87,7 +87,7 @@ async def get_user(
 
 ## Environment Variables
 
-```
+```bash
 DATABASE_URL=postgresql+asyncpg://user:pass@localhost/db
 SECRET_KEY=...
 ENVIRONMENT=development
@@ -103,6 +103,7 @@ ENVIRONMENT=development
 ## OpenAPI Documentation
 
 Auto-generated at:
+
 - Swagger UI: `/docs`
 - ReDoc: `/redoc`
 - OpenAPI JSON: `/openapi.json`

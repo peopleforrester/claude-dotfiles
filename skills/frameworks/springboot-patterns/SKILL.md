@@ -22,7 +22,7 @@ Modern Spring Boot 3.x patterns and best practices.
 
 ## Project Structure
 
-```
+```text
 src/main/java/com/example/app/
 ├── config/                    # Configuration classes
 │   ├── SecurityConfig.java

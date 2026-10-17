@@ -25,6 +25,7 @@ them before attempting fixes.
 ## Process
 
 ### 1. Error Classification
+
 Categorize the error before attempting fixes:
 
 | Category | Symptoms | Example |
@@ -59,6 +60,7 @@ Categorize the error before attempting fixes:
 ### 3. Resolution by Category
 
 #### Type Errors
+
 1. Read the full error message (every word matters)
 2. Navigate to the exact file and line
 3. Trace the type flow from source to error
@@ -66,6 +68,7 @@ Categorize the error before attempting fixes:
 5. Run `tsc --noEmit` to verify
 
 #### Dependency Errors
+
 1. Check `package.json` / `requirements.txt` for version constraints
 2. Examine lock file for conflicts (`npm ls <package>`)
 3. Look for peer dependency mismatches
@@ -73,6 +76,7 @@ Categorize the error before attempting fixes:
 5. Use `overrides` / `resolutions` as last resort
 
 #### Import Errors
+
 1. Verify the file exists at the specified path
 2. Check path casing (macOS is case-insensitive, Linux is not)
 3. Verify exports from the source module
@@ -80,6 +84,7 @@ Categorize the error before attempting fixes:
 5. Look for circular imports with `madge --circular`
 
 #### CI/CD Errors
+
 1. Compare local environment with CI environment
 2. Check Node/Python/Go version differences
 3. Verify environment variables are set
@@ -88,7 +93,7 @@ Categorize the error before attempting fixes:
 
 ### 4. Verification Loop
 
-```
+```text
 1. Apply the fix
 2. Run the build locally
 3. If new error → classify and fix (go to step 1)
@@ -99,7 +104,7 @@ Categorize the error before attempting fixes:
 
 ## Output Format
 
-```markdown
+````markdown
 ## Build Fix Report
 
 ### Error Summary
@@ -122,7 +127,7 @@ Categorize the error before attempting fixes:
 
 ### Prevention
 [How to prevent this error in the future]
-```
+````
 
 ## Critical Rule
 

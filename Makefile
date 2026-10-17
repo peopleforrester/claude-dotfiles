@@ -1,7 +1,7 @@
 # ABOUTME: Makefile for claude-dotfiles development and testing
 # ABOUTME: Provides targets for validation, testing, and installation
 
-.PHONY: all test test-node test-python e2e validate tokens install clean help
+.PHONY: all test test-node test-python e2e validate tokens lint-md install clean help
 
 # Default target
 all: validate tokens
@@ -17,7 +17,7 @@ tokens:
 	@python3 scripts/token-count.py .
 
 # Run all tests
-test: validate tokens test-install test-json test-shell lint-shell test-node
+test: validate tokens test-install test-json test-shell lint-shell lint-md test-node
 	@echo "✅ All tests passed!"
 
 # Node suite, as CI runs it: the scripts/ci validators, their unit tests, and
@@ -64,6 +64,16 @@ lint-shell:
 	fi
 	@find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" -print0 \
 		| xargs -0 shellcheck && echo "✓ shellcheck passed"
+
+# Lint Markdown with the markdownlint-cli pinned in package-lock.json, so this
+# needs `npm ci` first. Files in .gitignore (node_modules, /docs/) are skipped
+lint-md:
+	@echo "🔍 Linting Markdown with markdownlint..."
+	@if [ ! -x node_modules/.bin/markdownlint ]; then \
+		echo "✗ markdownlint not installed; run 'npm ci' first"; \
+		exit 1; \
+	fi
+	@npm run --silent lint && echo "✓ markdownlint passed"
 
 # Test install script in dry-run mode
 test-install:
@@ -143,6 +153,7 @@ help:
 	@echo "  tokens        Count tokens in templates"
 	@echo "  test-json     Test JSON file syntax"
 	@echo "  test-shell    Test shell script syntax"
+	@echo "  lint-md       Lint Markdown with markdownlint (needs npm ci)"
 	@echo "  test-node     Run the Node suite (CI validators and all unit tests)"
 	@echo "  test-python   Run Python unit tests"
 	@echo "  e2e           Install into a scratch HOME and validate with Claude Code (network)"

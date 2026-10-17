@@ -43,6 +43,7 @@ grep -rn "TODO\|FIXME\|HACK\|XXX" --include="*.ts" --include="*.py" --include="*
 ### 2. Duplication Analysis
 
 Look for:
+
 - Copy-pasted functions with minor variations
 - Similar code blocks across files
 - Repeated patterns that could be abstracted
@@ -51,6 +52,7 @@ Look for:
 ### 3. Complexity Assessment
 
 Flag code with:
+
 - Functions over 50 lines
 - Files over 500 lines
 - Nesting depth over 4 levels

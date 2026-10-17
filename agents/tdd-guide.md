@@ -25,6 +25,7 @@ ensuring no implementation code exists without a corresponding failing test.
 ## Process
 
 ### 1. Requirements to Test Cases
+
 Transform requirements into an ordered list of test cases:
 
 ```markdown
@@ -88,6 +89,7 @@ Run the test. It MUST pass. Do not add anything extra.
 ### 4. Refactor Phase - Improve While Green
 
 With passing tests as a safety net:
+
 - Improve naming
 - Remove duplication
 - Extract utilities
@@ -102,6 +104,7 @@ Move to the next test case and repeat the cycle.
 ## Strict Rules
 
 ### Enforce
+
 - No implementation code before a failing test
 - Tests must fail for the correct reason (not syntax/import errors)
 - Minimal code to pass - no "while I'm here" additions
@@ -109,6 +112,7 @@ Move to the next test case and repeat the cycle.
 - Run tests after every single change
 
 ### Challenge When
+
 - "I'll add tests later" → No. Test first, always.
 - "This is too simple to test" → Test it anyway. Simple things break too.
 - "Let me just implement this, then test" → Write the test first.
@@ -127,7 +131,7 @@ Move to the next test case and repeat the cycle.
 
 For each test case cycle:
 
-```markdown
+````markdown
 ### Cycle N: [Test Case Name]
 
 **RED** - Write failing test:
@@ -148,4 +152,4 @@ Result: All tests still PASS
 
 ---
 Coverage: X% (+Y% from this cycle)
-```
+````

@@ -20,6 +20,7 @@ until they start looking.
 ## The Problem
 
 When delegating to subagents, you face a dilemma:
+
 - **Send everything**: Context overflow, wasted tokens, confused agent
 - **Send nothing**: Agent lacks context, produces poor results
 - **Guess what's needed**: Often wrong, misses critical files
@@ -27,6 +28,7 @@ When delegating to subagents, you face a dilemma:
 ## The Solution: 4-Phase Iterative Loop
 
 ### Phase 1: DISPATCH
+
 Send a broad initial query to gather candidate context:
 
 ```markdown
@@ -37,6 +39,7 @@ Return: File paths with relevance scores
 ```
 
 ### Phase 2: EVALUATE
+
 Score each result for relevance (0.0 to 1.0):
 
 ```markdown
@@ -49,11 +52,13 @@ Score each result for relevance (0.0 to 1.0):
 ```
 
 Identify gaps:
+
 - What terminology does this codebase use? (update search terms)
 - What patterns are referenced but not found?
 - What dependencies need exploration?
 
 ### Phase 3: REFINE
+
 Update search criteria based on evaluation:
 
 ```markdown
@@ -64,9 +69,11 @@ Gaps to fill: [what's still missing]
 ```
 
 ### Phase 4: LOOP
+
 Repeat phases 1-3 with refined criteria.
 
 **Stopping Criteria:**
+
 - 3+ files with relevance >= 0.7
 - No critical gaps identified
 - OR max 3 iterations reached (proceed with best available)
@@ -74,11 +81,13 @@ Repeat phases 1-3 with refined criteria.
 ## Example: Finding Auth Implementation
 
 **Iteration 1:**
+
 - DISPATCH: Search for "auth", "login", "session"
 - EVALUATE: Found middleware but not the auth service
 - REFINE: Codebase uses "identity" not "auth"
 
 **Iteration 2:**
+
 - DISPATCH: Search for "identity", "credential", "token"
 - EVALUATE: Found IdentityService, TokenManager, SessionStore
 - Result: 5 files with relevance >= 0.8 — stop and proceed

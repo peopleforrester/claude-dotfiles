@@ -9,7 +9,7 @@ Guide through a safe deployment process.
 
 ## Usage
 
-```
+```text
 /deploy [environment]
 /deploy staging
 /deploy production
@@ -116,7 +116,7 @@ git push origin main
 
 Always have a rollback ready:
 
-```markdown
+````markdown
 ## Rollback Procedure
 
 If issues are detected:
@@ -142,7 +142,7 @@ npm run db:rollback
 - [ ] Notify team in #deployments
 - [ ] Update status page if customer-facing
 - [ ] Document incident
-```
+````
 
 ## Deployment Log Template
 

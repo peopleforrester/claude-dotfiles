@@ -26,6 +26,7 @@ to ecosystem best practices.
 ## Review Checklist
 
 ### Type Safety
+
 - All public functions have type annotations
 - Use `Protocol` over abstract base classes for structural typing
 - Use `TypedDict` for dictionary shapes
@@ -33,6 +34,7 @@ to ecosystem best practices.
 - Use `Union[X, Y]` or `X | Y` syntax (3.10+)
 
 ### Idiomatic Python
+
 ```python
 # PREFER: Comprehensions over map/filter
 result = [x.name for x in items if x.active]
@@ -57,6 +59,7 @@ config_path = Path.home() / ".config" / "app.toml"
 ```
 
 ### Error Handling
+
 ```python
 # PREFER: Specific exceptions
 try:
@@ -72,6 +75,7 @@ except tomllib.TOMLDecodeError as e:
 ```
 
 ### Performance
+
 - Use generators for large sequences (`yield` over list building)
 - Use `functools.lru_cache` for expensive pure functions
 - Prefer `collections.defaultdict` over manual key checking
@@ -79,6 +83,7 @@ except tomllib.TOMLDecodeError as e:
 - Profile before optimizing (`cProfile`, `line_profiler`)
 
 ### Project Structure
+
 - `pyproject.toml` for all configuration (not setup.py/setup.cfg)
 - `uv` for dependency management
 - `ruff` for linting and formatting (replaces flake8/isort/black)

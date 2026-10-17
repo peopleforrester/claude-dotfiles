@@ -28,7 +28,7 @@ pnpm typecheck        # TypeScript check
 
 ## Key Directories
 
-```
+```text
 src/
 ├── main.tsx          # Application entry
 ├── App.tsx           # Root component
@@ -102,7 +102,7 @@ export function Button({ variant = 'primary', children, onClick }: ButtonProps) 
 
 Vite requires `VITE_` prefix:
 
-```
+```bash
 VITE_API_URL=http://localhost:3000
 VITE_PUBLIC_KEY=...
 ```

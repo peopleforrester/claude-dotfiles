@@ -6,6 +6,7 @@ Extends `common/testing.md` with Python-specific testing constraints.
 ## Always
 
 ### Framework
+
 - Use `pytest` as the test runner (not unittest)
 - Use `pytest-cov` for coverage reporting
 - Use `hypothesis` for property-based testing on utilities
@@ -13,6 +14,7 @@ Extends `common/testing.md` with Python-specific testing constraints.
 - Use `conftest.py` for shared fixtures
 
 ### Patterns
+
 ```python
 # PREFER: Fixtures over setup/teardown
 @pytest.fixture
@@ -44,12 +46,14 @@ async def test_fetch_user(mock_client: AsyncClient) -> None:
 ```
 
 ### Coverage
+
 - Minimum 80% line coverage
 - 100% coverage on business logic and data validation
 - Use `# pragma: no cover` only for genuinely untestable code (with comment)
 
 ### Organization
-```
+
+```text
 tests/
   conftest.py          # Shared fixtures
   test_models.py       # Unit tests for models

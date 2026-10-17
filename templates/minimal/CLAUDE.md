@@ -20,7 +20,7 @@ npm run build    # Production build
 
 ## Key Directories
 
-```
+```text
 src/
 ├── components/    # UI components
 ├── lib/           # Utilities

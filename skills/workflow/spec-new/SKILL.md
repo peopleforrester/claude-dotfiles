@@ -10,13 +10,16 @@ implementation. Uses the `spec-interviewer` agent to gather requirements
 across 8 categories.
 
 ## Arguments
+
 - `$ARGUMENTS` — Name or brief description of the feature to spec
 
 ## Process
 
 ### 1. Initialize Spec
+
 Create the spec directory and files:
-```
+
+```text
 .spec/
 └── {slug}.spec.md     # Will be populated by interview
 ```
@@ -24,12 +27,15 @@ Create the spec directory and files:
 Generate slug from the feature name (lowercase, hyphens).
 
 ### 2. Context Gathering
+
 Before starting the interview, explore the codebase:
+
 - Detect the tech stack (language, framework, database)
 - Find similar existing implementations
 - Identify relevant patterns and conventions
 
 ### 3. Conduct Interview
+
 Delegate to the **spec-interviewer** agent to ask questions across:
 
 | Category | Focus |
@@ -44,6 +50,7 @@ Delegate to the **spec-interviewer** agent to ask questions across:
 | Implementation | Task breakdown, dependencies, risks |
 
 ### 4. Compile Spec Document
+
 After the interview, compile answers into `.spec/{slug}.spec.md`:
 
 ```markdown
@@ -85,6 +92,7 @@ After the interview, compile answers into `.spec/{slug}.spec.md`:
 ```
 
 ### 5. Generate Task Breakdown
+
 Delegate to the **planner** agent to create `.spec/{slug}.tasks.md`:
 
 ```markdown
@@ -106,6 +114,7 @@ Delegate to the **planner** agent to create `.spec/{slug}.tasks.md`:
 ```
 
 ### 6. Create Implementation Log
+
 Initialize `.spec/{slug}.log.md`:
 
 ```markdown
@@ -139,7 +148,7 @@ After completion, display:
 
 ## Example
 
-```
+```text
 User: /spec-new user authentication
 
 Claude: Creating spec for "user-authentication"...

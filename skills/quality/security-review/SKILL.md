@@ -9,7 +9,7 @@ Invoke the **security-reviewer** agent for a focused security analysis.
 
 ## Usage
 
-```
+```text
 /security-review                # Review all recent changes
 /security-review src/api/       # Review specific path
 /security-review --owasp        # Full OWASP Top 10 checklist
@@ -19,11 +19,13 @@ Invoke the **security-reviewer** agent for a focused security analysis.
 ## What Gets Checked
 
 ### Automated Scans
+
 - Hardcoded secrets and API keys
 - Vulnerable dependencies (npm audit / pip-audit / cargo audit)
 - Console.log/debug statements in production code
 
 ### Manual Review (OWASP Top 10)
+
 - A01: Broken Access Control
 - A02: Cryptographic Failures
 - A03: Injection (SQL, XSS, command)

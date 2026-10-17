@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Markdown lint ran nowhere and failed on about 1,800 findings.** `make test`
+  now runs `npm run lint` (target `lint-md`, which needs `npm ci` and says so
+  when markdownlint is missing). The backlog was cleared by turning off MD060
+  table-column-style, new in markdownlint 0.49, by `npm run lint:fix` for the
+  blank-line and bare-URL rules, and by labelling 150 unlabeled code fences
+  (`text`, or `bash` for environment variables). The sweep found fifteen
+  examples in eleven files that nest code fences inside a three-backtick
+  block, so the inner fence closed the example early and the rest rendered as
+  page content; their outer fences are now four backticks. The lint scripts skip everything in
+  `.gitignore`, so a local `/docs/` does not fail the gate.
+
 ## [0.7.3] - 2026-09-17
 
 Currency pass against the live documentation, six weeks after the August one.
@@ -15,6 +28,7 @@ Verified against the agent CLI 2.1.274 and the model overview published
 recalled.
 
 ### Fixed
+
 - **Two real hook events were reported as invalid.** `validate-hooks.js` takes
   its event list from `schemas/hooks.schema.json`, and the schema was missing
   `PreModelSwitch` and `PostModelSwitch`. A configuration using either got
@@ -46,6 +60,7 @@ recalled.
   dedicated checks.
 
 ### Added
+
 - `tests/test_hook_events.js` and `tests/test_validate_skills.js`. The suite is
   13 tests.
 - Unknown-frontmatter-field reporting in `validate-skills.js`. All 70 skills
@@ -58,16 +73,17 @@ recalled.
   and `"bypassPermissions"` are ignored in project and local settings files.
 
 ### Changed
+
 - `PROJECT_STATE.md` migrated to the lifecycle schema. It had described the
   April 2026 initiative as EXECUTING five months after it shipped in 0.5.0.
 - `CLAUDE.md` no longer says a skill's `name` is required by the format. It is
   optional upstream and defaults to the directory name; requiring it is this
   repo's own choice.
 
-
 ## [0.7.2] - 2026-08-07
 
 ### Fixed
+
 - **README claimed 3 permission profiles; there are 4.** The count went stale
   when the profile taxonomy was replaced in 0.5.0. `tests/test_inventory.js`
   guarded six of the seven inventory rows but not this one, which is why it
@@ -82,17 +98,20 @@ recalled.
   real `<h1>` for search results, screen readers, or link previews.
 
 ### Added
+
 - `assets/hero.png` — 16:9 hero image on the README.
 - Above-the-fold evidence block showing real `npm test` output, replacing setup
   instructions as the first thing a visitor sees.
 
 ### Changed
+
 - Sharpened the repo, package, and plugin descriptions from the generic
   "production-ready configurations" to the specific inventory they describe.
 
 ## [0.7.1] - 2026-08-04
 
 ### Removed
+
 - Dead `commands` installation from both `install.sh` and `install.ps1`. The
   `commands/` directory was migrated to skills in 0.5.0, but both installers
   still carried the install function, the `--commands`/`-Commands` flag, the
@@ -102,6 +121,7 @@ recalled.
   belong in the public distribution and still referenced superseded model IDs.
 
 ### Fixed
+
 - Synced the `install.ps1` version banner (was stuck at `0.1.0`) to the release.
 
 ## [0.7.0] - 2026-08-02
@@ -112,6 +132,7 @@ on 2026-08-02. Backed by the research spike
 `mrf-knowledge/claude-code/2026-08-02_config-best-practices-august-2026.md`.
 
 ### Fixed
+
 - **Hook configs did not work.** Every shipped hook example used an invalid
   matcher (`Write(*.ts)|Edit(*.ts)`, `tool == "Bash" && ...`), which Claude Code
   treats as a regex against the tool name and never matches. Matchers are tool
@@ -137,6 +158,7 @@ on 2026-08-02. Backed by the research spike
   string `fork`; `effort` was missing `xhigh`/`max`. Corrected both.
 
 ### Changed
+
 - Hook schema rewritten to the real nested shape (event → matcher groups →
   `hooks[]` handlers), the correct handler-type enum, all 31 events (added
   `Setup`, `UserPromptExpansion`, `PostToolBatch`, `MessageDisplay`,
@@ -153,6 +175,7 @@ on 2026-08-02. Backed by the research spike
   `background`, and `hooks` fields.
 
 ### Added
+
 - `test_inventory.js` prunes generated directories (`__pycache__`, etc.) so a
   stray `.pyc` no longer inflates the hook count.
 
@@ -164,6 +187,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 `mrf-knowledge/claude-code/2026-08-02_config-best-practices-august-2026.md`.
 
 ### Fixed
+
 - **Agent-model validator rejected current model IDs.** The regex in
   `scripts/ci/validate-agents.js` required two numeric segments
   (`^claude-...-\d+-\d+`), so single-segment IDs like `claude-opus-5`,
@@ -172,6 +196,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
   fixtures in `tests/test_validate_agents.js`.
 
 ### Changed
+
 - **Default model → the `sonnet` alias** in `settings/settings.json`
   (was the now-legacy `claude-sonnet-4-6`). An alias tracks the current
   generation and will not go stale; on the Anthropic API `sonnet` resolves
@@ -183,10 +208,12 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
   and clarified that aliases are accepted.
 
 ### Added
+
 - `DirectoryAdded` hook event (CLI v2.1.219) to `schemas/hooks.schema.json`
   and the GOTCHAS event list.
 
 ### Security
+
 - Resolved 4 newly-disclosed high-severity advisories in the dev-dependency
   chain (`brace-expansion` GHSA-3jxr-9vmj-r5cp / GHSA-mh99-v99m-4gvg,
   `js-yaml` GHSA-52cp-r559-cp3m, `linkify-it` GHSA-v245-v573-v5vm) via
@@ -196,6 +223,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.5.2] - 2026-07-12
 
 ### Changed
+
 - Re-verified the GA model lineup for July 2026 — unchanged (Opus 4.8,
   Sonnet 4.6, Haiku 4.5). Restamped the "as of" currency markers in
   `GOTCHAS.md`, `settings/settings.json`, and `schemas/skill.schema.json`
@@ -205,6 +233,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.5.1] - 2026-06-18
 
 ### Fixed
+
 - **Invalid default model ID.** `settings/settings.json` set `claude-sonnet-4-7`,
   which does not exist (the Sonnet line is 4.5 → 4.6) and would 404 at runtime.
   Corrected the default to `claude-sonnet-4-6`.
@@ -214,6 +243,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
   `claude-sonnet-4-7`.
 
 ### Changed
+
 - Bumped dev dependencies: `markdownlint-cli` 0.48 → 0.49,
   `@commitlint/config-conventional` 19 → 21.
 - Raised the Node engine floor to `>=22.12.0` to match
@@ -222,6 +252,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.5.0] - 2026-04-26
 
 ### Added
+
 - `agents/worktree-isolated-example.md` — demonstrates `isolation: worktree`
 - `hooks/templates/{instructions-loaded,user-prompt-submit,prompt-handler}.json`
   — examples of new April 2026 hook events and the `prompt` handler type
@@ -235,6 +266,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
   `tests/test_validate_agents.js`, `tests/test_inventory.js`
 
 ### Changed
+
 - **BREAKING**: `commands/` directory removed — all 31 commands migrated to
   `skills/<category>/<name>/SKILL.md` with `user-invocable: true`. Slash command
   names (`/tdd`, `/verify`, `/orchestrate`, etc.) are unchanged for users.
@@ -254,6 +286,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
   hook configs, docs, and rules
 
 ### Fixed
+
 - `scripts/token-count.py` regex now matches comma-formatted token counts
   (`~1,400` parsed as 1400 instead of silently matching `1`)
 - `hooks/validators/protect-sensitive-files.py` reads tool invocation from
@@ -269,6 +302,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 - `SECURITY.md` supported-versions table corrected (no fictional 1.x entry)
 
 ### Removed
+
 - `commands/` directory (all content migrated to `skills/`)
 - `scripts/ci/validate-commands.js` (now covered by `validate-skills.js`)
 - `settings/permissions/{conservative,balanced,autonomous}.json`
@@ -277,6 +311,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.4.0] - 2026-02-05
 
 ### Added
+
 - **Spec-Driven Development Workflow**: Interview-first specification system (Brain Spec lite)
   - `skills/development/spec-driven-development/` — Core spec workflow patterns and file format
   - `agents/spec-interviewer.md` — Opus agent for 8-category requirement interviews
@@ -300,6 +335,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 - **LLM Documentation**: `llms.txt` for LLM-optimized project discovery
 
 ### Changed
+
 - README updated with current inventory: 15 agents, 26 commands, 29 skills, 21 rules
 - Rules links in README now point to `rules/common/` (from `rules/`)
 - Validator now skips fenced code blocks, template files, placeholder links, and GitHub relative links
@@ -308,6 +344,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.3.0] - 2026-02-05
 
 ### Added
+
 - **Plugin Distribution**: `.claude-plugin/` with `plugin.json` and `marketplace.json`
   - Enables single-command installation as Claude Code plugin
   - Self-hosted marketplace configuration for discovery
@@ -355,6 +392,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 - **Enhanced Examples**: `user-CLAUDE.md`, `statusline.json`, session examples
 
 ### Changed
+
 - Agent tool restrictions: reviewers are now read-only (removed Bash from code-reviewer, security-reviewer)
 - Added YAML frontmatter to 8 existing commands missing `description` field
 - CI workflow now includes multi-OS/multi-Node matrix testing
@@ -363,6 +401,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.2.0] - 2026-02-05
 
 ### Added
+
 - **Rules System**: 7 always-follow constraint files in `rules/`
   - `security.md` - OWASP Top 10, secrets management, input validation
   - `coding-style.md` - Immutability, file organization, naming conventions
@@ -403,6 +442,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
   - `strategic-compact` - Context window optimization strategies
 
 ### Changed
+
 - `install.sh` now supports `--rules`, `--agents`, `--commands` flags
 - `install.ps1` now supports `-Rules`, `-Agents`, `-Commands` parameters
 - `scripts/validate.py` validates rules, agents, and command files
@@ -412,6 +452,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.1.2] - 2026-02-03
 
 ### Added
+
 - CodeRabbit configuration (`.coderabbit.yaml`) for AI-powered code reviews
 - Path-specific review instructions for JSON, SKILL.md, CLAUDE.md, and shell scripts
 - Auto-review enabled for PRs to main and staging branches
@@ -419,11 +460,13 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.1.1] - 2026-02-03
 
 ### Fixed
+
 - GitHub Actions validation now passes - `token-count.py` uses appropriate limits for different file types
 - Consistent GitHub username (`peopleforrester`) across all URLs in CHANGELOG.md and TROUBLESHOOTING.md
 - Author field in all 14 skill files updated for consistency
 
 ### Changed
+
 - Skills now have 200-350 line limits (detailed reference guides need more space)
 - Documentation files now have 150-300 line limits
 - Templates retain original strict limits (30-150 lines depending on type)
@@ -431,6 +474,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 ## [0.1.0] - 2026-01-28
 
 ### Added
+
 - Initial repository structure
 - MIT License
 - README with quick start and documentation
@@ -451,6 +495,7 @@ verified against `platform.claude.com` and `code.claude.com/docs/en` on
 - Stack-specific templates for React/TypeScript, Python/FastAPI, Next.js
 
 ### Compatibility
+
 - Claude Code 2.1+
 - Claude Desktop (skills and MCP)
 - Cursor (skills)

@@ -32,7 +32,7 @@ pnpm db:seed              # Seed database
 
 ## Key Directories
 
-```
+```text
 app/
 ├── layout.tsx            # Root layout (providers)
 ├── page.tsx              # Home page

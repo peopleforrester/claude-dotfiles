@@ -25,6 +25,7 @@ with minimal changes.
 ## Process
 
 ### 1. Capture Build Output
+
 ```bash
 # Full build with verbose output
 go build -v ./... 2>&1

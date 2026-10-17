@@ -6,18 +6,21 @@ Extends `common/security.md` with TypeScript/Node.js-specific constraints.
 ## Always
 
 ### Input Validation
+
 - Validate all API inputs with Zod, io-ts, or similar runtime validators
 - Sanitize HTML output with DOMPurify or equivalent
 - Use `encodeURIComponent()` for URL parameters
 - Validate environment variables at startup, fail fast on missing required values
 
 ### Dependencies
+
 - Run `npm audit` before every release
 - Pin major versions in production dependencies
 - Review new dependencies for typosquatting (check npm weekly downloads, repo stars)
 - Use `--ignore-scripts` for untrusted packages during install
 
 ### Framework-Specific
+
 ```typescript
 // React: Avoid dangerouslySetInnerHTML
 // If unavoidable, always sanitize first

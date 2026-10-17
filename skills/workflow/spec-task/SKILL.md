@@ -9,6 +9,7 @@ Update task status, mark tasks complete, and add implementation notes
 to the spec's log file.
 
 ## Arguments
+
 - `$ARGUMENTS` — `{spec-slug} {task-id} {action} [notes]`
 
 ## Actions
@@ -25,7 +26,7 @@ to the spec's log file.
 
 ### 1. Parse Arguments
 
-```
+```text
 /spec-task user-auth 2.3 done "Implemented logout with session cleanup"
           └─ slug   └─ id └─ action └─ optional notes
 ```
@@ -35,18 +36,21 @@ to the spec's log file.
 Modify `.spec/{slug}.tasks.md`:
 
 **For `done`:**
+
 ```diff
 - - [ ] 2.3 Implement AuthService.logout()
 + - [x] 2.3 Implement AuthService.logout()
 ```
 
 **For `skip`:**
+
 ```diff
 - - [ ] 2.3 Implement AuthService.logout()
 + - [~] 2.3 ~~Implement AuthService.logout()~~ (skipped: {reason})
 ```
 
 **For `block`:**
+
 ```diff
 - - [ ] 2.3 Implement AuthService.logout()
 + - [!] 2.3 Implement AuthService.logout() ⚠️ BLOCKED: {reason}
@@ -69,6 +73,7 @@ Append to `.spec/{slug}.log.md`:
 ### 4. Update Spec Status
 
 If all tasks are complete:
+
 - Change spec status from `active` to `completed`
 - Prompt to run `/verify` for final quality gate
 
@@ -92,7 +97,8 @@ If all tasks are complete:
 ## Examples
 
 ### Mark task done
-```
+
+```text
 User: /spec-task user-auth 2.3 done "Implemented with Redis session store"
 
 Claude:
@@ -111,7 +117,8 @@ Claude:
 ```
 
 ### Mark task blocked
-```
+
+```text
 User: /spec-task user-auth 3.1 block "Waiting for rate limit library decision"
 
 Claude:
@@ -130,7 +137,8 @@ Claude:
 ```
 
 ### Add implementation note
-```
+
+```text
 User: /spec-task user-auth 2.2 note "Decided to use bcrypt cost factor 12"
 
 Claude:
@@ -147,7 +155,7 @@ Note appended to .spec/user-auth.log.md
 
 Multiple tasks can be updated in one command:
 
-```
+```text
 /spec-task user-auth done 1.1 1.2 1.3 "Foundation phase complete"
 ```
 
@@ -156,6 +164,7 @@ This marks tasks 1.1, 1.2, and 1.3 as done with a shared note.
 ## Integration
 
 After marking tasks complete, consider:
+
 - `/verify` — Run quality checks after completing a phase
 - `/spec-status {slug}` — Review updated progress
 - `/orchestrate` — Continue with multi-agent implementation

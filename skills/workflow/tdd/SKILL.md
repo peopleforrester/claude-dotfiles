@@ -9,13 +9,13 @@ Invoke the **tdd-guide** agent to enforce strict test-driven development.
 
 ## Usage
 
-```
+```text
 /tdd [feature description or bug reference]
 ```
 
 ## Examples
 
-```
+```text
 /tdd add user authentication with email/password
 /tdd fix cart total calculation when discount applied
 /tdd implement search with filtering and pagination
@@ -32,7 +32,7 @@ Invoke the **tdd-guide** agent to enforce strict test-driven development.
 
 ## The Cycle
 
-```
+```text
 RED → GREEN → REFACTOR → REPEAT
 
 RED:      Write a failing test
@@ -52,6 +52,7 @@ REPEAT:   Next test case
 ## Arguments
 
 `$ARGUMENTS` can include:
+
 - Feature description: `/tdd add user registration`
 - Bug reference: `/tdd fix #123`
 - Scope: `/tdd implement payment processing for Stripe`

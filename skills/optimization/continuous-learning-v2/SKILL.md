@@ -25,9 +25,10 @@ v2 uses hooks (deterministic, 100% reliability) with structured instincts.
 ## Core Concepts
 
 ### Instincts
+
 Atomic units of learned behavior with confidence scoring:
 
-```yaml
+````markdown
 ---
 id: prefer-const-assertions
 trigger: "when defining constant arrays or objects in TypeScript"
@@ -49,7 +50,7 @@ type Role = typeof ROLES[number];
 - Applied in 3 sessions
 - Approved by reviewer each time
 - Matches TypeScript best practices
-```
+````
 
 ### Confidence Levels
 
@@ -61,6 +62,7 @@ type Role = typeof ROLES[number];
 | 0.9 | Near-certain | Core behavior, always applied |
 
 ### Confidence Evolution
+
 - New observation: starts at 0.3
 - Repeated application without correction: +0.1 per session
 - User correction/rejection: -0.2
@@ -69,7 +71,9 @@ type Role = typeof ROLES[number];
 ## Observation Hooks
 
 ### PreToolUse Observer
+
 Before tool execution, check if any instincts apply:
+
 ```json
 {
   "matcher": "Write|Edit",
@@ -81,7 +85,9 @@ Before tool execution, check if any instincts apply:
 ```
 
 ### PostToolUse Observer
+
 After tool execution, look for learnable patterns:
+
 ```json
 {
   "matcher": "Edit",
@@ -95,7 +101,7 @@ After tool execution, look for learnable patterns:
 
 ## Instinct Lifecycle
 
-```
+```text
 Observation → Instinct (0.3) → Strengthened (0.5-0.7) → Evolved (0.9)
                     ↓                                        ↓
               Weakened/Removed                    Promoted to Skill/Rule
@@ -111,7 +117,8 @@ Observation → Instinct (0.3) → Strengthened (0.5-0.7) → Evolved (0.9)
 ## Storage
 
 Instincts stored in `~/.claude/instincts/` as markdown files:
-```
+
+```text
 ~/.claude/instincts/
   prefer-const-assertions.md
   use-errgroup-for-goroutines.md
@@ -121,6 +128,7 @@ Instincts stored in `~/.claude/instincts/` as markdown files:
 ## Evolution Path
 
 When instincts cluster around a domain, they can be promoted:
+
 - **3+ related instincts** → candidate for a Skill
 - **5+ high-confidence instincts** → candidate for a Rule
 - **Domain-specific cluster** → candidate for an Agent prompt

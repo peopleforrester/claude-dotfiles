@@ -4,6 +4,7 @@
 Extends `common/patterns.md` with Python-specific patterns.
 
 ## Protocol Pattern (Structural Typing)
+
 ```python
 from typing import Protocol, runtime_checkable
 
@@ -21,6 +22,7 @@ def serialize(obj: Serializable) -> str:
 ```
 
 ## Dataclass as DTO
+
 ```python
 @dataclass(frozen=True, slots=True)
 class UserResponse:
@@ -35,6 +37,7 @@ class UserResponse:
 ```
 
 ## Context Manager Pattern
+
 ```python
 @contextmanager
 def database_transaction(session: Session):
@@ -49,6 +52,7 @@ def database_transaction(session: Session):
 ```
 
 ## Repository Pattern
+
 ```python
 class UserRepository:
     def __init__(self, session: Session) -> None:
@@ -70,6 +74,7 @@ class UserRepository:
 ```
 
 ## Dependency Injection (FastAPI)
+
 ```python
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with async_session() as session:
@@ -87,6 +92,7 @@ async def get_user(user_id: str, repo: UserRepository = Depends(get_user_repo)):
 ```
 
 ## References
+
 - See `skills/patterns/python-patterns/SKILL.md` for comprehensive patterns
 - See `skills/frameworks/fastapi-patterns/SKILL.md` for FastAPI patterns
 - See `skills/frameworks/django-patterns/SKILL.md` for Django patterns

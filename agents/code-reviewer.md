@@ -25,6 +25,7 @@ actionable feedback organized by priority.
 ## Process
 
 ### 1. Gather Changes
+
 ```bash
 # See what changed
 git diff --stat
@@ -33,33 +34,39 @@ git log --oneline -5
 ```
 
 ### 2. Review Each Changed File
+
 For every modified file, evaluate these dimensions:
 
 #### Correctness
+
 - Does the code do what it's supposed to?
 - Are edge cases handled (null, empty, boundary values)?
 - Is error handling appropriate and complete?
 - Are race conditions possible?
 
 #### Security
+
 - No hardcoded secrets or API keys
 - Input validation present for all user data
 - Authorization checks on protected operations
 - No injection vulnerabilities (SQL, XSS, command)
 
 #### Performance
+
 - No N+1 query patterns
 - Appropriate use of caching
 - No unnecessary loops or computations
 - Efficient data structures chosen
 
 #### Maintainability
+
 - Code is readable without comments
 - Functions are focused (single responsibility)
 - No code duplication
 - Naming is clear and consistent
 
 #### Testing
+
 - Tests cover the changes
 - Edge cases are tested
 - Tests are independent and deterministic
@@ -77,7 +84,7 @@ For every modified file, evaluate these dimensions:
 
 ## Output Format
 
-```markdown
+````markdown
 ## Code Review: [Context]
 
 ### Summary
@@ -105,7 +112,7 @@ For every modified file, evaluate these dimensions:
 
 ### Verdict
 **APPROVE** | **REQUEST CHANGES** | **NEEDS DISCUSSION**
-```
+````
 
 ## Approval Criteria
 

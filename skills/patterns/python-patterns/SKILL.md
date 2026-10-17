@@ -22,6 +22,7 @@ Modern Python 3.10+ patterns and best practices.
 ## Type Hints
 
 ### Strict Typing
+
 ```python
 from typing import TypeVar, Protocol, Optional
 from collections.abc import Sequence
@@ -33,6 +34,7 @@ def first_or_none(items: Sequence[T]) -> Optional[T]:
 ```
 
 ### Protocols (Structural Typing)
+
 ```python
 from typing import Protocol, runtime_checkable
 
@@ -51,6 +53,7 @@ display(HtmlWidget())  # Works - structural match
 ```
 
 ### TypedDict for Structured Data
+
 ```python
 from typing import TypedDict, NotRequired
 
@@ -63,6 +66,7 @@ class UserConfig(TypedDict):
 ## Dataclasses and Immutability
 
 ### Frozen Dataclasses
+
 ```python
 from dataclasses import dataclass, field
 
@@ -76,6 +80,7 @@ class Point:
 ```
 
 ### Pydantic for Validation
+
 ```python
 from pydantic import BaseModel, Field, field_validator
 
@@ -95,6 +100,7 @@ class CreateUser(BaseModel):
 ## Async Patterns
 
 ### Structured Concurrency
+
 ```python
 import asyncio
 
@@ -105,6 +111,7 @@ async def fetch_all(urls: list[str]) -> list[str]:
 ```
 
 ### Async Context Managers
+
 ```python
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
@@ -125,6 +132,7 @@ async def db_transaction() -> AsyncIterator[Connection]:
 ## Error Handling
 
 ### Result Pattern
+
 ```python
 from dataclasses import dataclass
 from typing import Generic, TypeVar, Union
@@ -149,6 +157,7 @@ def divide(a: float, b: float) -> Result[float, ValueError]:
 ```
 
 ### Match Statements (3.10+)
+
 ```python
 match command.split():
     case ["quit"]:

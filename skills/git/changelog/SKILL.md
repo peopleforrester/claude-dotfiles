@@ -9,7 +9,7 @@ Create changelog entries following Keep a Changelog format.
 
 ## Usage
 
-```
+```text
 /changelog                    # Generate entry for recent changes
 /changelog v1.2.0             # Generate entry for specific version
 /changelog --unreleased       # Add to Unreleased section

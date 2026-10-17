@@ -29,7 +29,7 @@ cargo update             # Update dependencies
 
 ## Key Directories
 
-```
+```text
 src/
 ├── main.rs           # Binary entry point
 ├── lib.rs            # Library root (if dual crate)
@@ -78,7 +78,7 @@ Key crates in `Cargo.toml`:
 
 Load with `dotenvy` or `config` crate:
 
-```
+```bash
 RUST_LOG=debug
 DATABASE_URL=postgres://...
 ```

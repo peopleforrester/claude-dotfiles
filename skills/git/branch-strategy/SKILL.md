@@ -38,7 +38,7 @@ Choose and implement the right Git branching strategy.
 
 ### Overview
 
-```
+```text
 main ─────●─────●─────●─────●─────●─────●───→
           │     │     │           │     │
           └─●───┘     └─────●─────┘     └─●
@@ -83,7 +83,7 @@ gh pr merge --squash
 
 ### Overview
 
-```
+```text
 main ─────●─────────────●─────────────●───→
           │             │             │
           └──●──●──●────┘             │
@@ -124,7 +124,7 @@ gh pr merge --squash
 
 ### Branch Naming
 
-```
+```text
 feature/description    # New features
 fix/description        # Bug fixes
 docs/description       # Documentation
@@ -143,7 +143,7 @@ test/description       # Test additions
 
 ### Overview
 
-```
+```text
 main     ─────●───────────────────●───────→
               │                   │
 develop ──●───●───●───●───●───●───●───●───→
@@ -211,13 +211,13 @@ git merge hotfix/security-patch
 
 ### Format
 
-```
+```text
 <type>/<ticket>-<description>
 ```
 
 ### Examples
 
-```
+```text
 feature/AUTH-123-oauth-login
 fix/BUG-456-cart-calculation
 hotfix/SEC-789-xss-vulnerability
@@ -236,7 +236,7 @@ docs/update-api-reference
 
 ### Setup
 
-```
+```text
 main      → Production
 staging   → Staging environment
 develop   → Development environment
@@ -244,7 +244,7 @@ develop   → Development environment
 
 ### Promotion Flow
 
-```
+```text
 feature/* → develop → staging → main
                 ↓         ↓       ↓
               Dev      Stage    Prod
@@ -332,18 +332,21 @@ gh pr merge --rebase
 ## Decision Checklist
 
 Choose **Trunk-Based** if:
+
 - [ ] Deploy multiple times per day
 - [ ] Have strong CI/CD
 - [ ] Can use feature flags
 - [ ] Team is experienced
 
 Choose **GitHub Flow** if:
+
 - [ ] Deploy daily to weekly
 - [ ] Want simple workflow
 - [ ] Don't need versioned releases
 - [ ] Small to medium team
 
 Choose **Git Flow** if:
+
 - [ ] Have scheduled releases
 - [ ] Need multiple versions
 - [ ] Have QA process

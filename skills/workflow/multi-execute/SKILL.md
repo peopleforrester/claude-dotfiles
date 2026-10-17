@@ -9,26 +9,33 @@ Execute a previously approved plan using coordinated agents.
 Requires an approved plan from `/multi-plan` or `/orchestrate`.
 
 ## Arguments
+
 - `$ARGUMENTS` — Phase to execute (e.g., "phase 1") or "all" for sequential execution
 
 ## Process
 
 ### 1. Load Plan
+
 Read the approved plan and identify:
+
 - Current phase to execute
 - Agent assignments
 - Acceptance criteria
 - Dependencies
 
 ### 2. Execute Phase
+
 For the specified phase:
+
 1. Delegate implementation to the **tdd-guide** agent
 2. Follow TDD workflow (test first, then implement)
 3. Run all tests to verify
 4. Delegate review to the assigned review agent
 
 ### 3. Gate Check
+
 Between phases, verify:
+
 - [ ] All tests pass
 - [ ] No type errors
 - [ ] No lint violations

@@ -9,7 +9,7 @@ Invoke the **build-resolver** agent to diagnose and fix build failures.
 
 ## Usage
 
-```
+```text
 /build-fix                      # Fix current build errors
 /build-fix --ci                 # Diagnose CI pipeline failure
 /build-fix --types              # Focus on type errors only

@@ -31,7 +31,7 @@ bundle exec rubocop -a        # Auto-fix
 
 ## Key Directories
 
-```
+```text
 app/
 ├── controllers/      # Request handling
 ├── models/           # Active Record models
@@ -114,7 +114,7 @@ export default class extends Controller {
 
 Rails credentials or environment:
 
-```
+```bash
 DATABASE_URL=postgres://...
 RAILS_MASTER_KEY=...
 SECRET_KEY_BASE=...

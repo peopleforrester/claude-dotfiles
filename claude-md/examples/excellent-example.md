@@ -8,6 +8,7 @@ This is an annotated example of an excellent CLAUDE.md file. Comments explain wh
 <!-- Tokens: ~1,350 (target: 1,500) | Lines: 72 | Compatibility: Claude Code 2.1+ -->
 
 <!-- ✅ Clear project name and one-line description -->
+<!-- markdownlint-disable-next-line MD025 -- the example CLAUDE.md keeps its own H1 -->
 # TaskFlow API
 
 Backend API service for the TaskFlow project management application.
@@ -41,7 +42,7 @@ pnpm db:studio        # Open Prisma Studio
 <!-- ✅ Concise directory overview - spatial orientation -->
 ## Key Directories
 
-```
+```text
 src/
 ├── routes/           # Fastify route handlers
 ├── services/         # Business logic
@@ -83,7 +84,7 @@ tests/
 
 Required (see `.env.example`):
 
-```
+```bash
 DATABASE_URL=postgresql://...
 REDIS_URL=redis://localhost:6379
 JWT_SECRET=...
