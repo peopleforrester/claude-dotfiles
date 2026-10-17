@@ -6,6 +6,18 @@ const { execSync } = require('child_process');
 const path = require('path');
 
 const rootDir = path.join(__dirname, '..');
+
+// Refuse an older Node than package.json engines, so a stale host fails with
+// a clear message rather than with a syntax or API error in some validator
+const minimum = require('../package.json').engines.node.replace('>=', '');
+const want = minimum.split('.').map(Number);
+const have = process.versions.node.split('.').map(Number);
+const differs = want.findIndex((n, i) => have[i] !== n);
+if (differs !== -1 && have[differs] < want[differs]) {
+  console.log(`Node ${process.versions.node} is older than ${minimum}, the minimum in package.json engines`);
+  process.exit(1);
+}
+
 let passed = 0;
 let failed = 0;
 

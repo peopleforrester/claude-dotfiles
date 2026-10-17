@@ -21,9 +21,13 @@ test: validate tokens test-install test-json test-shell lint-shell test-node
 	@echo "✅ All tests passed!"
 
 # Node suite, as CI runs it: the scripts/ci validators, their unit tests, and
-# the Python unit tests below
+# the Python unit tests below. Needs the Node version in package.json engines
 test-node:
 	@echo "🔍 Running the Node test suite..."
+	@if ! command -v node >/dev/null 2>&1; then \
+		echo "✗ node not installed; the Node suite needs the version in package.json engines"; \
+		exit 1; \
+	fi
 	@node tests/run-all.js
 
 # Unit tests for the Python scripts and hooks
