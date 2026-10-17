@@ -62,3 +62,31 @@ The file described an April 2026 initiative as EXECUTING five months after it
 shipped in 0.5.0, and carried a note at the bottom admitting the top was stale.
 Rewritten to the schema in [[state-persistence]]. The superseded plan text is
 in git history rather than duplicated here.
+
+## 2026-10-17T00:00:00Z · E2E command for the heavy gate
+
+`make e2e` (`tests/e2e/test_install_e2e.py`) runs `install.sh` into a scratch
+`HOME` for every profile, symlink mode, backup, dry run and each template, then
+runs `claude plugin validate --strict` from the published Claude Code CLI on the
+installed `~/.claude`. The light gate only ever ran `install.sh --help`, so no
+test exercised what a user actually gets.
+
+**Dependency:** `@anthropic-ai/claude-code@2.1.302`, the npm `latest` on
+2026-10-17, fetched with `npx` at test time rather than added to
+`devDependencies`, so `npm ci` in CI does not pull the CLI and its native
+binary. Pinned so the gate changes only when the pin does. The validator is
+the harness's own judgement of skills and agents, which the repo's Node
+validators only approximate. Bump the pin on a currency pass.
+
+**What it found on the first run:** `install_rules` copied `rules/*.md`, which
+since the move to `rules/common/` and `rules/<language>/` matches only
+`rules/README.md`. `--all` installed no rules at all. Both installers now copy
+`rules/common/*.md`; language rules have no path scoping and stay opt-in, as
+`rules/README.md` and `plugin.json`'s `install.rules: ["common"]` already said.
+
+**Not yet in the gate:** the same CLI rejects `.claude-plugin/plugin.json`
+(`author` must be an object) and `.claude-plugin/marketplace.json` (no `name`
+or `owner`, an invalid `source`, and the plugin name `claude-dotfiles` is
+reserved because it starts with `claude-`). Renaming the plugin is Michael's
+call, so the manifests go into the gate once that is settled. Filed as a
+follow-up from issue #13.

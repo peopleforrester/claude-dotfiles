@@ -541,11 +541,13 @@ function Install-Hooks {
 # =============================================================================
 # Installs rule files to ~/.claude/rules/
 # Rules are declarative constraint files that Claude Code loads automatically.
+# Only rules/common/ is installed; language rules carry no path scoping, so
+# they stay opt-in, as rules/README.md documents.
 # =============================================================================
 function Install-Rules {
     Write-Step "Installing rules..."
 
-    $rulesSrc = Join-Path $Script:SCRIPT_DIR "rules"
+    $rulesSrc = Join-Path (Join-Path $Script:SCRIPT_DIR "rules") "common"
     $rulesDest = Join-Path $Script:CLAUDE_DIR "rules"
 
     if (-not (Test-Path $rulesSrc)) {
@@ -562,7 +564,7 @@ function Install-Rules {
         $count++
     }
 
-    Write-Success "Installed $count rules"
+    Write-Success "Installed $count common rules"
 }
 
 # =============================================================================

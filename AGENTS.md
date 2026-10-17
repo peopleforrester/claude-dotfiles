@@ -75,6 +75,7 @@ claude  # Ask Claude to describe the setup
 ```
 
 Test command: `make test`
+E2E command: `make e2e`
 
 ## References
 

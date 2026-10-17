@@ -1,7 +1,7 @@
 # ABOUTME: Makefile for claude-dotfiles development and testing
 # ABOUTME: Provides targets for validation, testing, and installation
 
-.PHONY: all test test-node test-python validate tokens install clean help
+.PHONY: all test test-node test-python e2e validate tokens install clean help
 
 # Default target
 all: validate tokens
@@ -25,6 +25,12 @@ test: validate tokens test-install test-json test-shell lint-shell test-node
 test-node:
 	@echo "🔍 Running the Node test suite..."
 	@node tests/run-all.js
+
+# End-to-end: install into a scratch HOME, then have the real Claude Code CLI
+# (fetched from npm, so this needs the network) validate what was installed
+e2e:
+	@echo "🔍 Running the end-to-end suite..."
+	@python3 tests/e2e/test_install_e2e.py
 
 # Unit tests for the Python scripts and hooks
 test-python:
@@ -139,6 +145,7 @@ help:
 	@echo "  test-shell    Test shell script syntax"
 	@echo "  test-node     Run the Node suite (CI validators and all unit tests)"
 	@echo "  test-python   Run Python unit tests"
+	@echo "  e2e           Install into a scratch HOME and validate with Claude Code (network)"
 	@echo ""
 	@echo "Installation:"
 	@echo "  install       Interactive installation"

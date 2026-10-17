@@ -645,11 +645,16 @@ install_hooks() {
 # Rules are declarative constraint files that Claude Code loads automatically.
 # They define always-follow behaviors like security practices, coding style,
 # testing requirements, and git workflow conventions.
+#
+# The rules live in rules/common/ (language-agnostic, always installed) and
+# rules/<language>/. Language rules carry no path scoping, so installing them
+# globally would apply Go rules to a Python project; they stay opt-in, as
+# rules/README.md documents.
 # -----------------------------------------------------------------------------
 install_rules() {
     print_step "Installing rules..."
 
-    local rules_src="${SCRIPT_DIR}/rules"
+    local rules_src="${SCRIPT_DIR}/rules/common"
     local rules_dest="${CLAUDE_DIR}/rules"
 
     if [ ! -d "$rules_src" ]; then
@@ -667,7 +672,8 @@ install_rules() {
         fi
     done
 
-    print_success "Installed ${rule_count} rules"
+    print_success "Installed ${rule_count} common rules"
+    print_info "Add rules for your stack: cp ${SCRIPT_DIR}/rules/<language>/*.md ${rules_dest}/"
 }
 
 # -----------------------------------------------------------------------------
