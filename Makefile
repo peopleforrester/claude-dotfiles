@@ -1,7 +1,7 @@
 # ABOUTME: Makefile for claude-dotfiles development and testing
 # ABOUTME: Provides targets for validation, testing, and installation
 
-.PHONY: all test validate tokens install clean help
+.PHONY: all test test-node test-python validate tokens install clean help
 
 # Default target
 all: validate tokens
@@ -17,8 +17,14 @@ tokens:
 	@python3 scripts/token-count.py .
 
 # Run all tests
-test: validate tokens test-install test-json test-shell lint-shell test-python
+test: validate tokens test-install test-json test-shell lint-shell test-node
 	@echo "✅ All tests passed!"
+
+# Node suite, as CI runs it: the scripts/ci validators, their unit tests, and
+# the Python unit tests below
+test-node:
+	@echo "🔍 Running the Node test suite..."
+	@node tests/run-all.js
 
 # Unit tests for the Python scripts and hooks
 test-python:
@@ -131,6 +137,7 @@ help:
 	@echo "  tokens        Count tokens in templates"
 	@echo "  test-json     Test JSON file syntax"
 	@echo "  test-shell    Test shell script syntax"
+	@echo "  test-node     Run the Node suite (CI validators and all unit tests)"
 	@echo "  test-python   Run Python unit tests"
 	@echo ""
 	@echo "Installation:"
